@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { builtWith, capabilities, categories, contact, projects, type Accent } from '../data/projects'
 import { posts } from '../lib/posts'
+import RetrievalFlow from '../components/RetrievalFlow'
 
 /* Static literal classes per accent — Tailwind only compiles what it can see. */
 const ACCENTS: Record<Accent, { text: string; tile: string; chip: string; edge: string; dot: string }> = {
@@ -75,6 +76,8 @@ export default function Home() {
     <div className="min-h-dvh atmosphere">
       {/* ── hero ─────────────────────────────────────────────── */}
       <header className="mx-auto max-w-5xl px-5 pt-20 pb-10 sm:px-6 sm:pt-28">
+       <div className="grid items-center gap-10 md:grid-cols-[1fr_auto]">
+        <div>
         <motion.p {...rise(0)} className="inline-flex items-center gap-2 rounded-full border border-edge bg-panel px-3 py-1 font-mono text-[11px] text-zinc-400">
           <span className={`inline-block h-1.5 w-1.5 rounded-full ${live ? 'bg-emerald-400' : 'bg-zinc-600'}`} />
           {contact.status}{live && <span className="text-emerald-400"> · {live}</span>}
@@ -87,7 +90,7 @@ export default function Home() {
           {contact.headline} · {contact.location}
         </motion.p>
         <motion.div {...rise(3)} className="mt-8 flex flex-wrap items-center gap-3">
-          <a href="#projects" className="rounded-md bg-emerald-400 px-5 py-2.5 text-sm font-medium text-zinc-950 transition hover:brightness-110">
+          <a href="#projects" className="glow-hover rounded-md bg-emerald-400 px-5 py-2.5 text-sm font-medium text-zinc-950 transition hover:brightness-110">
             See the projects ↓
           </a>
           <a href="/cv.pdf" className="rounded-md border border-edge px-5 py-2.5 text-sm text-zinc-300 transition hover:border-zinc-500">
@@ -96,6 +99,12 @@ export default function Home() {
           <a href={contact.github} target="_blank" rel="noreferrer" className="px-2 font-mono text-sm text-zinc-500 hover:text-zinc-200">GitHub</a>
           <a href={contact.linkedin} target="_blank" rel="noreferrer" className="px-2 font-mono text-sm text-zinc-500 hover:text-zinc-200">LinkedIn</a>
         </motion.div>
+        </div>
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4, duration: 0.6 }} className="hidden md:block">
+          <RetrievalFlow />
+        </motion.div>
+       </div>
       </header>
 
       {/* ── capabilities: the classification layer ───────────── */}
@@ -108,7 +117,7 @@ export default function Home() {
             const a = ACCENTS[c.accent]
             return (
               <motion.div key={c.title} {...inView}
-                className="rounded-xl border border-edge bg-panel p-5 transition-colors hover:border-zinc-600">
+                className="glow-hover rounded-xl border border-edge bg-panel p-5 transition-colors hover:border-zinc-600">
                 <div className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border text-base ${a.tile}`}>
                   {c.glyph}
                 </div>

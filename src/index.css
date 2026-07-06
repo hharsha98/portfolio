@@ -36,6 +36,16 @@ body {
   to   { transform: translateX(-50%); }
 }
 
+/* glow: soft emerald halo behind primary CTAs and active cards */
+.glow { box-shadow: 0 0 0 1px rgb(52 211 153 / 0.15), 0 8px 40px -12px rgb(52 211 153 / 0.4); }
+.glow-hover { transition: box-shadow 0.3s, transform 0.3s; }
+.glow-hover:hover { box-shadow: 0 0 0 1px rgb(52 211 153 / 0.25), 0 10px 50px -12px rgb(52 211 153 / 0.5); transform: translateY(-2px); }
+
+/* respect reduced-motion: freeze the hero marquee for users who ask */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
 /* rendered markdown (writing section) */
 .prose-post { @apply text-zinc-300 leading-relaxed; }
 .prose-post h1 { @apply text-3xl font-semibold tracking-tight text-zinc-50 mb-6; }
