@@ -27,6 +27,15 @@ body {
 
 ::selection { background: rgb(52 211 153 / 0.25); }
 
+/* built-with marquee: duplicated track slides half its width, looping seamlessly */
+.marquee { overflow: hidden; white-space: nowrap; }
+.marquee-track { display: inline-block; animation: marquee 30s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 /* rendered markdown (writing section) */
 .prose-post { @apply text-zinc-300 leading-relaxed; }
 .prose-post h1 { @apply text-3xl font-semibold tracking-tight text-zinc-50 mb-6; }
