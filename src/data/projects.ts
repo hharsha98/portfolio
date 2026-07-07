@@ -50,6 +50,20 @@ export const projects: Project[] = [
     badge: 'in progress · Siemens',
   },
   {
+    name: 'RetrievalLab',
+    category: 'rag',
+    tagline: 'Advanced RAG, made visible',
+    story:
+      'The 2026 advanced-RAG ladder in one instrumented pipeline: contextual chunking, ' +
+      'hybrid search (vector + BM25, RRF), HyDE query transformation, and cross-encoder ' +
+      'reranking — with a Pipeline Inspector that shows every stage and the reranker ' +
+      'promoting chunks live, plus a retrieval eval (recall@k, MRR) comparing naive vs advanced.',
+    tech: ['FastAPI', 'React', 'pgvector', 'FlashRank', 'BM25', 'HyDE', 'Supabase'],
+    demo: 'https://retrievallab.pages.dev',
+    repo: 'https://github.com/hharsha98/retrievallab',
+    badge: 'advanced 100% vs naive 86% recall',
+  },
+  {
     name: 'ai-rag-project',
     category: 'rag',
     tagline: 'RAG "chat with your documents" — where it started',
