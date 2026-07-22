@@ -1,32 +1,48 @@
-# React + TypeScript + Vite
+<h1 align="center">Hanumanthu Harsha Vardhan — AI Engineer Portfolio</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+<p align="center">
+  A fast, hand-built portfolio of shipped <b>RAG</b> and <b>multi-agent AI</b> systems — every capability backed by a real project and honest metrics.
+</p>
 
-Currently, two official plugins are available:
+<p align="center">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🎬 Demo
 
-## React Compiler
+<p align="center">
+  <img src="docs/demo.gif" width="90%" alt="Scroll-through of the portfolio: hero, capabilities, and project cards" />
+</p>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🧭 What's inside
 
-## Expanding the Oxlint configuration
+Four capability areas, each proven by shipped work:
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- **RAG Systems** — chunking, embeddings, vector retrieval, page-level citations, and refusal when the answer isn't in the documents
+- **Multi-Agent Systems** — tool loops, structured output with validation, provider fallback (hand-rolled, no framework)
+- **Evaluation & Metering** — LLM-as-judge eval suites and per-request cost metering
+- **Deployment & Infra** — containerized and shipped
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+### Featured projects
+
+| Project | What it is |
+|---|---|
+| **CareerAgent** | Multi-agent platform for the job hunt |
+| **Multi-agent root-cause analysis** | Master thesis @ Siemens (industrial AI) |
+| **RetrievalLab** | Advanced RAG, made visible |
+| **ai-rag-project** | RAG — chat with your documents |
+
+## 🛠️ Built with
+
+React · TypeScript · Vite — a single-page site with client-side routing and a small markdown blog.
+
+## ▶️ Run locally
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Then open the local URL Vite prints (e.g. `http://localhost:5173`).
