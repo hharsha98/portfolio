@@ -11,9 +11,11 @@ export type Project = {
   stack: string[]
   status: ProjectStatus
   statusNote: string
-  github: string
+  github?: string
+  githubLabel?: string
   demo?: { label: string; href: string }
   secondary?: { label: string; href: string }
+  featuresHeading?: string
   category: 'environment' | 'ops' | 'retrieval'
 }
 
@@ -82,11 +84,11 @@ export const projects: Project[] = [
     tagline:
       'Multi-agent AI operations platform with agent orchestration, RAG, MCP tools, observability, Docker, Kubernetes, and Terraform scaffolding.',
     description:
-      'The agent-fleet product: an operations command center for running AI workforces, with portable deploy paths instead of a vendor lock-in demo.',
+      'Public product page for Agent Fleet — orchestration, RAG, MCP, observability, and portable deploy paths. The fleet codebase is not a public repository.',
     body: [
-      'AgentOps Studio is framed as a multi-agent workforce platform for business operations — support, research, delivery, compliance — with operational visibility and Kubernetes-based deployment.',
-      'The first implementation is the product shell and the deploy foundation: dashboard workspace, a deployment page covering Docker, local Kubernetes, and managed Kubernetes, Docker Compose, k3d-oriented manifests, and Terraform placeholders so provider-specific infra stays isolated.',
-      'Planned platform pieces are named in the repo: streaming multi-agent chat, visual workflows, document intelligence with citations, MCP registry, Langfuse observability, cost and token tracking. Treat this as the fleet product in the studio, not a finished SaaS.',
+      'Agent Fleet is the multi-agent operations platform behind this work. It is not a public repository. AgentOps Studio is the public product page: the command-center surface and the deploy foundation for running AI workforces (support, research, delivery, compliance) with operational visibility.',
+      'What is public is the product shell and infrastructure scaffolding: dashboard workspace; a deployment page covering Docker, local Kubernetes, and managed Kubernetes; Docker Compose; k3d-oriented manifests; Terraform placeholders so provider-specific infra stays isolated.',
+      'Named on the product: streaming multi-agent chat, visual workflows, document intelligence with citations, MCP registry, Langfuse observability, cost and token tracking. Treat this as the public face of Agent Fleet, not a claim that the fleet source is on GitHub.',
     ],
     features: [
       'Orchestration + RAG + MCP as the product spine',
@@ -97,8 +99,10 @@ export const projects: Project[] = [
     ],
     stack: ['TypeScript', 'Python', 'FastAPI', 'Docker', 'Kubernetes', 'Terraform', 'MCP'],
     status: 'foundation',
-    statusNote: 'Platform foundation',
+    statusNote: 'Product page · Agent Fleet',
     github: 'https://github.com/hharsha98/agentops-studio',
+    githubLabel: 'Public scaffolding',
+    featuresHeading: 'On the product',
     category: 'ops',
   },
   {

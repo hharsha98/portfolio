@@ -31,7 +31,9 @@ const title = `${project.name} — ${site.studio}`
     <p class="mt-4 text-lg leading-relaxed text-mute">{project.tagline}</p>
 
     <div class="mt-8 flex flex-wrap gap-3">
-      <a class="btn btn-primary" href={project.github} rel="noreferrer" target="_blank">GitHub ↗</a>
+      {project.github && (
+        <a class="btn btn-primary" href={project.github} rel="noreferrer" target="_blank">{project.githubLabel ?? 'GitHub'} ↗</a>
+      )}
       {project.demo && (
         <a class="btn btn-ghost" href={project.demo.href} rel="noreferrer" target="_blank">{project.demo.label} ↗</a>
       )}
@@ -45,7 +47,7 @@ const title = `${project.name} — ${site.studio}`
     </div>
 
     <section class="mt-12">
-      <h2 class="kicker">In the repo</h2>
+      <h2 class="kicker">{project.featuresHeading ?? 'In the repo'}</h2>
       <ul class="mt-4 space-y-2 border-l border-line pl-4">
         {project.features.map((f) => (
           <li class="text-sm leading-relaxed text-paper/85">{f}</li>

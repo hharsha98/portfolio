@@ -1,11 +1,18 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "agentic-systems-studio",
-  // Static assets Worker. Bind agentic-systems-studio.com later in the
-  // Cloudflare dashboard (Workers & Pages → Custom domains). Do not put
-  // routes.custom_domain here until the zone is attached to this account.
+  // Zone agentic-systems-studio.com is already on Cloudflare nameservers
+  // (alec.ns.cloudflare.com). Apex A/AAAA are empty on purpose — do not add
+  // a CNAME first. Attaching this exact hostname as a Workers/Pages Custom
+  // Domain creates those records and issues the certificate.
   "compatibility_date": "2026-08-31",
   "preview_urls": true,
+  "routes": [
+    {
+      "pattern": "agentic-systems-studio.com",
+      "custom_domain": true,
+    },
+  ],
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page",

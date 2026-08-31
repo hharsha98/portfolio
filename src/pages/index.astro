@@ -90,10 +90,11 @@ const rest = projects.slice(3)
         {paper.title}
       </h2>
       <p class="mt-3 max-w-2xl text-sm leading-relaxed text-mute">{paper.summary}</p>
-      <p class="mt-2 font-mono text-[11px] text-mute">{paper.context}</p>
+      <p class="mt-2 font-mono text-[11px] text-mute">{paper.venue} · doi:{paper.doi}</p>
       <div class="mt-6 flex flex-wrap gap-3">
         <a class="btn btn-primary" href="/research">Research note</a>
-        <a class="btn btn-ghost" href={paper.url} rel="noreferrer" target="_blank">ResearchGate ↗</a>
+        <a class="btn btn-ghost" href={paper.doiUrl} rel="noreferrer" target="_blank">DOI ↗</a>
+        <a class="btn btn-ghost" href={paper.researchgate} rel="noreferrer" target="_blank">ResearchGate ↗</a>
       </div>
     </article>
   </section>
