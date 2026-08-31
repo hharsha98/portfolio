@@ -6,9 +6,7 @@ Production domain: [agentic-systems-studio.com](https://agentic-systems-studio.c
 
 ## Domain / DNS
 
-The zone is already delegated to Cloudflare nameservers (`alec.ns.cloudflare.com`). Apex **A / AAAA records are empty on purpose** — do not add a CNAME first.
-
-After this site is built and deployed, attach the **exact hostname** `agentic-systems-studio.com` as a Cloudflare Pages or Workers **Custom Domain**. Cloudflare then creates the DNS records and issues the certificate. `wrangler.jsonc` already lists that hostname with `custom_domain: true` for the Workers path.
+The zone is on Cloudflare nameservers (`alec.ns.cloudflare.com`). Custom domains **agentic-systems-studio.com** and **www.agentic-systems-studio.com** are already attached to the Workers project `agentic-systems-studio`. Do not add a CNAME by hand. `wrangler.jsonc` lists both hostnames with `custom_domain: true` so deploys do not drop www.
 
 ## Stack
 
@@ -45,8 +43,24 @@ npm run build
 npm run preview
 ```
 
-## Deploy
+## Deploy (Cloudflare Workers)
 
-**Cloudflare Pages:** build command `npm run build`, output directory `dist`. Then Custom domains → `agentic-systems-studio.com`.
+Workers project: **agentic-systems-studio**. This repo is a **static Astro** site, not a Vite SPA.
 
-**Workers static assets:** `npx wrangler deploy` after a build. The Wrangler `routes` entry with `custom_domain: true` attaches the apex hostname and fills the empty A/AAAA records.
+Cloudflare Git must build **this studio branch** (`cursor/agentic-systems-studio-7fff`) or `main` after this PR merges. Building old `main` (Vite + `public/_redirects` `/* /index.html 200`) fails deploy with:
+
+```
+Invalid _redirects configuration: Line 1: Infinite loop detected
+(redirect stripping .html / /index) [code: 100324]
+```
+
+There is **no** `_redirects` file. Do not add a SPA fallback. `wrangler.jsonc` must stay at the repo root so Wrangler does not auto-scaffold a Vite SPA.
+
+Workers Builds:
+
+- **Production branch:** `cursor/agentic-systems-studio-7fff` (until this PR is merged)
+- Install: `npm ci`
+- Build command: `npm run build` (Astro → `dist/`)
+- Deploy command: `npx wrangler deploy`
+
+`wrangler.jsonc` serves `./dist` with `not_found_handling: "404-page"` and `html_handling: "auto-trailing-slash"` (Astro `build.format: 'file'`).
