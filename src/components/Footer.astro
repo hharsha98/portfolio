@@ -1,0 +1,65 @@
+---
+import { site } from '../data/site'
+---
+
+<footer class="border-t border-line">
+  <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-12">
+    <div class="md:col-span-5">
+      <p class="kicker">Contact</p>
+      <p class="mt-3 text-lg text-paper">{site.name}</p>
+      <p class="mt-1 text-sm text-mute">{site.location} · {site.now}</p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-copy={site.email}
+          data-label={site.email}
+        >
+          {site.email}
+        </button>
+        <a class="btn btn-ghost" href={site.cv}>CV</a>
+      </div>
+    </div>
+    <div class="md:col-span-3">
+      <p class="kicker">Network</p>
+      <ul class="mt-3 space-y-2 font-mono text-sm">
+        <li><a class="text-mute hover:text-brass" href={site.github} rel="noreferrer" target="_blank">GitHub ↗</a></li>
+        <li><a class="text-mute hover:text-brass" href={site.linkedin} rel="noreferrer" target="_blank">LinkedIn ↗</a></li>
+        <li><a class="text-mute hover:text-brass" href={site.huggingface} rel="noreferrer" target="_blank">Hugging Face ↗</a></li>
+        <li><a class="text-mute hover:text-brass" href={`mailto:${site.email}`}>Email</a></li>
+      </ul>
+    </div>
+    <div class="md:col-span-4">
+      <p class="kicker">Studio</p>
+      <p class="mt-3 text-sm leading-relaxed text-mute">
+        {site.studio} is the personal practice of {site.shortName} — agentic systems for industrial lines and product surfaces. Static site. No analytics. Domain {site.domain}.
+      </p>
+    </div>
+  </div>
+  <div class="border-t border-line/70">
+    <p class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-4 font-mono text-[11px] text-mute sm:px-6">
+      <span>{site.coordinates}</span>
+      <span>© {new Date().getFullYear()} {site.name}</span>
+    </p>
+  </div>
+</footer>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-copy]')
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const value = btn.dataset.copy
+      const original = btn.dataset.label ?? btn.textContent ?? ''
+      if (!value) return
+      try {
+        await navigator.clipboard.writeText(value)
+        btn.textContent = 'copied'
+        window.setTimeout(() => {
+          btn.textContent = original
+        }, 1600)
+      } catch {
+        window.location.href = `mailto:${value}`
+      }
+    })
+  })
+</script>

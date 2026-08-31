@@ -1,0 +1,63 @@
+---
+/**
+ * Dispatch schematic — industrial HMI, not a neural-net blob.
+ * Three lanes: brief → dispatch → fleet. Packets travel the rails.
+ */
+---
+
+<figure class="frame border border-line bg-panel p-3 sm:p-4" aria-hidden="false">
+  <span class="frame-b"></span>
+  <figcaption class="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-mute">
+    <span>Fig. 01 · fleet dispatch</span>
+    <span class="flex items-center gap-2"><span class="led"></span> live schematic</span>
+  </figcaption>
+  <svg viewBox="0 0 560 220" class="w-full" role="img" aria-label="Schematic of a brief entering dispatch and three agent lanes">
+    <defs>
+      <linearGradient id="rail" x1="0" x2="1">
+        <stop offset="0" stop-color="#c9a24a" stop-opacity="0.15" />
+        <stop offset="0.5" stop-color="#c9a24a" stop-opacity="0.55" />
+        <stop offset="1" stop-color="#4caf8a" stop-opacity="0.2" />
+      </linearGradient>
+    </defs>
+
+    <!-- stage labels -->
+    <text x="56" y="28" text-anchor="middle" fill="#8b909c" font-size="10" font-family="IBM Plex Mono, monospace" letter-spacing="1.6">BRIEF</text>
+    <text x="200" y="28" text-anchor="middle" fill="#8b909c" font-size="10" font-family="IBM Plex Mono, monospace" letter-spacing="1.6">DISPATCH</text>
+    <text x="400" y="28" text-anchor="middle" fill="#8b909c" font-size="10" font-family="IBM Plex Mono, monospace" letter-spacing="1.6">FLEET</text>
+
+    <!-- brief node -->
+    <rect x="18" y="70" width="76" height="80" fill="#161920" stroke="#c9a24a" stroke-opacity="0.7" />
+    <text x="56" y="104" text-anchor="middle" fill="#e7e2d6" font-size="11" font-family="IBM Plex Sans, sans-serif">ticket</text>
+    <text x="56" y="122" text-anchor="middle" fill="#c9a24a" font-size="9" font-family="IBM Plex Mono, monospace">RCA-04</text>
+
+    <!-- dispatch board -->
+    <rect x="140" y="52" width="120" height="136" fill="#101218" stroke="#2c313c" />
+    <rect x="152" y="68" width="96" height="22" fill="#c9a24a" fill-opacity="0.12" stroke="#c9a24a" stroke-opacity="0.45" />
+    <rect x="152" y="98" width="96" height="22" fill="#161920" stroke="#2c313c" />
+    <rect x="152" y="128" width="96" height="22" fill="#161920" stroke="#2c313c" />
+    <rect x="152" y="158" width="96" height="18" fill="#161920" stroke="#2c313c" />
+    <text x="200" y="83" text-anchor="middle" fill="#c9a24a" font-size="9" font-family="IBM Plex Mono, monospace">IN PROGRESS</text>
+    <text x="200" y="113" text-anchor="middle" fill="#8b909c" font-size="9" font-family="IBM Plex Mono, monospace">QUEUED</text>
+    <text x="200" y="143" text-anchor="middle" fill="#8b909c" font-size="9" font-family="IBM Plex Mono, monospace">REVIEW</text>
+    <text x="200" y="171" text-anchor="middle" fill="#8b909c" font-size="8" font-family="IBM Plex Mono, monospace">DONE</text>
+
+    <!-- rails -->
+    <line x1="260" y1="92" x2="536" y2="92" stroke="url(#rail)" stroke-width="1.2" />
+    <line x1="260" y1="132" x2="536" y2="132" stroke="url(#rail)" stroke-width="1.2" />
+    <line x1="260" y1="172" x2="536" y2="172" stroke="url(#rail)" stroke-width="1.2" />
+
+    <!-- agent stations -->
+    <g font-family="IBM Plex Mono, monospace" font-size="10" fill="#e7e2d6">
+      <rect x="400" y="76" width="136" height="32" fill="#161920" stroke="#4caf8a" stroke-opacity="0.7" />
+      <text x="468" y="96" text-anchor="middle">CLAUDE · RUN</text>
+      <rect x="400" y="116" width="136" height="32" fill="#161920" stroke="#c9a24a" stroke-opacity="0.55" />
+      <text x="468" y="136" text-anchor="middle">CURSOR · PLAN</text>
+      <rect x="400" y="156" width="136" height="32" fill="#161920" stroke="#2c313c" />
+      <text x="468" y="176" text-anchor="middle" fill="#8b909c">CODEX · IDLE</text>
+    </g>
+
+    <circle class="packet" r="3.5" fill="#c9a24a" />
+    <circle class="packet-2" r="3.5" fill="#4caf8a" />
+    <circle class="packet-3" r="3" fill="#8b909c" />
+  </svg>
+</figure>
