@@ -25,7 +25,6 @@ import { site } from '../data/site'
       <p class="kicker">Network</p>
       <ul class="mt-3 space-y-2 font-mono text-sm">
         <li><a class="text-mute hover:text-brass" href={site.github} rel="noreferrer" target="_blank">GitHub ↗</a></li>
-        <li><a class="text-mute hover:text-brass" href={site.githubOrg} rel="noreferrer" target="_blank">Studio org ↗</a></li>
         <li><a class="text-mute hover:text-brass" href={site.linkedin} rel="noreferrer" target="_blank">LinkedIn ↗</a></li>
         <li><a class="text-mute hover:text-brass" href={site.huggingface} rel="noreferrer" target="_blank">Hugging Face ↗</a></li>
         <li><a class="text-mute hover:text-brass" href={`mailto:${site.email}`}>Email</a></li>
@@ -34,12 +33,8 @@ import { site } from '../data/site'
     <div class="md:col-span-4">
       <p class="kicker">Studio</p>
       <p class="mt-3 text-sm leading-relaxed text-mute">
-        {site.studio} is the personal practice of {site.shortName} — agentic systems for industrial lines and product surfaces. Static site. No analytics. Domain {site.domain}.
-      </p>
-      <p class="mt-3 text-sm leading-relaxed text-mute">
-        Older experiments live in the
-        <a class="text-brass underline-offset-2 hover:underline" href={site.githubOrg} rel="noreferrer" target="_blank">GitHub org</a>,
-        not on the homepage.
+        {site.studio} is the personal practice of {site.shortName} — agentic systems for industrial lines and product surfaces. Static site. No analytics. Domain {site.domain}. Code on
+        <a class="text-brass underline-offset-2 hover:underline" href={site.github} rel="noreferrer" target="_blank">github.com/hharsha98</a>.
       </p>
     </div>
   </div>

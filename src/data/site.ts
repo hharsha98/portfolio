@@ -15,7 +15,6 @@ export const site = {
   email: 'harsha.vardhan@fau.de',
   linkedin: 'https://linkedin.com/in/hanumanthu1',
   github: 'https://github.com/hharsha98',
-  githubOrg: 'https://github.com/agentic-systems-studio',
   huggingface: 'https://huggingface.co/hhharsha',
   cv: '/cv.pdf',
   now: 'Master thesis · Siemens AG, Amberg',

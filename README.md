@@ -27,7 +27,7 @@ Astro static site, Tailwind v4, deployable to Cloudflare Pages or Workers static
 | `/research` | DVS EBL 2026 paper (DOI) |
 | `/about` | Siemens, FAPS, IndiaMART, education |
 
-Copy is taken from public GitHub descriptions/READMEs and the CV. No invented star counts or screenshots. The GitHub org [agentic-systems-studio](https://github.com/agentic-systems-studio) holds older experiments — footer only, not homepage heroes.
+Copy is taken from public GitHub descriptions/READMEs and the CV. No invented star counts or screenshots. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — the GitHub org of the same name as the domain is not his.
 
 ## Local
 
