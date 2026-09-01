@@ -4,23 +4,19 @@ export const site = {
   studio: 'Agentic Systems Studio',
   domain: 'agentic-systems-studio.com',
   url: 'https://agentic-systems-studio.com',
-  title: 'Hanumanthu Harsha Vardhan — AI Engineer',
+  title: 'Agentic Systems Studio',
   description:
-    'AI Engineer in Nuremberg. M.Sc. Electromobility (ACES), FAU. Siemens thesis on multi-agent root-cause analysis. Public work: agent fleets, local agent environments, evaluated RAG.',
+    'Work studio for shipped agentic systems: Agent Fleet, VibeDeck, Agent OS, AgentOps Studio, RetrievalLab, CareerAgent. GitHub github.com/hharsha98.',
   location: 'Nuremberg, Germany',
   coordinates: '49.45°N · 11.08°E',
   role: 'AI Engineer / Agentic Systems',
   positioning:
-    'AI Engineer building agentic systems for industrial and product use.',
-  educationShort: 'M.Sc. Electromobility (ACES), FAU Erlangen-Nürnberg',
-  email: 'harsha.vardhan@fau.de',
+    'A studio for shipped agentic systems — local-first agent environments, multi-agent ops, evaluated retrieval.',
+  email: 'rtvision7@gmail.com',
   linkedin: 'https://linkedin.com/in/hanumanthu1',
   github: 'https://github.com/hharsha98',
   huggingface: 'https://huggingface.co/hharsha',
-  photo: '/portrait.jpg',
-  cv: '/cv.pdf',
-  now: 'Master thesis · Siemens AG, Amberg',
-  nowDetail: 'Multi-agent root-cause analysis in manufacturing',
+  now: 'Shipping public systems',
 }
 
 export const paper = {
@@ -40,29 +36,8 @@ export const paper = {
     'Local knowledge retrieval for industrial settings, with trustworthiness and verification metrics in the evaluation loop — not retrieval quality alone.',
 }
 
-export const evehicleshop = {
-  name: 'EVEHICLESHOP',
-  href: 'https://evehicleshop.in',
-  label: 'evehicleshop.in',
-  note: 'Founder. Discover and compare EVs.',
-}
-
-export const hfSpaces = [
-  {
-    name: 'RetrievalLab',
-    href: 'https://huggingface.co/spaces/hharsha/retrievallab',
-    note: 'Explainer Space for the retrieval pipeline. Not an industrial deployment.',
-  },
-  {
-    name: 'Agentic Systems Portfolio',
-    href: 'https://huggingface.co/spaces/hharsha/agent-portfolio',
-    note: 'Hub Space linking out to public GitHub work.',
-  },
-]
-
 export const nav = [
-  { href: '/', label: 'Profile' },
+  { href: '/', label: 'Studio' },
   { href: '/#work', label: 'Work' },
   { href: '/research', label: 'Research' },
-  { href: '/about', label: 'About' },
 ] as const

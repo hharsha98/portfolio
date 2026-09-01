@@ -1,5 +1,5 @@
 ---
-import { site, nav, evehicleshop } from '../data/site'
+import { site, nav } from '../data/site'
 const path = Astro.url.pathname.replace(/\/$/, '') || '/'
 ---
 
@@ -9,7 +9,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/'
       <span class="flex h-8 w-8 items-center justify-center border border-brass/70 text-[11px] font-mono text-brass" aria-hidden="true">A·S</span>
       <span class="leading-tight">
         <span class="block font-mono text-[10px] uppercase tracking-[0.18em] text-mute group-hover:text-brass">{site.studio}</span>
-        <span class="hidden text-sm text-paper sm:block">{site.shortName}</span>
+        <span class="hidden text-sm text-paper sm:block">Work studio</span>
       </span>
     </a>
 
@@ -28,8 +28,11 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/'
           </a>
         )
       })}
-      <a href={evehicleshop.href} rel="noreferrer" target="_blank" class="ml-2 btn btn-ghost min-h-11 px-3 py-2 font-mono text-[12px] uppercase tracking-[0.14em]">
-        EV shop
+      <a href={site.linkedin} rel="noreferrer" target="_blank" class="ml-2 min-h-11 px-3 py-2 font-mono text-[12px] uppercase tracking-[0.16em] text-mute hover:text-brass">
+        Profile
+      </a>
+      <a href={site.huggingface} rel="noreferrer" target="_blank" class="min-h-11 px-3 py-2 font-mono text-[12px] uppercase tracking-[0.16em] text-mute hover:text-brass">
+        Hugging Face
       </a>
       <a href={`mailto:${site.email}`} class="ml-1 btn btn-ghost min-h-11 px-3 py-2 font-mono text-[12px] uppercase tracking-[0.14em]">
         Contact
@@ -47,8 +50,11 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/'
             {item.label}
           </a>
         ))}
-        <a href={evehicleshop.href} rel="noreferrer" target="_blank" class="block min-h-11 px-3 py-3 font-mono text-xs uppercase tracking-[0.16em] text-paper hover:text-brass">
-          EVEHICLESHOP
+        <a href={site.linkedin} rel="noreferrer" target="_blank" class="block min-h-11 px-3 py-3 font-mono text-xs uppercase tracking-[0.16em] text-paper hover:text-brass">
+          Profile · LinkedIn
+        </a>
+        <a href={site.huggingface} rel="noreferrer" target="_blank" class="block min-h-11 px-3 py-3 font-mono text-xs uppercase tracking-[0.16em] text-paper hover:text-brass">
+          Hugging Face
         </a>
         <a href={`mailto:${site.email}`} class="block min-h-11 px-3 py-3 font-mono text-xs uppercase tracking-[0.16em] text-brass">
           Contact

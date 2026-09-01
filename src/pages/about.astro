@@ -1,106 +1,31 @@
 ---
 import Base from '../layouts/Base.astro'
-import { site, paper, evehicleshop } from '../data/site'
-import { education, experience, skills } from '../data/projects'
+import { site } from '../data/site'
 ---
 
 <Base
-  title={`About — ${site.name}`}
-  description={`${site.name}, AI Engineer in Nuremberg. FAU Electromobility (ACES), Siemens Amberg, Institute FAPS.`}
+  title={`About Harsha — ${site.studio}`}
+  description={`Who runs ${site.studio}. Profile lives on LinkedIn and Hugging Face — this domain is the work studio.`}
 >
   <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-    <div class="flex flex-col gap-8 sm:flex-row sm:items-start">
-      <figure class="frame portrait-frame w-40 shrink-0 sm:w-48">
-        <span class="frame-b"></span>
-        <img
-          src={site.photo}
-          alt={`${site.name}, formal portrait`}
-          width="900"
-          height="900"
-          class="aspect-square w-full object-cover object-top"
-        />
-      </figure>
-      <div>
-        <p class="kicker">About</p>
-        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-paper sm:text-4xl">
-          {site.name}
-        </h1>
-        <p class="mt-3 text-sm text-mute">{site.role} · {site.location}</p>
-        <p class="mt-2 text-sm text-paper/85">{site.educationShort}</p>
-        <p class="mt-2 text-sm text-paper/85">{site.now} — {site.nowDetail}.</p>
-        <p class="mt-2 text-sm text-paper/85">
-          Paper:
-          <a class="text-brass underline-offset-2 hover:underline" href={paper.doiUrl} rel="noreferrer" target="_blank">doi:{paper.doi}</a>
-        </p>
-      </div>
-    </div>
-
-    <p class="mt-8 text-lg leading-relaxed text-mute">
-      Mechanical undergraduate, then Electromobility-ACES at FAU — AI, connectivity, e-powertrain, sustainable production. The work that stuck was making language models reliable enough for a plant, not a demo.
+    <p class="kicker">About Harsha</p>
+    <h1 class="mt-4 text-3xl font-semibold tracking-tight text-paper sm:text-5xl">
+      This domain is the work studio
+    </h1>
+    <p class="mt-5 text-lg leading-relaxed text-mute">
+      {site.studio} posts shipped systems — Agent Fleet, VibeDeck, Agent OS, AgentOps Studio, RetrievalLab, CareerAgent, and related case studies. It is not a LinkedIn-style personal profile.
     </p>
     <p class="mt-4 text-[15px] leading-relaxed text-paper/85">
-      The thesis at Siemens Amberg is a multi-agent system for automated root-cause analysis: perception, reasoning, retrieval, decision support, with local models and reliability metrics. Before that: a computer-vision internship on the same site, and a research assistantship at Institute FAPS on local RAG with trustworthiness metrics — the DVS EBL 2026 paper lives on the <a class="text-brass underline-offset-2 hover:underline" href="/research">research</a> page.
+      {site.name} runs the studio. For the person (not the dossiers), use LinkedIn or Hugging Face until a separate profile site exists. Source is only
+      <a class="text-brass underline-offset-2 hover:underline" href={site.github} rel="noreferrer" target="_blank">github.com/hharsha98</a>.
     </p>
-    <p class="mt-4 text-[15px] leading-relaxed text-paper/85">
-      Public code is on <a class="text-brass underline-offset-2 hover:underline" href={site.github} rel="noreferrer" target="_blank">github.com/hharsha98</a> — Agent Fleet, vibedeck, Agent OS, RetrievalLab, CareerAgent, and related repos. He is the founder of <a class="text-brass underline-offset-2 hover:underline" href={evehicleshop.href} rel="noreferrer" target="_blank">{evehicleshop.name}</a> ({evehicleshop.label}), an EV discover-and-compare site.
-    </p>
-    <p class="mt-4 text-[15px] leading-relaxed text-paper/85">
-      Earlier: data analytics at IndiaMART, then data and systems coordination at RT Vision.
-    </p>
-
     <div class="mt-8 flex flex-wrap gap-3">
-      <a class="btn btn-primary" href={site.cv}>Download CV</a>
-      <a class="btn btn-ghost" href={site.linkedin} rel="noreferrer" target="_blank">LinkedIn ↗</a>
+      <a class="btn btn-primary" href={site.linkedin} rel="noreferrer" target="_blank">LinkedIn ↗</a>
+      <a class="btn btn-ghost" href={site.huggingface} rel="noreferrer" target="_blank">Hugging Face ↗</a>
       <a class="btn btn-ghost" href={`mailto:${site.email}`}>{site.email}</a>
     </div>
-
-    <section class="mt-16">
-      <h2 class="kicker">Experience</h2>
-      <ol class="mt-6 divide-y divide-line border-y border-line">
-        {experience.map((job) => (
-          <li class="grid gap-2 py-6 sm:grid-cols-[11rem_1fr]">
-            <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-mute">{job.dates}</p>
-            <div>
-              <h3 class="font-semibold text-paper">{job.title}</h3>
-              <p class="mt-0.5 text-sm text-brass">{job.org}</p>
-              <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-mute">
-                {job.points.map((pt) => <li>{pt}</li>)}
-              </ul>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </section>
-
-    <section class="mt-16">
-      <h2 class="kicker">Education</h2>
-      <ol class="mt-6 divide-y divide-line border-y border-line">
-        {education.map((ed) => (
-          <li class="grid gap-2 py-6 sm:grid-cols-[11rem_1fr]">
-            <p class="font-mono text-[11px] uppercase tracking-[0.12em] text-mute">{ed.dates}</p>
-            <div>
-              <h3 class="font-semibold text-paper">{ed.title}</h3>
-              <p class="mt-0.5 text-sm text-brass">{ed.org}</p>
-              {ed.note && <p class="mt-2 text-sm text-mute">{ed.note}</p>}
-            </div>
-          </li>
-        ))}
-      </ol>
-    </section>
-
-    <section class="mt-16">
-      <h2 class="kicker">Tools I actually use</h2>
-      <div class="mt-6 grid gap-6 sm:grid-cols-2">
-        {skills.map((g) => (
-          <div>
-            <h3 class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">{g.group}</h3>
-            <div class="mt-2 flex flex-wrap gap-1.5">
-              {g.items.map((s) => <span class="chip">{s}</span>)}
-            </div>
-          </div>
-        ))}
-      </div>
-      <p class="mt-6 font-mono text-[11px] text-mute">Languages: English (fluent) · German (intermediate) · Telugu · Hindi</p>
-    </section>
+    <p class="mt-10">
+      <a class="font-mono text-xs uppercase tracking-[0.16em] text-brass hover:underline" href="/#work">← Back to the work</a>
+    </p>
   </article>
 </Base>

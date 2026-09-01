@@ -2,7 +2,7 @@
 import '../styles/global.css'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
-import { site, evehicleshop } from '../data/site'
+import { site } from '../data/site'
 
 interface Props {
   title?: string
@@ -13,25 +13,24 @@ interface Props {
 const title = Astro.props.title ?? site.title
 const description = Astro.props.description ?? site.description
 const canonical = new URL(Astro.props.canonical ?? Astro.url.pathname, site.url).toString()
-const photo = new URL(site.photo, site.url).toString()
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: site.name,
-  jobTitle: site.role,
-  email: site.email,
+  '@type': 'ProfessionalService',
+  name: site.studio,
   url: site.url,
-  image: photo,
+  email: site.email,
+  description: site.description,
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Nuremberg',
     addressCountry: 'DE',
   },
-  alumniOf: {
-    '@type': 'CollegeOrUniversity',
-    name: 'Friedrich-Alexander-Universität Erlangen-Nürnberg',
+  founder: {
+    '@type': 'Person',
+    name: site.name,
+    sameAs: [site.github, site.linkedin, site.huggingface],
   },
-  sameAs: [site.github, site.linkedin, site.huggingface, evehicleshop.href],
+  sameAs: [site.github],
 }
 ---
 
@@ -51,11 +50,9 @@ const jsonLd = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={photo} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={photo} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>

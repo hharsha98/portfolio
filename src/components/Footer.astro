@@ -1,13 +1,13 @@
 ---
-import { site, evehicleshop } from '../data/site'
+import { site } from '../data/site'
 ---
 
 <footer class="border-t border-line">
   <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-12">
     <div class="md:col-span-5">
       <p class="kicker">Contact</p>
-      <p class="mt-3 text-lg text-paper">{site.name}</p>
-      <p class="mt-1 text-sm text-mute">{site.location} · {site.now}</p>
+      <p class="mt-3 text-lg text-paper">{site.studio}</p>
+      <p class="mt-1 text-sm text-mute">{site.location}</p>
       <div class="mt-5 flex flex-wrap gap-2">
         <button
           type="button"
@@ -18,33 +18,30 @@ import { site, evehicleshop } from '../data/site'
         >
           {site.email}
         </button>
-        <a class="btn btn-ghost" href={site.cv}>CV</a>
       </div>
     </div>
     <div class="md:col-span-3">
       <p class="kicker">Network</p>
       <ul class="mt-3 space-y-2 font-mono text-sm">
         <li><a class="text-mute hover:text-brass" href={site.github} rel="noreferrer" target="_blank">GitHub ↗</a></li>
-        <li><a class="text-mute hover:text-brass" href={site.linkedin} rel="noreferrer" target="_blank">LinkedIn ↗</a></li>
+        <li><a class="text-mute hover:text-brass" href={site.linkedin} rel="noreferrer" target="_blank">About Harsha · LinkedIn ↗</a></li>
         <li><a class="text-mute hover:text-brass" href={site.huggingface} rel="noreferrer" target="_blank">Hugging Face ↗</a></li>
-        <li><a class="text-mute hover:text-brass" href={evehicleshop.href} rel="noreferrer" target="_blank">EVEHICLESHOP ↗</a></li>
         <li><a class="text-mute hover:text-brass" href={`mailto:${site.email}`}>Email</a></li>
       </ul>
     </div>
     <div class="md:col-span-4">
       <p class="kicker">Studio</p>
       <p class="mt-3 text-sm leading-relaxed text-mute">
-        {site.studio} is the personal practice of {site.shortName} — agentic systems for industrial lines and product surfaces. Static site. No analytics. Domain {site.domain}. Code on
+        {site.studio} is a work studio for shipped agentic systems — not a personal profile. Code on
         <a class="text-brass underline-offset-2 hover:underline" href={site.github} rel="noreferrer" target="_blank">github.com/hharsha98</a>.
-        Founder of
-        <a class="text-brass underline-offset-2 hover:underline" href={evehicleshop.href} rel="noreferrer" target="_blank">{evehicleshop.name}</a>.
+        Static site. No analytics. Domain {site.domain}.
       </p>
     </div>
   </div>
   <div class="border-t border-line/70">
     <p class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-4 font-mono text-[11px] text-mute sm:px-6">
       <span>{site.coordinates}</span>
-      <span>© {new Date().getFullYear()} {site.name}</span>
+      <span>© {new Date().getFullYear()} {site.studio}</span>
     </p>
   </div>
 </footer>

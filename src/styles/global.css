@@ -140,10 +140,6 @@ body {
   @apply text-[clamp(2.4rem,7vw,5.4rem)] font-semibold leading-[0.95] tracking-[-0.03em] text-paper;
 }
 
-.portrait-frame {
-  @apply overflow-hidden border border-brass/50 bg-panel;
-}
-
 .site-header {
   @apply sticky top-0 z-40 border-b border-line/80 bg-ink/85 backdrop-blur-md;
 }

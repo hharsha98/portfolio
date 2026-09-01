@@ -1,22 +1,24 @@
 # Agentic Systems Studio
 
-Personal studio site of **Hanumanthu Harsha Vardhan** — AI Engineer in Nuremberg building agentic systems for industrial and product use.
+Work studio for shipped agentic systems — Agent Fleet, VibeDeck, Agent OS, AgentOps Studio, RetrievalLab, CareerAgent, and related case studies.
+
+This domain is **not** a LinkedIn-style personal profile. Profile lives on [LinkedIn](https://linkedin.com/in/hanumanthu1) and [Hugging Face](https://huggingface.co/hharsha) until a separate Pages site exists. Do not retarget DNS of agentic-systems-studio.com to a profile project.
 
 Production domain: [agentic-systems-studio.com](https://agentic-systems-studio.com).
 
 ## Domain / DNS
 
-The zone is on Cloudflare nameservers (`alec.ns.cloudflare.com`). Custom domains **agentic-systems-studio.com** and **www.agentic-systems-studio.com** are already attached to the Workers project `agentic-systems-studio`. Do not add a CNAME by hand. `wrangler.jsonc` lists both hostnames with `custom_domain: true` so deploys do not drop www.
+The zone is on Cloudflare nameservers (`alec.ns.cloudflare.com`). Custom domains **agentic-systems-studio.com** and **www.agentic-systems-studio.com** are already attached to the Workers project `agentic-systems-studio`. Keep that project as the **work studio**. Do not add a CNAME by hand. `wrangler.jsonc` lists both hostnames with `custom_domain: true` so deploys do not drop www.
 
 ## Stack
 
-Astro static site, Tailwind v4, deployable to Cloudflare Pages or Workers static assets (`wrangler.jsonc`).
+Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.jsonc`).
 
 ## Pages
 
 | Route | Content |
 |---|---|
-| `/` | Profile: photo, FAU, Siemens thesis, paper DOI, all public work with real URLs |
+| `/` | Studio homepage: schematic, featured systems, paper band |
 | `/projects/agentfleet` | Self-hostable multi-agent ops platform (public) |
 | `/projects/vibedeck` | Agentic dev environment |
 | `/projects/agent-os` | Local-first Agent OS (live gallery) |
@@ -27,9 +29,9 @@ Astro static site, Tailwind v4, deployable to Cloudflare Pages or Workers static
 | `/projects/ai-rag` | Origin RAG system |
 | `/projects/revenue-ops` | RevenueOps control tower (Phase 0 scaffold) |
 | `/research` | DVS EBL 2026 paper (DOI) |
-| `/about` | Siemens, FAPS, IndiaMART, education |
+| `/about` | Pointer to LinkedIn and Hugging Face — not a CV |
 
-Copy is taken from public GitHub descriptions/READMEs and the CV. No invented star counts or GPA. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Also: [evehicleshop.in](https://evehicleshop.in) (founder).
+Copy is taken from public GitHub descriptions/READMEs. No invented star counts or GPA. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — never github.com/agentic-systems-studio. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Studio contact: `rtvision7@gmail.com`.
 
 ## Local
 

@@ -1,130 +1,104 @@
 ---
 import Base from '../layouts/Base.astro'
-import WorkRow from '../components/WorkRow.astro'
-import { site, paper, evehicleshop, hfSpaces } from '../data/site'
+import Schematic from '../components/Schematic.astro'
+import ProjectCard from '../components/ProjectCard.astro'
+import { site, paper } from '../data/site'
 import { projects } from '../data/projects'
+
+const featured = projects.slice(0, 3)
+const rest = projects.slice(3)
 ---
 
 <Base>
-  <section class="mx-auto max-w-6xl px-4 pb-12 pt-8 sm:px-6 sm:pb-16 sm:pt-12">
-    <div class="grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
-      <div class="lg:col-span-4">
-        <figure class="frame portrait-frame mx-auto max-w-sm lg:mx-0">
-          <span class="frame-b"></span>
-          <img
-            src={site.photo}
-            alt={`${site.name}, formal portrait`}
-            width="900"
-            height="900"
-            class="aspect-square w-full object-cover object-top"
-          />
-        </figure>
-        <p class="mt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-mute">Bewerbungsfoto · Nuremberg</p>
-      </div>
+  <section class="mx-auto max-w-6xl px-4 pb-16 pt-10 sm:px-6 sm:pb-24 sm:pt-16">
+    <div class="mb-8 flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-mute">
+      <p class="flex items-center gap-2">
+        <span class="led"></span>
+        {site.now}
+      </p>
+      <p>{site.location}</p>
+    </div>
 
-      <div class="lg:col-span-8">
-        <p class="kicker">{site.location}</p>
-        <h1 class="title-xl mt-3">
-          <span class="block text-[0.32em] font-medium tracking-[0.06em] text-paper/80">Hanumanthu</span>
-          Harsha
-          <span class="block text-brass">Vardhan</span>
+    <div class="grid items-start gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-7">
+        <p class="kicker">Work studio · {site.domain}</p>
+        <h1 class="title-xl mt-4">
+          Agentic
+          <span class="block text-brass">Systems</span>
+          Studio
         </h1>
-        <p class="lede mt-5">{site.positioning}</p>
-
-        <dl class="mt-8 grid gap-3 border-y border-line py-5 text-sm sm:grid-cols-[9.5rem_1fr]">
-          <dt class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">Education</dt>
-          <dd class="text-paper/90">{site.educationShort}</dd>
-          <dt class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">Now</dt>
-          <dd class="text-paper/90">{site.now} — {site.nowDetail}. Code is confidential.</dd>
-          <dt class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">Paper</dt>
-          <dd>
-            <a class="text-brass underline-offset-2 hover:underline" href={paper.doiUrl} rel="noreferrer" target="_blank">
-              doi:{paper.doi}
-            </a>
-            <span class="text-mute"> · {paper.venue} · Institute FAPS</span>
-          </dd>
-          <dt class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">Email</dt>
-          <dd>
-            <a class="text-brass underline-offset-2 hover:underline" href={`mailto:${site.email}`}>{site.email}</a>
-          </dd>
-        </dl>
-
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a class="btn btn-primary" href={`mailto:${site.email}`}>Email</a>
-          <a class="btn btn-ghost" href={site.cv}>CV (PDF)</a>
-          <a class="btn btn-ghost" href={site.linkedin} rel="noreferrer" target="_blank">LinkedIn ↗</a>
+        <p class="lede mt-6">
+          {site.positioning} Case studies for systems that sit on a plant floor or a product surface — not a slide, not a CV.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a class="btn btn-primary" href="#work">See the work</a>
           <a class="btn btn-ghost" href={site.github} rel="noreferrer" target="_blank">GitHub ↗</a>
+          <a class="btn btn-ghost" href={`mailto:${site.email}`}>Contact</a>
         </div>
-        <ul class="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs text-mute">
-          <li><a class="hover:text-brass" href={site.huggingface} rel="noreferrer" target="_blank">huggingface.co/hharsha</a></li>
-          <li><a class="hover:text-brass" href={evehicleshop.href} rel="noreferrer" target="_blank">{evehicleshop.label}</a></li>
-          <li><a class="hover:text-brass" href="/about">Full CV trail</a></li>
+        <ul class="mt-8 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs text-mute">
+          <li><a class="hover:text-brass" href={site.github} rel="noreferrer" target="_blank">github.com/hharsha98</a></li>
+          <li><a class="hover:text-brass" href={site.linkedin} rel="noreferrer" target="_blank">About Harsha · LinkedIn</a></li>
+          <li><a class="hover:text-brass" href={site.huggingface} rel="noreferrer" target="_blank">Hugging Face</a></li>
         </ul>
+      </div>
+      <div class="lg:col-span-5">
+        <Schematic />
       </div>
     </div>
   </section>
 
-  <section id="work" class="border-t border-line">
-    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
-      <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p class="kicker">Work</p>
-          <h2 class="mt-2 text-3xl font-semibold tracking-tight text-paper sm:text-4xl">Public systems</h2>
-          <p class="mt-2 max-w-2xl text-sm text-mute">
-            Real URLs only. GitHub is <a class="text-brass underline-offset-2 hover:underline" href={site.github} rel="noreferrer" target="_blank">github.com/hharsha98</a>.
-            No star counts. Siemens thesis source is not public.
-          </p>
+  <section class="border-y border-line bg-panel/40">
+    <div class="mx-auto grid max-w-6xl gap-px bg-line sm:grid-cols-3">
+      {[
+        ['Multi-agent ops', 'Agent Fleet: self-hostable chat, DAG orchestration, RAG, MCP, evals and cost budgets.'],
+        ['Agent environments', 'Terminal grids, kanban dispatch, shared memory. Agents that run as processes — not chat toys.'],
+        ['Evaluated retrieval', 'Citations, refusal, recall@k, MRR. Answers that can point at a source, or admit they cannot.'],
+      ].map(([label, copy]) => (
+        <div class="bg-ink px-5 py-7 sm:px-8">
+          <p class="kicker">{label}</p>
+          <p class="mt-3 text-sm leading-relaxed text-mute">{copy}</p>
         </div>
-        <p class="font-mono text-[11px] text-mute">{projects.length} repos · plus {evehicleshop.name}</p>
-      </div>
-
-      <div class="divide-y divide-line border-y border-line">
-        {projects.map((p) => <WorkRow project={p} />)}
-        <article class="grid gap-3 py-5 sm:grid-cols-[3rem_1fr_auto] sm:items-start">
-          <p class="font-mono text-[11px] text-brass">EV</p>
-          <div>
-            <h3 class="text-lg font-semibold tracking-tight text-paper">{evehicleshop.name}</h3>
-            <p class="mt-1 text-sm leading-relaxed text-mute">{evehicleshop.note}</p>
-          </div>
-          <div class="flex flex-wrap gap-2 sm:justify-end">
-            <a class="btn btn-ghost px-3 py-2 text-xs" href={evehicleshop.href} rel="noreferrer" target="_blank">Live site ↗</a>
-          </div>
-        </article>
-      </div>
+      ))}
     </div>
   </section>
 
-  <section class="border-t border-line">
-    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-      <article class="frame panel p-6 sm:p-8">
-        <span class="frame-b"></span>
-        <p class="kicker">Paper</p>
-        <h2 class="mt-3 max-w-3xl text-2xl font-semibold tracking-tight text-paper sm:text-3xl">
-          {paper.title}
-        </h2>
-        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-mute">{paper.summary}</p>
-        <p class="mt-2 font-mono text-[11px] text-mute">{paper.venue} · doi:{paper.doi}</p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a class="btn btn-primary" href={paper.doiUrl} rel="noreferrer" target="_blank">DOI ↗</a>
-          <a class="btn btn-ghost" href="/research">Research note</a>
-          <a class="btn btn-ghost" href={paper.researchgate} rel="noreferrer" target="_blank">ResearchGate ↗</a>
-        </div>
-      </article>
-
-      <div class="mt-8">
-        <p class="kicker">Hugging Face</p>
-        <ul class="mt-4 grid gap-3 sm:grid-cols-2">
-          {hfSpaces.map((s) => (
-            <li class="panel p-4">
-              <a class="font-medium text-paper hover:text-brass" href={s.href} rel="noreferrer" target="_blank">{s.name} ↗</a>
-              <p class="mt-1 text-sm text-mute">{s.note}</p>
-            </li>
-          ))}
-        </ul>
-        <p class="mt-3 font-mono text-[11px] text-mute">
-          Profile: <a class="hover:text-brass" href={site.huggingface} rel="noreferrer" target="_blank">{site.huggingface.replace('https://', '')}</a>
+  <section id="work" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+    <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="kicker">Work</p>
+        <h2 class="mt-2 text-3xl font-semibold tracking-tight text-paper sm:text-4xl">Shipped systems</h2>
+        <p class="mt-2 max-w-xl text-sm text-mute">
+          Each dossier is a case study. Source is on
+          <a class="text-brass underline-offset-2 hover:underline" href={site.github} rel="noreferrer" target="_blank">github.com/hharsha98</a>
+          — no invented metrics.
         </p>
       </div>
+      <p class="font-mono text-[11px] text-mute">{projects.length} systems</p>
     </div>
+
+    <div class="grid gap-4">
+      {featured.map((p) => <ProjectCard project={p} featured />)}
+    </div>
+
+    <div class="mt-4 grid gap-4 sm:grid-cols-2">
+      {rest.map((p) => <ProjectCard project={p} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 sm:pb-24">
+    <article class="frame panel p-6 sm:p-8">
+      <span class="frame-b"></span>
+      <p class="kicker">Paper</p>
+      <h2 class="mt-3 max-w-3xl text-2xl font-semibold tracking-tight text-paper sm:text-3xl">
+        {paper.title}
+      </h2>
+      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-mute">{paper.summary}</p>
+      <p class="mt-2 font-mono text-[11px] text-mute">{paper.venue} · doi:{paper.doi}</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a class="btn btn-primary" href="/research">Research note</a>
+        <a class="btn btn-ghost" href={paper.doiUrl} rel="noreferrer" target="_blank">DOI ↗</a>
+        <a class="btn btn-ghost" href={paper.researchgate} rel="noreferrer" target="_blank">ResearchGate ↗</a>
+      </div>
+    </article>
   </section>
 </Base>
