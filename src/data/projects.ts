@@ -58,7 +58,7 @@ export const projects: Project[] = [
     body: [
       'vibedeck is a home base for running multiple AI coding agents at once instead of juggling separate terminal windows. Each pane is a real terminal session: Claude Code, cursor-agent, Codex, or a plain shell.',
       'Work moves on a kanban board that dispatches agents the same way you would assign a ticket. Shared memory lets every agent in the workspace read and write notes so they do not rediscover the same facts. Multi-agent orchestration coordinates related pieces of a larger task.',
-      'The core is usable today: split up to 16 panes, pick an agent per pane, browse and edit files, dispatch from the board. Sessions live on the server, so closing a tab does not kill the agents. Desktop builds ship for macOS, Windows, and Linux. The app is not Apple-notarized; first launch is blocked by Gatekeeper until you explicitly open it.',
+      'The core is usable today: split up to 16 panes, pick an agent per pane, browse and edit files, dispatch from the board. Sessions live on the server, so closing a tab does not kill the agents. Desktop builds ship for macOS, Windows, and Linux. The app is not Apple-notarized; first launch is blocked by Gatekeeper until you explicitly open it. The public gallery is a click-through of the product surfaces — not a hosted instance.',
     ],
     features: [
       'Terminal grid with real PTYs, split layouts, and templates',
@@ -71,6 +71,7 @@ export const projects: Project[] = [
     status: 'usable',
     statusNote: 'Usable, still being built',
     github: 'https://github.com/hharsha98/vibedeck',
+    demo: { label: 'Live gallery', href: 'https://vibedeck-gallery.pages.dev' },
     secondary: {
       label: 'Releases',
       href: 'https://github.com/hharsha98/vibedeck/releases/latest',
