@@ -24,7 +24,7 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 | `/projects/agent-os` | Local-first Agent OS — [live gallery](https://hharsha98.github.io/agent-os/) |
 | `/projects/agentops-studio` | Product + deploy scaffolding |
 | `/projects/agentgrid` | Multi-agent terminal grid |
-| `/projects/retrievallab` | Advanced RAG + eval — [live demo](https://retrievallab.pages.dev) |
+| `/projects/retrievallab` | Advanced RAG + eval — [live lab](https://retrievallab.pages.dev) |
 | `/projects/careeragent` | Multi-agent job-hunt product — [live demo](https://careeragent-ceq.pages.dev) |
 | `/projects/ai-rag` | Origin RAG system |
 | `/projects/revenue-ops` | RevenueOps control tower (Phase 0 scaffold) |
