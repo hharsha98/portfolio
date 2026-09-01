@@ -31,7 +31,7 @@ export const projects: Project[] = [
     body: [
       'Agent Fleet is a self-hostable multi-agent operations platform. You chat with a roster of tool-using agents, or hand the orchestrator a goal and watch it decompose into a live task DAG with human-approval gates.',
       'The public repository is https://github.com/hharsha98/agentfleet. The product spine is FastAPI plus Next.js, Postgres with pgvector, and a hand-built agent runtime with an env-switchable LangGraph path. The fleet can consume external MCP servers and also expose itself as an MCP server for IDE clients.',
-      'Ops is part of the product: per-message metering, cost budgets, prompt-injection screening, PII masking, versioned agent publish/rollback, and an Eval Center with a CI regression gate. It is meant to be run locally or self-hosted, not presented as a hosted SaaS.',
+      'Ops is part of the product: per-message metering, cost budgets, prompt-injection screening, PII masking, versioned agent publish/rollback, and an Eval Center with a CI regression gate. It is meant to be run locally or self-hosted, not presented as a hosted SaaS. The public gallery is a click-through of the product surfaces.',
     ],
     features: [
       'Streaming multi-agent chat with per-agent tools and prompts',
@@ -42,8 +42,9 @@ export const projects: Project[] = [
     ],
     stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'pgvector', 'MCP', 'Docker'],
     status: 'usable',
-    statusNote: 'Self-hostable · public repo',
+    statusNote: 'Live gallery',
     github: 'https://github.com/hharsha98/agentfleet',
+    demo: { label: 'Live gallery', href: 'https://agentfleet-gallery.pages.dev' },
     category: 'ops',
   },
   {
@@ -57,7 +58,7 @@ export const projects: Project[] = [
     body: [
       'vibedeck is a home base for running multiple AI coding agents at once instead of juggling separate terminal windows. Each pane is a real terminal session: Claude Code, cursor-agent, Codex, or a plain shell.',
       'Work moves on a kanban board that dispatches agents the same way you would assign a ticket. Shared memory lets every agent in the workspace read and write notes so they do not rediscover the same facts. Multi-agent orchestration coordinates related pieces of a larger task.',
-      'The core is usable today: split up to 16 panes, pick an agent per pane, browse and edit files, dispatch from the board. Sessions live on the server, so closing a tab does not kill the agents. Desktop builds ship for macOS, Windows, and Linux. The app is not Apple-notarized; first launch is blocked by Gatekeeper until you explicitly open it.',
+      'The core is usable today: split up to 16 panes, pick an agent per pane, browse and edit files, dispatch from the board. Sessions live on the server, so closing a tab does not kill the agents. Desktop builds ship for macOS, Windows, and Linux. The app is not Apple-notarized; first launch is blocked by Gatekeeper until you explicitly open it. The public gallery is a click-through of the product surfaces — not a hosted instance.',
     ],
     features: [
       'Terminal grid with real PTYs, split layouts, and templates',
@@ -70,6 +71,7 @@ export const projects: Project[] = [
     status: 'usable',
     statusNote: 'Usable, still being built',
     github: 'https://github.com/hharsha98/vibedeck',
+    demo: { label: 'Live gallery', href: 'https://vibedeck-gallery.pages.dev' },
     secondary: {
       label: 'Releases',
       href: 'https://github.com/hharsha98/vibedeck/releases/latest',
