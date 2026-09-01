@@ -16,18 +16,20 @@ Astro static site, Tailwind v4, deployable to Cloudflare Pages or Workers static
 
 | Route | Content |
 |---|---|
-| `/` | Positioning, featured work, paper, contact |
+| `/` | Profile: photo, FAU, Siemens thesis, paper DOI, all public work with real URLs |
+| `/projects/agentfleet` | Self-hostable multi-agent ops platform (public) |
 | `/projects/vibedeck` | Agentic dev environment |
-| `/projects/agent-os` | Local-first Agent OS |
-| `/projects/agentops-studio` | Product page for Agent Fleet (fleet source is not public) |
+| `/projects/agent-os` | Local-first Agent OS (live gallery) |
+| `/projects/agentops-studio` | Product + deploy scaffolding |
 | `/projects/agentgrid` | Multi-agent terminal grid |
 | `/projects/retrievallab` | Advanced RAG + eval |
 | `/projects/careeragent` | Multi-agent job-hunt product |
 | `/projects/ai-rag` | Origin RAG system |
+| `/projects/revenue-ops` | RevenueOps control tower (Phase 0 scaffold) |
 | `/research` | DVS EBL 2026 paper (DOI) |
 | `/about` | Siemens, FAPS, IndiaMART, education |
 
-Copy is taken from public GitHub descriptions/READMEs and the CV. No invented star counts or screenshots. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — the GitHub org of the same name as the domain is not his.
+Copy is taken from public GitHub descriptions/READMEs and the CV. No invented star counts or GPA. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Also: [evehicleshop.in](https://evehicleshop.in) (founder).
 
 ## Local
 

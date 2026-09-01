@@ -1,0 +1,31 @@
+---
+import type { Project } from '../data/projects'
+
+interface Props {
+  project: Project
+}
+
+const { project } = Astro.props
+---
+
+<article class="grid gap-3 py-5 sm:grid-cols-[3rem_1fr_auto] sm:items-start">
+  <p class="font-mono text-[11px] text-brass">{project.index}</p>
+  <div>
+    <h3 class="text-lg font-semibold tracking-tight text-paper">
+      <a class="hover:text-brass" href={`/projects/${project.slug}`}>{project.name}</a>
+    </h3>
+    <p class="mt-1 text-sm leading-relaxed text-mute">{project.description}</p>
+    <p class="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-mute">{project.statusNote}</p>
+  </div>
+  <div class="flex flex-wrap gap-2 sm:justify-end">
+    {project.github && (
+      <a class="btn btn-ghost px-3 py-2 text-xs" href={project.github} rel="noreferrer" target="_blank">GitHub ↗</a>
+    )}
+    {project.demo && (
+      <a class="btn btn-primary px-3 py-2 text-xs" href={project.demo.href} rel="noreferrer" target="_blank">{project.demo.label} ↗</a>
+    )}
+    {project.secondary && (
+      <a class="btn btn-ghost px-3 py-2 text-xs" href={project.secondary.href} rel="noreferrer" target="_blank">{project.secondary.label} ↗</a>
+    )}
+  </div>
+</article>

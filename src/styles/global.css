@@ -140,8 +140,8 @@ body {
   @apply text-[clamp(2.4rem,7vw,5.4rem)] font-semibold leading-[0.95] tracking-[-0.03em] text-paper;
 }
 
-.lede {
-  @apply max-w-xl text-[1.05rem] leading-relaxed text-mute;
+.portrait-frame {
+  @apply overflow-hidden border border-brass/50 bg-panel;
 }
 
 .site-header {

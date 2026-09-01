@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro'
-import { site } from '../data/site'
+import { site, paper, evehicleshop } from '../data/site'
 import { education, experience, skills } from '../data/projects'
 ---
 
@@ -9,18 +9,43 @@ import { education, experience, skills } from '../data/projects'
   description={`${site.name}, AI Engineer in Nuremberg. FAU Electromobility (ACES), Siemens Amberg, Institute FAPS.`}
 >
   <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-    <p class="kicker">About</p>
-    <h1 class="mt-4 text-3xl font-semibold tracking-tight text-paper sm:text-5xl">
-      From production lines to production agents
-    </h1>
-    <p class="mt-5 text-lg leading-relaxed text-mute">
-      {site.name} is an AI engineer in {site.location}. Mechanical undergraduate, then Electromobility-ACES at FAU — AI, connectivity, e-powertrain, sustainable production. The work that stuck was making language models reliable enough for a plant, not a demo.
+    <div class="flex flex-col gap-8 sm:flex-row sm:items-start">
+      <figure class="frame portrait-frame w-40 shrink-0 sm:w-48">
+        <span class="frame-b"></span>
+        <img
+          src={site.photo}
+          alt={`${site.name}, formal portrait`}
+          width="900"
+          height="900"
+          class="aspect-square w-full object-cover object-top"
+        />
+      </figure>
+      <div>
+        <p class="kicker">About</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-paper sm:text-4xl">
+          {site.name}
+        </h1>
+        <p class="mt-3 text-sm text-mute">{site.role} · {site.location}</p>
+        <p class="mt-2 text-sm text-paper/85">{site.educationShort}</p>
+        <p class="mt-2 text-sm text-paper/85">{site.now} — {site.nowDetail}.</p>
+        <p class="mt-2 text-sm text-paper/85">
+          Paper:
+          <a class="text-brass underline-offset-2 hover:underline" href={paper.doiUrl} rel="noreferrer" target="_blank">doi:{paper.doi}</a>
+        </p>
+      </div>
+    </div>
+
+    <p class="mt-8 text-lg leading-relaxed text-mute">
+      Mechanical undergraduate, then Electromobility-ACES at FAU — AI, connectivity, e-powertrain, sustainable production. The work that stuck was making language models reliable enough for a plant, not a demo.
     </p>
     <p class="mt-4 text-[15px] leading-relaxed text-paper/85">
       The thesis at Siemens Amberg is a multi-agent system for automated root-cause analysis: perception, reasoning, retrieval, decision support, with local models and reliability metrics. Before that: a computer-vision internship on the same site, and a research assistantship at Institute FAPS on local RAG with trustworthiness metrics — the DVS EBL 2026 paper lives on the <a class="text-brass underline-offset-2 hover:underline" href="/research">research</a> page.
     </p>
     <p class="mt-4 text-[15px] leading-relaxed text-paper/85">
-      Earlier: data analytics at IndiaMART, then data and systems coordination at RT Vision. The studio projects — vibedeck, Agent OS, AgentOps Studio, RetrievalLab, CareerAgent — are the public trail of the same judgment: dry-run defaults, citations, evals, and infra you can explain.
+      Public code is on <a class="text-brass underline-offset-2 hover:underline" href={site.github} rel="noreferrer" target="_blank">github.com/hharsha98</a> — Agent Fleet, vibedeck, Agent OS, RetrievalLab, CareerAgent, and related repos. He is the founder of <a class="text-brass underline-offset-2 hover:underline" href={evehicleshop.href} rel="noreferrer" target="_blank">{evehicleshop.name}</a> ({evehicleshop.label}), an EV discover-and-compare site.
+    </p>
+    <p class="mt-4 text-[15px] leading-relaxed text-paper/85">
+      Earlier: data analytics at IndiaMART, then data and systems coordination at RT Vision.
     </p>
 
     <div class="mt-8 flex flex-wrap gap-3">

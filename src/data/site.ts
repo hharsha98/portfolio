@@ -6,18 +6,21 @@ export const site = {
   url: 'https://agentic-systems-studio.com',
   title: 'Hanumanthu Harsha Vardhan — AI Engineer',
   description:
-    'AI Engineer in Nuremberg building agentic systems for industrial and product use. Local-first agent environments, multi-agent ops, and evaluated RAG.',
+    'AI Engineer in Nuremberg. M.Sc. Electromobility (ACES), FAU. Siemens thesis on multi-agent root-cause analysis. Public work: agent fleets, local agent environments, evaluated RAG.',
   location: 'Nuremberg, Germany',
   coordinates: '49.45°N · 11.08°E',
   role: 'AI Engineer / Agentic Systems',
   positioning:
     'AI Engineer building agentic systems for industrial and product use.',
+  educationShort: 'M.Sc. Electromobility (ACES), FAU Erlangen-Nürnberg',
   email: 'harsha.vardhan@fau.de',
   linkedin: 'https://linkedin.com/in/hanumanthu1',
   github: 'https://github.com/hharsha98',
-  huggingface: 'https://huggingface.co/hhharsha',
+  huggingface: 'https://huggingface.co/hharsha',
+  photo: '/portrait.jpg',
   cv: '/cv.pdf',
   now: 'Master thesis · Siemens AG, Amberg',
+  nowDetail: 'Multi-agent root-cause analysis in manufacturing',
 }
 
 export const paper = {
@@ -37,8 +40,28 @@ export const paper = {
     'Local knowledge retrieval for industrial settings, with trustworthiness and verification metrics in the evaluation loop — not retrieval quality alone.',
 }
 
+export const evehicleshop = {
+  name: 'EVEHICLESHOP',
+  href: 'https://evehicleshop.in',
+  label: 'evehicleshop.in',
+  note: 'Founder. Discover and compare EVs.',
+}
+
+export const hfSpaces = [
+  {
+    name: 'RetrievalLab',
+    href: 'https://huggingface.co/spaces/hharsha/retrievallab',
+    note: 'Explainer Space for the retrieval pipeline. Not an industrial deployment.',
+  },
+  {
+    name: 'Agentic Systems Portfolio',
+    href: 'https://huggingface.co/spaces/hharsha/agent-portfolio',
+    note: 'Hub Space linking out to public GitHub work.',
+  },
+]
+
 export const nav = [
-  { href: '/', label: 'Studio' },
+  { href: '/', label: 'Profile' },
   { href: '/#work', label: 'Work' },
   { href: '/research', label: 'Research' },
   { href: '/about', label: 'About' },
