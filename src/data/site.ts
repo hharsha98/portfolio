@@ -16,6 +16,7 @@ export const site = {
   linkedin: 'https://linkedin.com/in/hanumanthu1',
   github: 'https://github.com/hharsha98',
   huggingface: 'https://huggingface.co/hharsha',
+  profile: 'https://cursor-harsha-profile-pages.harsha-ai.pages.dev',
   now: 'Shipping public systems',
 }
 

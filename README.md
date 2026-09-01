@@ -2,7 +2,7 @@
 
 Work studio for shipped agentic systems — Agent Fleet, VibeDeck, Agent OS, AgentOps Studio, RetrievalLab, CareerAgent, and related case studies.
 
-This domain is **not** a LinkedIn-style personal profile. Profile lives on [LinkedIn](https://linkedin.com/in/hanumanthu1) and [Hugging Face](https://huggingface.co/hharsha) until a separate Pages site exists. Do not retarget DNS of agentic-systems-studio.com to a profile project.
+This domain is **not** a LinkedIn-style personal profile. The recruiter profile is a separate Pages site: [cursor-harsha-profile-pages.harsha-ai.pages.dev](https://cursor-harsha-profile-pages.harsha-ai.pages.dev). Do not retarget DNS of agentic-systems-studio.com to that project.
 
 Production domain: [agentic-systems-studio.com](https://agentic-systems-studio.com).
 
@@ -19,17 +19,17 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 | Route | Content |
 |---|---|
 | `/` | Studio homepage: schematic, featured systems, paper band |
-| `/projects/agentfleet` | Self-hostable multi-agent ops platform (public) |
+| `/projects/agentfleet` | Self-hostable multi-agent ops platform — [live gallery](https://agentfleet-gallery.pages.dev) |
 | `/projects/vibedeck` | Agentic dev environment |
-| `/projects/agent-os` | Local-first Agent OS (live gallery) |
+| `/projects/agent-os` | Local-first Agent OS — [live gallery](https://hharsha98.github.io/agent-os/) |
 | `/projects/agentops-studio` | Product + deploy scaffolding |
 | `/projects/agentgrid` | Multi-agent terminal grid |
-| `/projects/retrievallab` | Advanced RAG + eval |
-| `/projects/careeragent` | Multi-agent job-hunt product |
+| `/projects/retrievallab` | Advanced RAG + eval — [live demo](https://retrievallab.pages.dev) |
+| `/projects/careeragent` | Multi-agent job-hunt product — [live demo](https://careeragent-ceq.pages.dev) |
 | `/projects/ai-rag` | Origin RAG system |
 | `/projects/revenue-ops` | RevenueOps control tower (Phase 0 scaffold) |
 | `/research` | DVS EBL 2026 paper (DOI) |
-| `/about` | Pointer to LinkedIn and Hugging Face — not a CV |
+| `/about` | Pointer to the recruiter profile, LinkedIn, and Hugging Face — not a CV |
 
 Copy is taken from public GitHub descriptions/READMEs. No invented star counts or GPA. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — never github.com/agentic-systems-studio. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Studio contact: `rtvision7@gmail.com`.
 
