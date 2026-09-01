@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro'
+import { paper, site } from '../data/site'
+
+const scholarly = {
+  '@context': 'https://schema.org',
+  '@type': 'ScholarlyArticle',
+  name: paper.title,
+  url: paper.doiUrl,
+  identifier: `https://doi.org/${paper.doi}`,
+  datePublished: '2026-02',
+  isPartOf: {
+    '@type': 'PublicationVolume',
+    name: paper.venueFull,
+    volumeNumber: '404',
+  },
+}
+---
+
+<Base
+  title={`Research — ${site.studio}`}
+  description={`${paper.title}. ${paper.venue}. doi:${paper.doi}`}
+>
+  <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+    <p class="kicker">Research</p>
+    <h1 class="mt-4 text-3xl font-semibold tracking-tight text-paper sm:text-5xl">
+      Local retrieval, industrial trust
+    </h1>
+    <p class="mt-5 text-lg leading-relaxed text-mute">
+      Conference paper from the FAPS research assistantship, published at DVS EBL 2026: retrieval that stays on local knowledge, scored with trustworthiness metrics rather than fluency alone.
+    </p>
+
+    <div class="frame panel mt-10 p-6 sm:p-8">
+      <span class="frame-b"></span>
+      <dl class="grid gap-4 font-mono text-[12px] sm:grid-cols-[7rem_1fr]">
+        <dt class="uppercase tracking-[0.16em] text-mute">Title</dt>
+        <dd class="font-sans text-base leading-snug text-paper">{paper.title}</dd>
+        <dt class="uppercase tracking-[0.16em] text-mute">Venue</dt>
+        <dd class="font-sans text-base text-paper/85">{paper.venue} · {paper.venueFull}</dd>
+        <dt class="uppercase tracking-[0.16em] text-mute">Series</dt>
+        <dd class="font-sans text-base text-paper/85">{paper.series} · {paper.date} · ISBN {paper.isbn}</dd>
+        <dt class="uppercase tracking-[0.16em] text-mute">DOI</dt>
+        <dd>
+          <a class="font-sans text-base text-brass underline-offset-2 hover:underline" href={paper.doiUrl} rel="noreferrer" target="_blank">
+            {paper.doi}
+          </a>
+        </dd>
+        <dt class="uppercase tracking-[0.16em] text-mute">Place</dt>
+        <dd class="font-sans text-base text-paper/85">Institute FAPS, Nuremberg · FAU</dd>
+      </dl>
+      <p class="mt-6 text-[15px] leading-relaxed text-paper/85">{paper.summary}</p>
+      <p class="mt-4 text-sm leading-relaxed text-mute">
+        The assistantship work used local embedding models, retrieval pipelines, prototype agent workflows, and reliability evaluation for industrial decision support.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a class="btn btn-primary" href={paper.doiUrl} rel="noreferrer" target="_blank">DOI ↗</a>
+        <a class="btn btn-ghost" href={paper.researchgate} rel="noreferrer" target="_blank">ResearchGate ↗</a>
+        <a class="btn btn-ghost" href="/projects/retrievallab">Related: RetrievalLab</a>
+      </div>
+    </div>
+  </article>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(scholarly)} />
+</Base>

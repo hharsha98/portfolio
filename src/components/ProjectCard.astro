@@ -1,0 +1,39 @@
+---
+import type { Project } from '../data/projects'
+
+interface Props {
+  project: Project
+  featured?: boolean
+}
+
+const { project, featured = false } = Astro.props
+const href = `/projects/${project.slug}`
+---
+
+<a
+  href={href}
+  class:list={[
+    'group frame panel block p-5 transition-colors hover:border-brass/50 sm:p-6',
+    featured && 'sm:p-7',
+  ]}
+>
+  <span class="frame-b"></span>
+  <div class="flex items-baseline justify-between gap-3">
+    <span class="font-mono text-[11px] text-brass">{project.index}</span>
+    <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">{project.statusNote}</span>
+  </div>
+  <h3 class:list={['mt-4 font-semibold tracking-tight text-paper group-hover:text-brass', featured ? 'text-2xl sm:text-3xl' : 'text-xl']}>
+    {project.name}
+  </h3>
+  <p class="mt-2 max-w-2xl text-sm leading-relaxed text-mute">
+    {project.description}
+  </p>
+  <div class="mt-4 flex flex-wrap gap-1.5">
+    {project.stack.slice(0, featured ? 6 : 4).map((t) => (
+      <span class="chip">{t}</span>
+    ))}
+  </div>
+  <p class="mt-5 font-mono text-[11px] uppercase tracking-[0.16em] text-brass">
+    Open dossier →
+  </p>
+</a>

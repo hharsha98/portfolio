@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro'
+import { site } from '../data/site'
+---
+
+<Base
+  title={`About Harsha — ${site.studio}`}
+  description={`Who runs ${site.studio}. Profile lives on LinkedIn and Hugging Face — this domain is the work studio.`}
+>
+  <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+    <p class="kicker">About Harsha</p>
+    <h1 class="mt-4 text-3xl font-semibold tracking-tight text-paper sm:text-5xl">
+      This domain is the work studio
+    </h1>
+    <p class="mt-5 text-lg leading-relaxed text-mute">
+      {site.studio} posts shipped systems — Agent Fleet, VibeDeck, Agent OS, AgentOps Studio, RetrievalLab, CareerAgent, and related case studies. It is not a LinkedIn-style personal profile.
+    </p>
+    <p class="mt-4 text-[15px] leading-relaxed text-paper/85">
+      {site.name} runs the studio. For the person (not the dossiers), use LinkedIn or Hugging Face until a separate profile site exists. Source is only
+      <a class="text-brass underline-offset-2 hover:underline" href={site.github} rel="noreferrer" target="_blank">github.com/hharsha98</a>.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a class="btn btn-primary" href={site.linkedin} rel="noreferrer" target="_blank">LinkedIn ↗</a>
+      <a class="btn btn-ghost" href={site.huggingface} rel="noreferrer" target="_blank">Hugging Face ↗</a>
+      <a class="btn btn-ghost" href={`mailto:${site.email}`}>{site.email}</a>
+    </div>
+    <p class="mt-10">
+      <a class="font-mono text-xs uppercase tracking-[0.16em] text-brass hover:underline" href="/#work">← Back to the work</a>
+    </p>
+  </article>
+</Base>

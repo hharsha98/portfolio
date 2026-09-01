@@ -1,48 +1,70 @@
-<h1 align="center">Hanumanthu Harsha Vardhan — AI Engineer Portfolio</h1>
+# Agentic Systems Studio
 
-<p align="center">
-  A fast, hand-built portfolio of shipped <b>RAG</b> and <b>multi-agent AI</b> systems — every capability backed by a real project and honest metrics.
-</p>
+Work studio for shipped agentic systems — Agent Fleet, VibeDeck, Agent OS, AgentOps Studio, RetrievalLab, CareerAgent, and related case studies.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
-</p>
+This domain is **not** a LinkedIn-style personal profile. Profile lives on [LinkedIn](https://linkedin.com/in/hanumanthu1) and [Hugging Face](https://huggingface.co/hharsha) until a separate Pages site exists. Do not retarget DNS of agentic-systems-studio.com to a profile project.
 
-## 🎬 Demo
+Production domain: [agentic-systems-studio.com](https://agentic-systems-studio.com).
 
-<p align="center">
-  <img src="docs/demo.gif" width="90%" alt="Scroll-through of the portfolio: hero, capabilities, and project cards" />
-</p>
+## Domain / DNS
 
-## 🧭 What's inside
+The zone is on Cloudflare nameservers (`alec.ns.cloudflare.com`). Custom domains **agentic-systems-studio.com** and **www.agentic-systems-studio.com** are already attached to the Workers project `agentic-systems-studio`. Keep that project as the **work studio**. Do not add a CNAME by hand. `wrangler.jsonc` lists both hostnames with `custom_domain: true` so deploys do not drop www.
 
-Four capability areas, each proven by shipped work:
+## Stack
 
-- **RAG Systems** — chunking, embeddings, vector retrieval, page-level citations, and refusal when the answer isn't in the documents
-- **Multi-Agent Systems** — tool loops, structured output with validation, provider fallback (hand-rolled, no framework)
-- **Evaluation & Metering** — LLM-as-judge eval suites and per-request cost metering
-- **Deployment & Infra** — containerized and shipped
+Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.jsonc`).
 
-### Featured projects
+## Pages
 
-| Project | What it is |
+| Route | Content |
 |---|---|
-| **CareerAgent** | Multi-agent platform for the job hunt |
-| **Multi-agent root-cause analysis** | Master thesis @ Siemens (industrial AI) |
-| **RetrievalLab** | Advanced RAG, made visible |
-| **ai-rag-project** | RAG — chat with your documents |
+| `/` | Studio homepage: schematic, featured systems, paper band |
+| `/projects/agentfleet` | Self-hostable multi-agent ops platform (public) |
+| `/projects/vibedeck` | Agentic dev environment |
+| `/projects/agent-os` | Local-first Agent OS (live gallery) |
+| `/projects/agentops-studio` | Product + deploy scaffolding |
+| `/projects/agentgrid` | Multi-agent terminal grid |
+| `/projects/retrievallab` | Advanced RAG + eval |
+| `/projects/careeragent` | Multi-agent job-hunt product |
+| `/projects/ai-rag` | Origin RAG system |
+| `/projects/revenue-ops` | RevenueOps control tower (Phase 0 scaffold) |
+| `/research` | DVS EBL 2026 paper (DOI) |
+| `/about` | Pointer to LinkedIn and Hugging Face — not a CV |
 
-## 🛠️ Built with
+Copy is taken from public GitHub descriptions/READMEs. No invented star counts or GPA. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — never github.com/agentic-systems-studio. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Studio contact: `rtvision7@gmail.com`.
 
-React · TypeScript · Vite — a single-page site with client-side routing and a small markdown blog.
-
-## ▶️ Run locally
+## Local
 
 ```bash
 npm install
 npm run dev
 ```
 
-Then open the local URL Vite prints (e.g. `http://localhost:5173`).
+Build:
+
+```bash
+npm run build
+npm run preview
+```
+
+## Deploy (Cloudflare Workers)
+
+Workers project: **agentic-systems-studio**. This repo is a **static Astro** site, not a Vite SPA.
+
+Cloudflare Git must build **this studio branch** (`cursor/agentic-systems-studio-7fff`) or `main` after this PR merges. Building old `main` (Vite + `public/_redirects` `/* /index.html 200`) fails deploy with:
+
+```
+Invalid _redirects configuration: Line 1: Infinite loop detected
+(redirect stripping .html / /index) [code: 100324]
+```
+
+There is **no** `_redirects` file. Do not add a SPA fallback. `wrangler.jsonc` must stay at the repo root so Wrangler does not auto-scaffold a Vite SPA.
+
+Workers Builds:
+
+- **Production branch:** `cursor/agentic-systems-studio-7fff` (until this PR is merged)
+- Install: `npm ci`
+- Build command: `npm run build` (Astro → `dist/`)
+- Deploy command: `npx wrangler deploy`
+
+`wrangler.jsonc` serves `./dist` with `not_found_handling: "404-page"` and `html_handling: "auto-trailing-slash"` (Astro `build.format: 'file'`).

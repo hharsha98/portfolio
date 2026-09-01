@@ -1,0 +1,65 @@
+---
+import { site, nav } from '../data/site'
+const path = Astro.url.pathname.replace(/\/$/, '') || '/'
+---
+
+<header class="site-header">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+    <a href="/" class="group flex min-h-11 items-center gap-3">
+      <span class="flex h-8 w-8 items-center justify-center border border-brass/70 text-[11px] font-mono text-brass" aria-hidden="true">A·S</span>
+      <span class="leading-tight">
+        <span class="block font-mono text-[10px] uppercase tracking-[0.18em] text-mute group-hover:text-brass">{site.studio}</span>
+        <span class="hidden text-sm text-paper sm:block">Work studio</span>
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex" aria-label="Primary">
+      {nav.map((item) => {
+        const active = item.href === '/' ? path === '/' : path === item.href || path.startsWith(item.href)
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              'min-h-11 px-3 py-2 font-mono text-[12px] uppercase tracking-[0.16em] transition-colors',
+              active && item.href !== '/#work' ? 'text-brass' : 'text-mute hover:text-paper',
+            ]}
+          >
+            {item.label}
+          </a>
+        )
+      })}
+      <a href={site.linkedin} rel="noreferrer" target="_blank" class="ml-2 min-h-11 px-3 py-2 font-mono text-[12px] uppercase tracking-[0.16em] text-mute hover:text-brass">
+        Profile
+      </a>
+      <a href={site.huggingface} rel="noreferrer" target="_blank" class="min-h-11 px-3 py-2 font-mono text-[12px] uppercase tracking-[0.16em] text-mute hover:text-brass">
+        Hugging Face
+      </a>
+      <a href={`mailto:${site.email}`} class="ml-1 btn btn-ghost min-h-11 px-3 py-2 font-mono text-[12px] uppercase tracking-[0.14em]">
+        Contact
+      </a>
+    </nav>
+
+    <details class="nav-menu relative md:hidden">
+      <summary class="flex min-h-11 min-w-11 cursor-pointer items-center justify-center border border-line text-paper">
+        <span class="sr-only">Menu</span>
+        <span aria-hidden="true" class="font-mono text-xs">☰</span>
+      </summary>
+      <div class="absolute right-0 mt-2 w-56 border border-line bg-panel p-2 shadow-xl">
+        {nav.map((item) => (
+          <a href={item.href} class="block min-h-11 px-3 py-3 font-mono text-xs uppercase tracking-[0.16em] text-paper hover:text-brass">
+            {item.label}
+          </a>
+        ))}
+        <a href={site.linkedin} rel="noreferrer" target="_blank" class="block min-h-11 px-3 py-3 font-mono text-xs uppercase tracking-[0.16em] text-paper hover:text-brass">
+          Profile · LinkedIn
+        </a>
+        <a href={site.huggingface} rel="noreferrer" target="_blank" class="block min-h-11 px-3 py-3 font-mono text-xs uppercase tracking-[0.16em] text-paper hover:text-brass">
+          Hugging Face
+        </a>
+        <a href={`mailto:${site.email}`} class="block min-h-11 px-3 py-3 font-mono text-xs uppercase tracking-[0.16em] text-brass">
+          Contact
+        </a>
+      </div>
+    </details>
+  </div>
+</header>

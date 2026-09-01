@@ -1,0 +1,193 @@
+@import "tailwindcss";
+@import "@fontsource/ibm-plex-sans/400.css";
+@import "@fontsource/ibm-plex-sans/500.css";
+@import "@fontsource/ibm-plex-sans/600.css";
+@import "@fontsource/ibm-plex-sans/700.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
+@theme {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --color-ink: #0a0b0d;
+  --color-panel: #101218;
+  --color-raised: #161920;
+  --color-line: #2c313c;
+  --color-line-strong: #3d4452;
+  --color-mute: #8b909c;
+  --color-paper: #e7e2d6;
+  --color-brass: #c9a24a;
+  --color-brass-dim: #c9a24a33;
+  --color-signal: #4caf8a;
+  --color-warn: #d4783a;
+}
+
+:root {
+  color-scheme: dark;
+  --grid: 48px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  @apply bg-ink text-paper/90 antialiased;
+  font-feature-settings: "ss01" 1, "kern" 1;
+  background-image:
+    linear-gradient(to right, rgb(201 162 74 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(201 162 74 / 0.035) 1px, transparent 1px);
+  background-size: var(--grid) var(--grid);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgb(201 162 74 / 0.28);
+  color: #fff8e8;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brass);
+  outline-offset: 3px;
+}
+
+.skip {
+  @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-brass focus:px-3 focus:py-2 focus:text-ink focus:font-medium;
+}
+
+.frame {
+  position: relative;
+}
+.frame::before,
+.frame::after,
+.frame > .frame-b::before,
+.frame > .frame-b::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  border-color: var(--color-brass);
+  opacity: 0.55;
+}
+.frame::before {
+  top: 0;
+  left: 0;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+.frame::after {
+  top: 0;
+  right: 0;
+  border-top: 1px solid;
+  border-right: 1px solid;
+}
+.frame > .frame-b::before {
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+}
+.frame > .frame-b::after {
+  bottom: 0;
+  right: 0;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
+
+.kicker {
+  @apply font-mono text-[11px] uppercase tracking-[0.22em] text-brass;
+}
+
+.hairline {
+  border-color: var(--color-line);
+}
+
+.panel {
+  @apply border border-line bg-panel;
+}
+
+.chip {
+  @apply border border-line bg-ink/40 px-2 py-0.5 font-mono text-[11px] text-mute;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 border px-4 py-2.5 text-sm font-medium transition-colors;
+  min-height: 44px;
+}
+.btn-primary {
+  @apply border-brass bg-brass text-ink hover:bg-paper hover:border-paper;
+}
+.btn-ghost {
+  @apply border-line text-paper/90 hover:border-brass hover:text-brass;
+}
+
+.title-xl {
+  @apply text-[clamp(2.4rem,7vw,5.4rem)] font-semibold leading-[0.95] tracking-[-0.03em] text-paper;
+}
+
+.site-header {
+  @apply sticky top-0 z-40 border-b border-line/80 bg-ink/85 backdrop-blur-md;
+}
+
+details.nav-menu > summary {
+  list-style: none;
+}
+details.nav-menu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.packet {
+  offset-path: path("M 24 92 L 536 92");
+  animation: packet 5.5s linear infinite;
+}
+.packet-2 {
+  offset-path: path("M 24 132 L 536 132");
+  animation: packet 7s linear infinite;
+  animation-delay: -2.2s;
+}
+.packet-3 {
+  offset-path: path("M 24 172 L 536 172");
+  animation: packet 6.2s linear infinite;
+  animation-delay: -4s;
+}
+
+@keyframes packet {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+.led {
+  @apply inline-block h-1.5 w-1.5 rounded-full bg-signal;
+  box-shadow: 0 0 8px rgb(76 175 138 / 0.7);
+}
+.led-idle {
+  @apply bg-mute/50;
+  box-shadow: none;
+}
