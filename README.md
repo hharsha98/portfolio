@@ -1,48 +1,36 @@
-<h1 align="center">Hanumanthu Harsha Vardhan — AI Engineer Portfolio</h1>
+# Hanumanthu Harsha Vardhan — recruiter profile
 
-<p align="center">
-  A fast, hand-built portfolio of shipped <b>RAG</b> and <b>multi-agent AI</b> systems — every capability backed by a real project and honest metrics.
-</p>
+Light, recruiter-facing personal page (LinkedIn + German Bewerbung). This branch is **only** the profile. It is not Agentic Systems Studio.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
-</p>
+- Live (Cloudflare Pages): `https://harsha-vardhan.pages.dev`
+- Work studio (separate): [agentic-systems-studio.com](https://agentic-systems-studio.com)
+- GitHub: [github.com/hharsha98](https://github.com/hharsha98)
 
-## 🎬 Demo
-
-<p align="center">
-  <img src="docs/demo.gif" width="90%" alt="Scroll-through of the portfolio: hero, capabilities, and project cards" />
-</p>
-
-## 🧭 What's inside
-
-Four capability areas, each proven by shipped work:
-
-- **RAG Systems** — chunking, embeddings, vector retrieval, page-level citations, and refusal when the answer isn't in the documents
-- **Multi-Agent Systems** — tool loops, structured output with validation, provider fallback (hand-rolled, no framework)
-- **Evaluation & Metering** — LLM-as-judge eval suites and per-request cost metering
-- **Deployment & Infra** — containerized and shipped
-
-### Featured projects
-
-| Project | What it is |
-|---|---|
-| **CareerAgent** | Multi-agent platform for the job hunt |
-| **Multi-agent root-cause analysis** | Master thesis @ Siemens (industrial AI) |
-| **RetrievalLab** | Advanced RAG, made visible |
-| **ai-rag-project** | RAG — chat with your documents |
-
-## 🛠️ Built with
-
-React · TypeScript · Vite — a single-page site with client-side routing and a small markdown blog.
-
-## ▶️ Run locally
+## Run locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-Then open the local URL Vite prints (e.g. `http://localhost:5173`).
+## Build & deploy
+
+Static Vite export. No Node at runtime. Wrangler project name is `harsha-vardhan`. Never deploy this branch as Worker `agentic-systems-studio`, and do not attach `agentic-systems-studio.com`.
+
+```bash
+npm test          # content guards + production build
+npm run deploy    # wrangler pages deploy → project harsha-vardhan
+```
+
+`npm run deploy` needs `CLOUDFLARE_API_TOKEN` with **Cloudflare Pages** edit on the same account that already has Worker `agentic-systems-studio`.
+
+### If Git integration still needs a dashboard click
+
+1. [Cloudflare Dashboard → Workers & Pages](https://dash.cloudflare.com/?to=/:account/workers-and-pages)
+2. **Create** → **Pages** → **Connect to Git**
+3. GitHub repo `hharsha98/portfolio`
+4. **Project name:** `harsha-vardhan` (not `agentic-systems-studio`)
+5. **Production branch:** `cursor/harsha-profile-pages-4f23` (or `main` after merge, if this is the production profile)
+6. **Build command:** `npm run build`
+7. **Build output directory:** `dist`
+8. Do **not** add a custom domain on `agentic-systems-studio.com`
