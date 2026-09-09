@@ -5,7 +5,7 @@ import { site } from '../data/site'
 
 <Base
   title={`About Harsha — ${site.studio}`}
-  description={`Who runs ${site.studio}. Profile lives on LinkedIn and Hugging Face — this domain is the work studio.`}
+  description={`Who runs ${site.studio}. The recruiter profile is a separate Pages site — this domain is the work studio.`}
 >
   <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
     <p class="kicker">About Harsha</p>
@@ -16,11 +16,14 @@ import { site } from '../data/site'
       {site.studio} posts shipped systems — Agent Fleet, VibeDeck, Agent OS, AgentOps Studio, RetrievalLab, CareerAgent, and related case studies. It is not a LinkedIn-style personal profile.
     </p>
     <p class="mt-4 text-[15px] leading-relaxed text-paper/85">
-      {site.name} runs the studio. For the person (not the dossiers), use LinkedIn or Hugging Face until a separate profile site exists. Source is only
+      {site.name} runs the studio. For the person (not the dossiers), see the
+      <a class="text-brass underline-offset-2 hover:underline" href={site.profile} rel="noreferrer" target="_blank">recruiter profile</a>,
+      LinkedIn, or Hugging Face. This domain stays the work studio. Source is only
       <a class="text-brass underline-offset-2 hover:underline" href={site.github} rel="noreferrer" target="_blank">github.com/hharsha98</a>.
     </p>
     <div class="mt-8 flex flex-wrap gap-3">
-      <a class="btn btn-primary" href={site.linkedin} rel="noreferrer" target="_blank">LinkedIn ↗</a>
+      <a class="btn btn-primary" href={site.profile} rel="noreferrer" target="_blank">Recruiter profile ↗</a>
+      <a class="btn btn-ghost" href={site.linkedin} rel="noreferrer" target="_blank">LinkedIn ↗</a>
       <a class="btn btn-ghost" href={site.huggingface} rel="noreferrer" target="_blank">Hugging Face ↗</a>
       <a class="btn btn-ghost" href={`mailto:${site.email}`}>{site.email}</a>
     </div>
