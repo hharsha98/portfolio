@@ -19,7 +19,7 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 | Route | Content |
 |---|---|
 | `/` | Studio homepage: schematic, featured systems, paper band |
-| `/projects/agentfleet` | Self-hostable multi-agent ops platform — [live gallery](https://agentfleet-gallery.pages.dev) |
+| `/projects/agentfleet` | Self-hostable multi-agent ops platform — [live app](https://agentfleet.169.58.185.43.sslip.io) · [live gallery](https://agentfleet-gallery.pages.dev) |
 | `/projects/vibedeck` | Agentic dev environment — [live gallery](https://vibedeck-gallery.pages.dev) |
 | `/projects/agent-os` | Local-first Agent OS — [live gallery](https://hharsha98.github.io/agent-os/) |
 | `/projects/agentops-studio` | Product + deploy scaffolding |
