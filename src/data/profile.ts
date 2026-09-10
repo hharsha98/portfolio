@@ -7,7 +7,7 @@ export const profile = {
   headline:
     'AI Engineer · Agentic systems · Cloud deployment · M.Sc. Electromobility (ACES), FAU · Nürnberg',
   location: 'Nürnberg, Germany',
-  email: 'rtvision7@gmail.com',
+  email: 'mechaharsha@gmail.com',
   phoneDisplay: '+49 176 577 99028',
   phoneTel: '+4917657799028',
   photo: '/portrait.jpg',
@@ -18,7 +18,7 @@ export const profile = {
     'Pflichtpraktikum',
   ],
   links: {
-    linkedin: 'https://linkedin.com/in/hanumanthu1',
+    linkedin: 'https://www.linkedin.com/in/hanumanthu1',
     github: 'https://github.com/hharsha98',
     huggingface: 'https://huggingface.co/hharsha',
     studio: 'https://agentic-systems-studio.com',
@@ -26,7 +26,7 @@ export const profile = {
 } as const
 
 export const site = {
-  origin: 'https://harsha-vardhan.pages.dev',
+  origin: 'https://cursor-harsha-profile-pages.harsha-ai.pages.dev',
   title: 'Hanumanthu Harsha Vardhan — AI Engineer',
   description:
     'AI Engineer in Nürnberg. Agentic systems and cloud deployment. M.Sc. Electromobility (ACES) at FAU. Open to AI Engineer, AI Architect, AI Cloud Deployment, and Pflichtpraktikum.',
