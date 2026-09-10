@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://harsha-vardhan.pages.dev/
+Sitemap: https://cursor-harsha-profile-pages.harsha-ai.pages.dev/
