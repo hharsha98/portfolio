@@ -178,7 +178,7 @@ export default function App() {
 
         <div className="space-y-16 pb-8 sm:space-y-20">
           <section id="about" aria-labelledby="about-heading">
-            <SectionTitle kicker="About" title="The person, not the studio" />
+            <SectionTitle kicker="About" title="What I do" />
             <h3 id="about-heading" className="sr-only">
               About
             </h3>
@@ -186,6 +186,16 @@ export default function App() {
               {about.map((p) => (
                 <p key={p}>{p}</p>
               ))}
+              <p>
+                Project write-ups and demos live at{' '}
+                <ExternalLink
+                  className="font-medium text-navy underline-offset-2 hover:underline"
+                  href={profile.links.studio}
+                >
+                  Agentic Systems Studio
+                </ExternalLink>
+                .
+              </p>
             </div>
           </section>
 
@@ -334,11 +344,10 @@ export default function App() {
             {profile.name} · {profile.location}
           </p>
           <p>
-            Work studio:{' '}
+            Projects:{' '}
             <ExternalLink className="font-medium text-navy underline-offset-2 hover:underline" href={profile.links.studio}>
-              agentic-systems-studio.com
+              Agentic Systems Studio
             </ExternalLink>
-            . This page is the person.
           </p>
         </div>
       </footer>

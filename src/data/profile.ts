@@ -33,7 +33,7 @@ export const site = {
 } as const
 
 export const about = [
-  'I build agentic systems and retrieval pipelines that have to hold up outside a demo — local models, cited answers, and evaluation instead of vibes. This page is the person. The work studio is separate: Agentic Systems Studio.',
+  'I build agentic systems and retrieval pipelines that have to hold up outside a demo — local models, cited answers, and evaluation instead of vibes.',
   'I came to AI from mechanical engineering, then Electromobility (ACES) at FAU Erlangen-Nürnberg. The problems that stuck were industrial: making language models reliable enough for a plant, not a slide.',
   'Right now I am writing my master thesis at Siemens AG in Amberg on multi-agent root-cause analysis. Public code lives only at github.com/hharsha98.',
 ]

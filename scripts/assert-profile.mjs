@@ -73,6 +73,8 @@ const forbidden = [
   'eval 6/6',
   '€0/mo',
   '€0 infra',
+  'The person, not the studio',
+  'This page is the person.',
 ]
 for (const needle of forbidden) {
   if (bundled.toLowerCase().includes(needle.toLowerCase())) {
@@ -107,6 +109,8 @@ const required = [
   'German',
   'Intermediate',
   '10.53192/EBL20260344',
+  'What I do',
+  'Project write-ups',
 ]
 for (const needle of required) {
   if (!bundled.includes(needle)) fail(`missing required string: ${needle}`)
