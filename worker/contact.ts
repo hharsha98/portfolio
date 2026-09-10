@@ -81,8 +81,12 @@ async function readPayload(request: Request): Promise<Record<string, unknown> | 
   }
   const form = await request.formData()
   const record: Record<string, unknown> = {}
+  let size = 0
   for (const [key, value] of form.entries()) {
-    if (typeof value === 'string') record[key] = value
+    if (typeof value !== 'string') continue
+    size += key.length + value.length
+    if (size > MAX_BODY_BYTES) return null
+    record[key] = value
   }
   return record
 }
@@ -95,8 +99,13 @@ async function verifyTurnstile(secret: string, token: string, ip: string | null)
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body,
   })
-  const data = (await result.json()) as { success?: boolean }
-  return data.success === true
+  if (!result.ok) return false
+  try {
+    const data = (await result.json()) as { success?: boolean }
+    return data.success === true
+  } catch {
+    return false
+  }
 }
 
 async function ipHash(ip: string): Promise<string> {
@@ -137,40 +146,46 @@ export async function handleContact(request: Request, env: Env, _ctx: ExecutionC
   if (hits >= MAX_PER_HOUR) {
     return jsonResponse({ ok: false, error: 'Rate limited.' }, 429)
   }
+  // Count the attempt before siteverify so junk tokens cannot burn free-plan subrequests.
+  await env.INBOX.put(rlKey, String(hits + 1), { expirationTtl: 3600 })
 
   if (!env.TURNSTILE_SECRET) {
     console.error(JSON.stringify({ msg: 'TURNSTILE_SECRET missing', path: '/api/contact' }))
     return jsonResponse({ ok: false, error: 'Contact is temporarily unavailable.' }, 503)
   }
 
-  const valid = await verifyTurnstile(env.TURNSTILE_SECRET, parsed.fields.token, ip)
-  if (!valid) {
-    return jsonResponse({ ok: false, error: 'Turnstile verification failed.' }, 403)
+  try {
+    const valid = await verifyTurnstile(env.TURNSTILE_SECRET, parsed.fields.token, ip)
+    if (!valid) {
+      return jsonResponse({ ok: false, error: 'Turnstile verification failed.' }, 403)
+    }
+
+    const id = crypto.randomUUID()
+    const createdAt = new Date().toISOString()
+    const hashedIp = await ipHash(ip)
+    const record = {
+      id,
+      created_at: createdAt,
+      name: parsed.fields.name,
+      email: parsed.fields.email,
+      company: parsed.fields.company,
+      message: parsed.fields.message,
+      ip_hash: hashedIp,
+    }
+
+    await env.DB.prepare(
+      `INSERT INTO contact_submissions (id, created_at, name, email, company, message, ip_hash)
+       VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)`,
+    )
+      .bind(record.id, record.created_at, record.name, record.email, record.company, record.message, record.ip_hash)
+      .run()
+
+    await env.INBOX.put(`inbox:${id}`, JSON.stringify(record), { expirationTtl: 60 * 60 * 24 * 90 })
+
+    console.info(JSON.stringify({ msg: 'contact stored', id }))
+    return jsonResponse({ ok: true, id })
+  } catch (error) {
+    console.error(JSON.stringify({ msg: 'contact persist failed', error: String(error) }))
+    return jsonResponse({ ok: false, error: 'Contact is temporarily unavailable.' }, 503)
   }
-
-  const id = crypto.randomUUID()
-  const createdAt = new Date().toISOString()
-  const hashedIp = await ipHash(ip)
-  const record = {
-    id,
-    created_at: createdAt,
-    name: parsed.fields.name,
-    email: parsed.fields.email,
-    company: parsed.fields.company,
-    message: parsed.fields.message,
-    ip_hash: hashedIp,
-  }
-
-  await env.DB.prepare(
-    `INSERT INTO contact_submissions (id, created_at, name, email, company, message, ip_hash)
-     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)`,
-  )
-    .bind(record.id, record.created_at, record.name, record.email, record.company, record.message, record.ip_hash)
-    .run()
-
-  await env.INBOX.put(`inbox:${id}`, JSON.stringify(record), { expirationTtl: 60 * 60 * 24 * 90 })
-  await env.INBOX.put(rlKey, String(hits + 1), { expirationTtl: 3600 })
-
-  console.info(JSON.stringify({ msg: 'contact stored', id }))
-  return jsonResponse({ ok: true, id })
 }
