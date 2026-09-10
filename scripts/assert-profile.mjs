@@ -24,7 +24,11 @@ function read(path) {
 }
 
 if (!existsSync(portrait)) fail('public/portrait.jpg is missing')
-if (statSync(portrait).size < 20_000) fail('public/portrait.jpg looks too small to be the portrait')
+const portraitSize = statSync(portrait).size
+// Live coat-and-tie headshot at https://harsha-vardhan.pages.dev/portrait.jpg
+if (portraitSize !== 176_124) {
+  fail(`public/portrait.jpg must be the live coat-and-tie JPEG (176124 bytes), got ${portraitSize}`)
+}
 
 const wrangler = read(wranglerPath)
 if (!wrangler.includes('"name": "harsha-vardhan"')) fail('wrangler name must be harsha-vardhan')
@@ -73,6 +77,8 @@ const forbidden = [
   'eval 6/6',
   '€0/mo',
   '€0 infra',
+  'The person, not the studio',
+  'This page is the person.',
 ]
 for (const needle of forbidden) {
   if (bundled.toLowerCase().includes(needle.toLowerCase())) {
@@ -107,12 +113,17 @@ const required = [
   'German',
   'Intermediate',
   '10.53192/EBL20260344',
+  'What I do',
+  'Project write-ups',
 ]
 for (const needle of required) {
   if (!bundled.includes(needle)) fail(`missing required string: ${needle}`)
 }
 
 if (!existsSync(join(dist, 'portrait.jpg'))) fail('dist/portrait.jpg missing after build')
+if (statSync(join(dist, 'portrait.jpg')).size !== 176_124) {
+  fail('dist/portrait.jpg is not the live coat-and-tie JPEG')
+}
 if (!index.includes('application/ld+json')) fail('Person JSON-LD missing from index.html')
 if (!index.includes('og:image')) fail('Open Graph image missing')
 

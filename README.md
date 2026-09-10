@@ -4,7 +4,7 @@ Light, recruiter-facing personal page (LinkedIn + German Bewerbung). This branch
 
 - Live (Cloudflare Pages): `https://harsha-vardhan.pages.dev/`
 - Public email: `mechaharsh@gmail.com`
-- Work studio (separate): [agentic-systems-studio.com](https://agentic-systems-studio.com)
+- Project site: [agentic-systems-studio.com](https://agentic-systems-studio.com)
 - GitHub: [github.com/hharsha98](https://github.com/hharsha98)
 
 ## Run locally
