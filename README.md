@@ -2,7 +2,7 @@
 
 Light, recruiter-facing personal page (LinkedIn + German Bewerbung). This branch is **only** the profile. It is not Agentic Systems Studio.
 
-- Live (Cloudflare Pages): `https://cursor-harsha-profile-pages.harsha-ai.pages.dev/`
+- Live (Cloudflare Pages): `https://harsha-vardhan.pages.dev/`
 - Public email: `mechaharsh@gmail.com`
 - Work studio (separate): [agentic-systems-studio.com](https://agentic-systems-studio.com)
 - GitHub: [github.com/hharsha98](https://github.com/hharsha98)
@@ -36,4 +36,4 @@ npm run deploy    # wrangler pages deploy → project harsha-vardhan
 7. **Build output directory:** `dist`
 8. Do **not** add a custom domain on `agentic-systems-studio.com`
 
-Canonical / Open Graph / JSON-LD URLs use the **live** Pages host `https://cursor-harsha-profile-pages.harsha-ai.pages.dev/` until a custom hostname exists. Do not point them at `harsha-vardhan.pages.dev` (it does not resolve) or invent `profile.agentic-systems-studio.com`.
+Canonical / Open Graph / JSON-LD URLs use the short Pages host `https://harsha-vardhan.pages.dev/`. Do not invent `profile.agentic-systems-studio.com`.
