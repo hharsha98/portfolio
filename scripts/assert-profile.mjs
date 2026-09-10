@@ -65,7 +65,7 @@ const forbidden = [
   'rtvision134@gmail.com',
   'rtvision7@gmail.com',
   'mechaharsha@gmail.com',
-  'harsha-vardhan.pages.dev',
+  'cursor-harsha-profile-pages.harsha-ai.pages.dev',
   'profile.agentic-systems-studio.com',
   'English (C1)',
   'German (C1)',
@@ -83,7 +83,7 @@ for (const needle of forbidden) {
 const required = [
   'Hanumanthu Harsha Vardhan',
   'mechaharsh@gmail.com',
-  'https://cursor-harsha-profile-pages.harsha-ai.pages.dev/',
+  'https://harsha-vardhan.pages.dev/',
   'static.cloudflareinsights.com/beacon.min.js',
   'a93fbf59b0b74915869eed9815a03fcf',
   '+49 176 577 99028',

@@ -26,7 +26,7 @@ export const profile = {
 } as const
 
 export const site = {
-  origin: 'https://cursor-harsha-profile-pages.harsha-ai.pages.dev',
+  origin: 'https://harsha-vardhan.pages.dev',
   title: 'Hanumanthu Harsha Vardhan — AI Engineer',
   description:
     'AI Engineer in Nürnberg. Agentic systems and cloud deployment. M.Sc. Electromobility (ACES) at FAU. Open to AI Engineer, AI Architect, AI Cloud Deployment, and Pflichtpraktikum.',
