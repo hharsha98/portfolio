@@ -7,7 +7,7 @@ export const profile = {
   headline:
     'AI Engineer · Agentic systems · Cloud deployment · M.Sc. Electromobility (ACES), FAU · Nürnberg',
   location: 'Nürnberg, Germany',
-  email: 'mechaharsha@gmail.com',
+  email: 'mechaharsh@gmail.com',
   phoneDisplay: '+49 176 577 99028',
   phoneTel: '+4917657799028',
   photo: '/portrait.jpg',

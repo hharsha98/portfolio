@@ -3,7 +3,7 @@
 Light, recruiter-facing personal page (LinkedIn + German Bewerbung). This branch is **only** the profile. It is not Agentic Systems Studio.
 
 - Live (Cloudflare Pages): `https://cursor-harsha-profile-pages.harsha-ai.pages.dev/`
-- Public email: `mechaharsha@gmail.com`
+- Public email: `mechaharsh@gmail.com`
 - Work studio (separate): [agentic-systems-studio.com](https://agentic-systems-studio.com)
 - GitHub: [github.com/hharsha98](https://github.com/hharsha98)
 

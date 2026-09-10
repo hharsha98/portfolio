@@ -64,6 +64,7 @@ const forbidden = [
   'harsha.vardhan@fau.de',
   'rtvision134@gmail.com',
   'rtvision7@gmail.com',
+  'mechaharsha@gmail.com',
   'harsha-vardhan.pages.dev',
   'profile.agentic-systems-studio.com',
   'English (C1)',
@@ -81,7 +82,7 @@ for (const needle of forbidden) {
 
 const required = [
   'Hanumanthu Harsha Vardhan',
-  'mechaharsha@gmail.com',
+  'mechaharsh@gmail.com',
   'https://cursor-harsha-profile-pages.harsha-ai.pages.dev/',
   'static.cloudflareinsights.com/beacon.min.js',
   'a93fbf59b0b74915869eed9815a03fcf',
