@@ -1,7 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "agentic-systems-studio",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-08-31",
+  "compatibility_flags": ["nodejs_compat"],
   "preview_urls": true,
   "workers_dev": true,
   "observability": {
@@ -12,11 +14,32 @@
   // public/_redirects `/* /index.html 200` rule and Cloudflare rejects
   // the deploy with 100324 (infinite loop: html_handling strips .html /
   // /index then the rewrite fires again).
+  // run_worker_first only for the contact webhook so HTML assets stay
+  // asset-first (required for 404-page html_handling).
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page",
-    "html_handling": "auto-trailing-slash"
+    "html_handling": "auto-trailing-slash",
+    "run_worker_first": ["/api/contact", "/api/contact/"]
   },
+  "vars": {
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAEuwpaBEHtpcUX5g"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ass-db",
+      "database_id": "a3495da0-abe8-4730-937f-e897346f0d2b",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      // Existing free namespace ASS_KV
+      "binding": "INBOX",
+      "id": "a069d00779a44aa495ffece55e99728e"
+    }
+  ],
   // Custom domains already attached on account Rtvision7. Keep both so
   // `wrangler deploy` does not drop www.
   "routes": [

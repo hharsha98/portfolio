@@ -8,7 +8,9 @@
     "build": "astro build",
     "preview": "astro preview --host",
     "check": "astro check",
-    "deploy": "wrangler deploy"
+    "test": "node scripts/assert-studio.mjs",
+    "deploy": "wrangler deploy",
+    "types": "wrangler types"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.2.7",

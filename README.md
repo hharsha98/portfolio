@@ -30,8 +30,9 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 | `/projects/revenue-ops` | RevenueOps control tower (Phase 0 scaffold) |
 | `/research` | DVS EBL 2026 paper (DOI) |
 | `/about` | Pointer to the recruiter profile, LinkedIn, and Hugging Face — not a CV |
+| `/contact` | Turnstile-protected contact form (sitekey `0x4AAAAAAEuwpaBEHtpcUX5g`). POST `/api/contact` verifies the token and stores the message in free D1 (`ass-db`) + KV (`ASS_KV`). No Email Sending / Workers Paid. |
 
-Copy is taken from public GitHub descriptions/READMEs. No invented star counts or GPA. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — never github.com/agentic-systems-studio. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Studio contact: `rtvision7@gmail.com`.
+Copy is taken from public GitHub descriptions/READMEs. No invented star counts or GPA. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — never github.com/agentic-systems-studio. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Studio contact: `contact@agentic-systems-studio.com`. Turnstile-protected form at `/contact` stores submissions in free D1 + KV — no Email Sending / Workers Paid.
 
 ## Local
 
@@ -67,4 +68,22 @@ Workers Builds:
 - Build command: `npm run build` (Astro → `dist/`)
 - Deploy command: `npx wrangler deploy`
 
-`wrangler.jsonc` serves `./dist` with `not_found_handling: "404-page"` and `html_handling: "auto-trailing-slash"` (Astro `build.format: 'file'`).
+`wrangler.jsonc` serves `./dist` with `not_found_handling: "404-page"` and `html_handling: "auto-trailing-slash"` (Astro `build.format: 'file'`). The Worker script handles only `/api/contact` (`run_worker_first`).
+
+### Contact webhook (free plan)
+
+Reuse existing free bindings — do not create paid products:
+
+- D1 `ass-db` (`a3495da0-abe8-4730-937f-e897346f0d2b`)
+- KV `ASS_KV` (`a069d00779a44aa495ffece55e99728e`)
+- Turnstile widget sitekey `0x4AAAAAAEuwpaBEHtpcUX5g` (public)
+
+Apply the D1 migration, then put the **Turnstile secret** (never commit it):
+
+```bash
+npx wrangler d1 migrations apply ass-db --remote
+npx wrangler secret put TURNSTILE_SECRET
+```
+
+Local test secret is in `.dev.vars.example` (Cloudflare's always-pass test key).
+

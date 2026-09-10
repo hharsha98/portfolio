@@ -18,7 +18,7 @@ const jsonLd = {
   '@type': 'ProfessionalService',
   name: site.studio,
   url: site.url,
-  email: site.email,
+  email: `mailto:${site.email}`,
   description: site.description,
   address: {
     '@type': 'PostalAddress',
@@ -62,5 +62,6 @@ const jsonLd = {
       <slot />
     </main>
     <Footer />
+    <slot name="scripts" />
   </body>
 </html>
