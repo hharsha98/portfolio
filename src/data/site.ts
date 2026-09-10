@@ -12,8 +12,8 @@ export const site = {
   role: 'AI Engineer / Agentic Systems',
   positioning:
     'A studio for shipped agentic systems — local-first agent environments, multi-agent ops, evaluated retrieval.',
-  email: 'rtvision7@gmail.com',
-  linkedin: 'https://linkedin.com/in/hanumanthu1',
+  email: 'contact@agentic-systems-studio.com',
+  linkedin: 'https://www.linkedin.com/in/hanumanthu1',
   github: 'https://github.com/hharsha98',
   huggingface: 'https://huggingface.co/hharsha',
   profile: 'https://cursor-harsha-profile-pages.harsha-ai.pages.dev',
@@ -41,4 +41,5 @@ export const nav = [
   { href: '/', label: 'Studio' },
   { href: '/#work', label: 'Work' },
   { href: '/research', label: 'Research' },
+  { href: '/contact', label: 'Contact' },
 ] as const

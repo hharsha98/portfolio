@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro'
+import { site } from '../data/site'
+
+const turnstileSiteKey = '0x4AAAAAAEuwpaBEHtpcUX5g'
+---
+
+<Base
+  title={`Contact — ${site.studio}`}
+  description={`Contact ${site.studio}. Turnstile-protected form; submissions are stored on the free Worker (D1 + KV). No paid email sending.`}
+>
+  <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+    <p class="kicker">Contact</p>
+    <h1 class="mt-4 text-3xl font-semibold tracking-tight text-paper sm:text-5xl">
+      Write the studio
+    </h1>
+    <p class="mt-5 text-lg leading-relaxed text-mute">
+      Use the form below. A Turnstile check runs first; the Worker stores the note in D1 and a KV inbox on the free plan. There is no paid email pipeline — <a class="text-brass underline-offset-2 hover:underline" href={`mailto:${site.email}`}>{site.email}</a> still works as a direct mailto.
+    </p>
+
+    <form
+      id="studio-contact"
+      class="frame panel mt-10 space-y-5 p-6 sm:p-8"
+      action="/api/contact"
+      method="post"
+    >
+      <span class="frame-b"></span>
+      <p class="kicker">Message</p>
+
+      <label class="block">
+        <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">Name</span>
+        <input
+          class="mt-2 w-full border border-line bg-ink px-3 py-2.5 text-sm text-paper"
+          type="text"
+          name="name"
+          autocomplete="name"
+          maxlength="80"
+          required
+        />
+      </label>
+
+      <label class="block">
+        <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">Email</span>
+        <input
+          class="mt-2 w-full border border-line bg-ink px-3 py-2.5 text-sm text-paper"
+          type="email"
+          name="email"
+          autocomplete="email"
+          maxlength="120"
+          required
+        />
+      </label>
+
+      <label class="block">
+        <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">Company <span class="text-mute/70">(optional)</span></span>
+        <input
+          class="mt-2 w-full border border-line bg-ink px-3 py-2.5 text-sm text-paper"
+          type="text"
+          name="company"
+          autocomplete="organization"
+          maxlength="120"
+        />
+      </label>
+
+      <label class="block">
+        <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">Message</span>
+        <textarea
+          class="mt-2 min-h-36 w-full border border-line bg-ink px-3 py-2.5 text-sm text-paper"
+          name="message"
+          maxlength="4000"
+          required
+        ></textarea>
+      </label>
+
+      <div class="sr-only" aria-hidden="true">
+        <label>
+          Website
+          <input type="text" name="website" tabindex="-1" autocomplete="off" />
+        </label>
+      </div>
+
+      <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="dark"></div>
+
+      <p id="contact-status" class="min-h-6 font-mono text-xs text-mute" aria-live="polite"></p>
+
+      <button class="btn btn-primary" type="submit">Send</button>
+    </form>
+  </article>
+  <Fragment slot="scripts">
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script>
+      const form = document.getElementById('studio-contact')
+      const status = document.getElementById('contact-status')
+      if (form instanceof HTMLFormElement && status) {
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault()
+          status.textContent = 'Sending…'
+          const data = new FormData(form)
+          const token = String(data.get('cf-turnstile-response') ?? '')
+          if (!token) {
+            status.textContent = 'Complete the Turnstile check, then send again.'
+            return
+          }
+          const payload = {
+            name: String(data.get('name') ?? ''),
+            email: String(data.get('email') ?? ''),
+            company: String(data.get('company') ?? ''),
+            message: String(data.get('message') ?? ''),
+            website: String(data.get('website') ?? ''),
+            'cf-turnstile-response': token,
+          }
+          try {
+            const response = await fetch('/api/contact', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify(payload),
+            })
+            const body = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string }
+            if (response.ok && body.ok) {
+              status.textContent = 'Received. Thank you.'
+              form.reset()
+              const turnstile = (window as unknown as { turnstile?: { reset: () => void } }).turnstile
+              turnstile?.reset()
+              return
+            }
+            if (response.status === 429) {
+              status.textContent = 'Too many messages from this network. Try later.'
+            } else {
+              status.textContent = body.error ?? 'Could not send. Try mailto, or wait and retry.'
+            }
+            const turnstile = (window as unknown as { turnstile?: { reset: () => void } }).turnstile
+            turnstile?.reset()
+          } catch {
+            status.textContent = 'Network error. Use mailto if this keeps failing.'
+          }
+        })
+      }
+    </script>
+  </Fragment>
+</Base>
