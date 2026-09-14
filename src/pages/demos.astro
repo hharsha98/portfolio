@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro'
+import { site } from '../data/site'
+import { publicSurfaces, demoLinks, statusLabel } from '../data/products'
+
+const rows = publicSurfaces().map((product) => ({ product, links: demoLinks(product) }))
+---
+
+<Base
+  title={`Demos — ${site.studio}`}
+  description="Working live labs (including Agent Fleet on Contabo/sslip), galleries, and downloads for Agentic Systems Studio. Scaffolds stay on GitHub, not this page."
+>
+  <section class="section">
+    <p class="kicker">Demos</p>
+    <h1 class="page-title mt-4">Surfaces that work today</h1>
+    <p class="mt-5 max-w-2xl text-lg leading-relaxed text-mute">
+      Live labs (including Agent Fleet on Contabo/sslip), a download, and an early gallery. Scaffolds stay GitHub-only — they do not get Live buttons. Studio hostnames such as fleet.agentic-systems-studio.com are planned names, not live URLs.
+    </p>
+
+    <div class="mt-12 space-y-4">
+      {rows.map(({ product, links }) => (
+        <article
+          class="demo-row has-accent panel p-5 sm:p-6"
+          style={`--accent:${/^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7cff'}`}
+        >
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h2 class="display text-2xl text-paper">
+              <a class="product-name-link" href={`/products/${product.slug}`}>{product.name}</a>
+            </h2>
+            <span class={`badge badge-${product.status}`}>{statusLabel(product.status)}</span>
+          </div>
+          <p class="mt-2 max-w-3xl text-sm leading-relaxed text-mute">{product.description}</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            {links.map((link) => (
+              <a
+                class:list={['btn', link.kind === 'live' || link.kind === 'download' ? 'btn-primary' : 'btn-ghost']}
+                href={link.href}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {link.label} ↗
+              </a>
+            ))}
+            <a class="btn btn-ghost" href={`/products/${product.slug}`}>Open product</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>

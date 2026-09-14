@@ -1,0 +1,4 @@
+# Copy to .dev.vars for local wrangler/astro worker testing.
+# Production secret: `npx wrangler secret put TURNSTILE_SECRET --name agentic-systems-studio`
+# Do not commit the real secret. Test key below always passes locally.
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
