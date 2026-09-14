@@ -181,6 +181,12 @@ if (!indexHtml.includes('products around one core')) {
 if (!indexHtml.includes('Live · square')) {
   fail('built home constellation must encode honesty in node shape, not clone Fleet tool glyphs')
 }
+if (!indexHtml.includes('orbit-plate')) {
+  fail('built home constellation must be a chart plate, not a CSS radar clone')
+}
+if (indexHtml.includes('orbit-spoke')) {
+  fail('built home constellation must not use Fleet-style radial spokes')
+}
 if (!indexHtml.includes('Studio workflow')) fail('built home must include the studio workflow section')
 if (!indexHtml.includes('Tech we actually use')) fail('built home must include tech credibility pills')
 if (!indexHtml.includes('Write the studio')) fail('built home must close on studio contact, not a SaaS funnel')

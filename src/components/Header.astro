@@ -4,24 +4,27 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/'
 ---
 
 <header class:list={['site-header', path === '/' && 'site-header-home']}>
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+  <div class="mx-auto flex max-w-[88rem] items-center justify-between gap-4 px-4 py-3 sm:px-6">
     <a href="/" class="group flex min-h-11 items-center gap-3">
       <span class="logo-mark" aria-hidden="true">A·S</span>
       <span class="leading-tight">
-        <span class="block text-sm text-paper">{site.studio}</span>
-        <span class="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-mute sm:block">Product studio</span>
+        <span class="block text-sm tracking-wide text-paper">{site.studio}</span>
+        <span class="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-mute sm:block">Product studio</span>
       </span>
     </a>
 
     <nav class="hidden items-center gap-0.5 md:flex" aria-label="Primary">
       {nav.map((item) => {
         const active = path === item.href || path.startsWith(`${item.href}/`)
+        const contact = item.href === '/contact'
         return (
           <a
             href={item.href}
             class:list={[
-              'min-h-11 px-3 py-2 text-[13px] tracking-wide transition-colors',
-              active ? 'text-paper' : 'text-mute hover:text-paper',
+              contact
+                ? 'nav-cta'
+                : 'nav-link min-h-11 px-3 py-2 text-[13px] tracking-wide transition-colors',
+              !contact && (active ? 'is-active text-paper' : 'text-mute hover:text-paper'),
             ]}
           >
             {item.label}
@@ -32,7 +35,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/'
         href={site.profile}
         rel="noreferrer"
         target="_blank"
-        class="min-h-11 px-3 py-2 text-[13px] tracking-wide text-mute hover:text-paper"
+        class="nav-link min-h-11 px-3 py-2 text-[13px] tracking-wide text-mute hover:text-paper"
       >
         Founder
       </a>
@@ -40,7 +43,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/'
         href={site.github}
         rel="noreferrer"
         target="_blank"
-        class="min-h-11 px-3 py-2 text-[13px] tracking-wide text-mute hover:text-paper"
+        class="nav-link min-h-11 px-3 py-2 text-[13px] tracking-wide text-mute hover:text-paper"
       >
         GitHub ↗
       </a>

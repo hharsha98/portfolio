@@ -13,9 +13,10 @@ const primary =
   product.links.find((l) => l.kind === 'github') ??
   product.links[0]
 const rest = product.links.filter((l) => l !== primary)
+const accent = /^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7cff'
 ---
 
-<article class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+<article class="product-detail mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16" style={`--accent:${accent}`}>
   <nav class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute" aria-label="Breadcrumb">
     <a class="hover:text-brass" href="/">Home</a>
     <span class="px-2" aria-hidden="true">/</span>
@@ -24,7 +25,8 @@ const rest = product.links.filter((l) => l !== primary)
     <span class="text-brass">{product.name}</span>
   </nav>
 
-  <p class="mt-10 font-mono text-xs text-brass">{product.index} · {statusLabel(product.status)}</p>
+  <div class="product-detail-rule" aria-hidden="true"></div>
+  <p class="mt-8 font-mono text-xs" style={`color:var(--accent)`}>{product.index} · {statusLabel(product.status)}</p>
   <h1 class="page-title mt-3">{product.name}</h1>
   <p class="mt-4 text-lg leading-relaxed text-mute">{product.tagline}</p>
 
@@ -83,7 +85,7 @@ const rest = product.links.filter((l) => l !== primary)
 
 <nav class="mx-auto grid max-w-6xl gap-px border-t border-line bg-line sm:grid-cols-2" aria-label="Adjacent products">
   {prev ? (
-    <a href={`/products/${prev.slug}`} class="bg-ink px-5 py-6 hover:bg-panel sm:px-8">
+    <a href={`/products/${prev.slug}`} class="product-neighbor bg-ink px-5 py-7 hover:bg-panel sm:px-8">
       <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">Previous</p>
       <p class="mt-2 text-lg text-paper">{prev.name}</p>
     </a>
@@ -91,7 +93,7 @@ const rest = product.links.filter((l) => l !== primary)
     <span class="hidden bg-ink sm:block"></span>
   )}
   {next ? (
-    <a href={`/products/${next.slug}`} class="bg-ink px-5 py-6 text-right hover:bg-panel sm:px-8">
+    <a href={`/products/${next.slug}`} class="product-neighbor bg-ink px-5 py-7 text-right hover:bg-panel sm:px-8">
       <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">Next</p>
       <p class="mt-2 text-lg text-paper">{next.name}</p>
     </a>

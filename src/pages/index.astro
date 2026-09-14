@@ -23,7 +23,7 @@ const stats = catalogStats()
       <div class="hero-vignette"></div>
     </div>
     <p class="hero-spine" aria-hidden="true"><span>A·S · Nuremberg · Ten systems · 2026</span></p>
-    <div class="hero-inner relative mx-auto grid max-w-[88rem] items-center gap-6 px-4 pl-4 xl:pl-14 lg:grid-cols-12 lg:gap-2">
+    <div class="hero-inner relative mx-auto grid max-w-[88rem] items-center gap-8 px-4 pl-4 xl:pl-14 lg:grid-cols-12 lg:gap-8">
       <div class="hero-copy lg:col-span-5">
         <span class="hero-watermark" aria-hidden="true">10</span>
         <div class="flex flex-wrap gap-2">
@@ -52,13 +52,13 @@ const stats = catalogStats()
     <div class="stats-bar">
       <dl class="mx-auto grid max-w-[88rem] grid-cols-2 sm:grid-cols-4">
         {[
-          [String(stats.live), 'Live'],
-          [String(stats.download), 'Download / local'],
-          [String(stats.gallery), 'Gallery / early'],
-          [String(stats.building), 'Building'],
-        ].map(([value, label]) => (
-          <div class="stat-cell">
-            <dt class="font-mono text-[11px] uppercase tracking-[0.18em] text-mute">{label}</dt>
+          [String(stats.live), 'Live', 'live'],
+          [String(stats.download), 'Download / local', 'download'],
+          [String(stats.gallery), 'Gallery / early', 'gallery'],
+          [String(stats.building), 'Building', 'building'],
+        ].map(([value, label, kind]) => (
+          <div class:list={['stat-cell', `is-${kind}`]}>
+            <dt class="font-mono text-[11px] uppercase tracking-[0.18em]">{label}</dt>
             <dd class="display stat-value">{value}</dd>
           </div>
         ))}
