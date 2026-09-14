@@ -14,7 +14,7 @@ Future product hosts (copy/config only — **planned names, not live URLs**. Do 
 
 | Host | Product | Primary CTA today |
 |---|---|---|
-| `fleet.agentic-systems-studio.com` | Agent Fleet | GitHub + [self-host docs](https://github.com/hharsha98/agentfleet/blob/main/docs/DEPLOY.md) — no public owned SaaS URL yet |
+| `fleet.agentic-systems-studio.com` | Agent Fleet | [Live demo / Contabo](https://agentfleet.169.58.185.43.sslip.io/) — studio hostname is planned only, not attached |
 | `os.agentic-systems-studio.com` | Agent OS | [Gallery](https://hharsha98.github.io/agent-os/) |
 | `vibespace.agentic-systems-studio.com` | Vibespace | [Download](https://github.com/hharsha98/Vibespace/releases/latest) |
 | `rag.agentic-systems-studio.com` | RetrievalLab | [Live lab](https://retrievallab.pages.dev) |
@@ -29,7 +29,7 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 |---|---|
 | `/` | Product studio home: pitch, featured products, catalog, coming hosts |
 | `/products` | Full product catalog with Live / Download / local / Gallery / early / Building badges |
-| `/products/agentfleet` | Building — GitHub + self-host docs (no public owned SaaS) |
+| `/products/agentfleet` | Live — [Contabo/sslip demo](https://agentfleet.169.58.185.43.sslip.io/) · [GitHub](https://github.com/hharsha98/agentfleet) · [self-host docs](https://github.com/hharsha98/agentfleet/blob/main/docs/DEPLOY.md) |
 | `/products/agent-os` | Gallery / early — [gallery](https://hharsha98.github.io/agent-os/) |
 | `/products/vibespace` | Download / local — [GitHub Releases](https://github.com/hharsha98/Vibespace/releases/latest) |
 | `/products/retrievallab` | Live — [retrievallab.pages.dev](https://retrievallab.pages.dev) |
@@ -46,7 +46,7 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 
 Copy is taken from public GitHub descriptions/READMEs. No invented star counts or eval headlines. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — never github.com/agentic-systems-studio. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Studio contact: `contact@agentic-systems-studio.com`. Do not put a personal Gmail address on public studio pages. Turnstile-protected form at `/contact` stores submissions in free D1 + KV — no Email Sending / Workers Paid.
 
-Do **not** link third-party Vercel or Pages hosts for Agent Fleet. Agent Fleet has no confirmed public owned SaaS URL. Do **not** present scaffolds as live SaaS. MARA Open has no Live button (GitHub only until migrated).
+Do **not** link third-party Vercel or Pages hosts for Agent Fleet. The owned live demo is the Contabo/sslip host. Do **not** attach `fleet.agentic-systems-studio.com` in this repo. Do **not** present remaining scaffolds (Grid, Tower, MARA, AgentOps) as live SaaS. MARA Open has no Live button (GitHub only until migrated).
 
 ## Local
 

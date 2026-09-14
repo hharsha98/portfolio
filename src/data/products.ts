@@ -58,11 +58,11 @@ export const products: Product[] = [
     tagline:
       'A self-hostable multi-agent operations platform — chat with a fleet of tool-using agents, or hand the orchestrator a goal and watch it execute as a live task DAG, with evals, cost governance, and guardrails.',
     description:
-      'Building. Public repo you can clone and self-host — not a live SaaS, and there is no owned public deploy yet.',
+      'Live Contabo/sslip demo — chat, missions, agents, documents, templates, and workflows. GitHub and self-host docs remain. Not Cloudflare production.',
     body: [
-      'Agent Fleet is a self-hostable multi-agent operations platform in progress. You chat with a roster of tool-using agents, or hand the orchestrator a goal and watch it decompose into a task DAG with human-approval gates.',
+      'Agent Fleet is a self-hostable multi-agent operations platform. You chat with a roster of tool-using agents, or hand the orchestrator a goal and watch it decompose into a task DAG with human-approval gates.',
       'The public repository is on GitHub under hharsha98/agentfleet. The product spine is FastAPI plus Next.js, Postgres with pgvector, and a hand-built agent runtime with an env-switchable LangGraph path. The fleet can consume external MCP servers and also expose itself as an MCP server for IDE clients.',
-      'There is no public owned deploy. Do not treat this page as a hosted app. A studio hostname (fleet.agentic-systems-studio.com) is planned only — it is not live and is not a product URL. Use GitHub and the self-host docs if you want to run it yourself.',
+      'A live demo runs on a free Contabo VPS at agentfleet.169.58.185.43.sslip.io — sslip, not Cloudflare Containers, and not a Pages or Vercel host. GitHub and the self-host docs remain if you want to run it yourself. A studio hostname (fleet.agentic-systems-studio.com) is planned only — it is not live, not attached, and is not a product URL.',
     ],
     features: [
       'Streaming multi-agent chat with per-agent tools and prompts',
@@ -73,15 +73,20 @@ export const products: Product[] = [
     ],
     stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'pgvector', 'MCP', 'Docker'],
     accent: '#8b7cff',
-    status: 'building',
+    status: 'live',
     featured: true,
     github: 'https://github.com/hharsha98/agentfleet',
     futureHost: hostFor('Agent Fleet'),
     visual: {
       src: '/media/agentfleet-landing.png',
-      alt: 'Owned Agent Fleet orbital diagram on a dark grid — product visual from the public repo, not a hosted app',
+      alt: 'Owned Agent Fleet orbital diagram on a dark grid — product visual from the public repo',
     },
     links: [
+      {
+        kind: 'live',
+        label: 'Live demo / Contabo',
+        href: 'https://agentfleet.169.58.185.43.sslip.io/',
+      },
       { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentfleet' },
       {
         kind: 'docs',

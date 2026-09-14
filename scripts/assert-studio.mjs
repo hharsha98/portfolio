@@ -88,9 +88,6 @@ if (blob.includes('rtvision7@gmail.com')) fail('rtvision7@gmail.com still presen
 if (blob.toLowerCase().includes('mechaharsh@')) fail('personal mechaharsh@ email must not appear on studio pages')
 if (blob.includes('agentfleet.vercel.app')) fail('do not link third-party Agent Fleet vercel.app')
 if (blob.includes('agentfleet.pages.dev')) fail('do not link third-party agentfleet.pages.dev')
-if (blob.includes('agentfleet.169.58.185.43.sslip.io')) {
-  fail('Agent Fleet has no confirmed public owned SaaS URL — do not link the sslip live app')
-}
 if (!existsSync(join(root, 'public', 'media', 'agentfleet-landing.png'))) {
   fail('owned Agent Fleet landing visual missing at public/media/agentfleet-landing.png')
 }
@@ -104,6 +101,7 @@ if (!existsSync(join(root, 'migrations', '0001_contact_submissions.sql'))) fail(
 const products = read(join(root, 'src', 'data', 'products.ts'))
 for (const url of [
   'https://github.com/hharsha98/agentfleet',
+  'https://agentfleet.169.58.185.43.sslip.io/',
   'https://github.com/hharsha98/agent-os',
   'https://hharsha98.github.io/agent-os/',
   'https://github.com/hharsha98/Vibespace',
@@ -159,8 +157,11 @@ if (!indexHtml.includes('retrievallab.pages.dev')) fail('built home must use Ret
 if (!indexHtml.includes('careeragent-ceq.pages.dev')) fail('built home must include CareerAgent live URL')
 if (!indexHtml.includes('ragtrust.169.58.185.43.sslip.io')) fail('built home must include RAG Trust live URL')
 if (!indexHtml.includes('hharsha98.github.io/agent-os')) fail('built home must use Agent OS gallery URL')
-if (indexHtml.includes('agentfleet.vercel.app') || indexHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
-  fail('built home must not present Agent Fleet as hosted SaaS')
+if (!indexHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
+  fail('built home must link the owned Agent Fleet Contabo/sslip live demo')
+}
+if (indexHtml.includes('agentfleet.vercel.app')) {
+  fail('do not link third-party Agent Fleet vercel.app')
 }
 if (indexHtml.includes('agentfleet.pages.dev')) {
   fail('do not link third-party agentfleet.pages.dev')
@@ -206,6 +207,12 @@ if (!productsHtml.includes('Open product') && !productsHtml.includes('GitHub')) 
   fail('products page must use product CTAs')
 }
 if (!productsHtml.includes('Building / coming soon')) fail('products page must show building status')
+if (!productsHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
+  fail('products catalog must link the Agent Fleet Contabo/sslip live demo')
+}
+if (!productsHtml.includes('Live demo / Contabo')) {
+  fail('products catalog must label the Fleet demo as Live demo / Contabo')
+}
 if (/href=["'][^"']*chatgpt\.site/.test(productsHtml)) {
   fail('products catalog must not link MARA chatgpt.site as Live')
 }
@@ -214,11 +221,27 @@ const demosHtml = read(join(root, 'dist', 'demos.html'))
 if (/href=["'][^"']*chatgpt\.site/.test(demosHtml)) fail('demos page must not link MARA chatgpt.site')
 if (!demosHtml.includes('retrievallab.pages.dev')) fail('demos page must include RetrievalLab live URL')
 if (!demosHtml.includes('careeragent-ceq.pages.dev')) fail('demos page must include CareerAgent live URL')
-if (demosHtml.includes('Self-host docs')) fail('coming-soon Fleet must not appear as a demo surface')
+if (!demosHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
+  fail('demos page must include the Agent Fleet Contabo/sslip live demo')
+}
+if (demosHtml.includes('Self-host docs')) fail('Fleet self-host docs belong on the product page, not the demos list')
 
 const maraHtml = read(join(root, 'dist', 'products', 'mara-open.html'))
 if (/href=["'][^"']*chatgpt\.site/.test(maraHtml)) fail('MARA product page must not link chatgpt.site')
 if (!maraHtml.includes('github.com/hharsha98/mara-open')) fail('MARA product page must link GitHub')
+
+const fleetHtml = read(join(root, 'dist', 'products', 'agentfleet.html'))
+if (!fleetHtml.includes('01 · Live')) fail('Agent Fleet product page must be Live')
+if (!fleetHtml.includes('Live demo / Contabo')) fail('Agent Fleet product page must label the Contabo demo')
+if (!fleetHtml.includes('https://agentfleet.169.58.185.43.sslip.io/')) {
+  fail('Agent Fleet product page must link the owned sslip demo')
+}
+if (!fleetHtml.includes('github.com/hharsha98/agentfleet')) fail('Agent Fleet product page must keep GitHub')
+if (!fleetHtml.includes('docs/DEPLOY.md')) fail('Agent Fleet product page must keep self-host docs')
+if (fleetHtml.includes('agentfleet.pages.dev') || fleetHtml.includes('agentfleet.vercel.app')) {
+  fail('do not link third-party Agent Fleet Pages or Vercel hosts')
+}
+if (fleetHtml.includes('01 · Building')) fail('Agent Fleet must not remain Building / coming soon')
 
 if (wrangler.includes('fleet.agentic-systems-studio.com')) {
   fail('do not attach future product hosts in wrangler routes / DNS')
