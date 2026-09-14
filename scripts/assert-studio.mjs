@@ -109,7 +109,7 @@ for (const url of [
   'https://ragtrust.169.58.185.43.sslip.io/',
   'https://hharsha98.github.io/rag-trustworthiness-industrial/',
   'https://careeragent-ceq.pages.dev',
-  'https://mara-open-hharsha98.rtvision134.chatgpt.site',
+  'https://github.com/hharsha98/mara-open',
   'https://github.com/hharsha98/agentgrid',
   'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
   'https://github.com/hharsha98/agentops-studio',
@@ -148,6 +148,8 @@ if (indexHtml.includes('Open dossier') || /\bdossier\b/i.test(indexHtml)) {
 if (!indexHtml.includes('harsha-vardhan.pages.dev')) fail('built home must link the founder site')
 if (!indexHtml.includes('Vibespace')) fail('built home must feature Vibespace')
 if (!indexHtml.includes('retrievallab.pages.dev')) fail('built home must use RetrievalLab live URL')
+if (!indexHtml.includes('careeragent-ceq.pages.dev')) fail('built home must include CareerAgent live URL')
+if (!indexHtml.includes('ragtrust.169.58.185.43.sslip.io')) fail('built home must include RAG Trust live URL')
 if (!indexHtml.includes('hharsha98.github.io/agent-os')) fail('built home must use Agent OS gallery URL')
 if (indexHtml.includes('agentfleet.vercel.app') || indexHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
   fail('built home must not present Agent Fleet as hosted SaaS')
@@ -161,8 +163,16 @@ if (!indexHtml.includes('/media/agentfleet-landing.png')) {
 if (indexHtml.includes('94ms') || /17 built-in/i.test(indexHtml)) {
   fail('do not copy Agent Fleet marketing metrics onto the studio hub')
 }
-if (!indexHtml.includes('Phase 1 constellation')) {
+if (!indexHtml.includes('Studio constellation')) {
   fail('built home must include the studio constellation graphic')
+}
+if (!indexHtml.includes('Building / coming soon')) {
+  fail('built home must mark coming-soon products')
+}
+if (!indexHtml.includes('Gallery / early')) fail('built home must mark Agent OS as gallery / early')
+if (!indexHtml.includes('Download / local')) fail('built home must mark Vibespace as download / local')
+if (/href=["'][^"']*chatgpt\.site/.test(indexHtml)) {
+  fail('built home must not link MARA chatgpt.site as Live')
 }
 if (!existsSync(join(root, 'dist', 'products.html'))) fail('built products page missing')
 if (!existsSync(join(root, 'dist', 'demos.html'))) fail('built demos page missing')
@@ -172,6 +182,20 @@ if (productsHtml.includes('Open dossier')) fail('products page still says Open d
 if (!productsHtml.includes('Open product') && !productsHtml.includes('GitHub')) {
   fail('products page must use product CTAs')
 }
+if (!productsHtml.includes('Building / coming soon')) fail('products page must show building status')
+if (/href=["'][^"']*chatgpt\.site/.test(productsHtml)) {
+  fail('products catalog must not link MARA chatgpt.site as Live')
+}
+
+const demosHtml = read(join(root, 'dist', 'demos.html'))
+if (/href=["'][^"']*chatgpt\.site/.test(demosHtml)) fail('demos page must not link MARA chatgpt.site')
+if (!demosHtml.includes('retrievallab.pages.dev')) fail('demos page must include RetrievalLab live URL')
+if (!demosHtml.includes('careeragent-ceq.pages.dev')) fail('demos page must include CareerAgent live URL')
+if (demosHtml.includes('Self-host docs')) fail('coming-soon Fleet must not appear as a demo surface')
+
+const maraHtml = read(join(root, 'dist', 'products', 'mara-open.html'))
+if (/href=["'][^"']*chatgpt\.site/.test(maraHtml)) fail('MARA product page must not link chatgpt.site')
+if (!maraHtml.includes('github.com/hharsha98/mara-open')) fail('MARA product page must link GitHub')
 
 if (wrangler.includes('fleet.agentic-systems-studio.com')) {
   fail('do not attach future product hosts in wrangler routes / DNS')

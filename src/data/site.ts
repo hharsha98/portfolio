@@ -6,17 +6,17 @@ export const site = {
   url: 'https://agentic-systems-studio.com',
   title: 'Agentic Systems Studio',
   description:
-    'A studio of AI products: Agent Fleet, Agent OS, Vibespace, RetrievalLab, and related systems. Self-host, local-first, and live demos. GitHub github.com/hharsha98.',
+    'A studio that ships AI systems over time: live labs, local downloads, early galleries, and products still being built. GitHub github.com/hharsha98.',
   location: 'Nuremberg, Germany',
   coordinates: '49.45°N · 11.08°E',
   positioning:
-    'A studio of AI products — self-hostable multi-agent ops, local-first agent environments, and retrieval you can inspect.',
+    'The studio ships real systems over time — live retrieval labs, local-first tools, and products still being built.',
   email: 'contact@agentic-systems-studio.com',
   linkedin: 'https://www.linkedin.com/in/hanumanthu1',
   github: 'https://github.com/hharsha98',
   huggingface: 'https://huggingface.co/hharsha',
   profile: 'https://harsha-vardhan.pages.dev',
-  now: 'Public products',
+  now: 'Shipping over time',
 }
 
 export const paper = {

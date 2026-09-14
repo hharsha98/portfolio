@@ -174,6 +174,9 @@ body {
 .badge-download {
   @apply border-cyan/40 text-cyan;
 }
+.badge-building {
+  @apply border-aurora/40 text-aurora;
+}
 .badge-github {
   @apply border-line text-mute hover:border-brass/40 hover:text-brass;
 }

@@ -11,24 +11,24 @@ const rest = catalogProducts()
 
 <Base
   title={`Products — ${site.studio}`}
-  description="Agent Fleet, Agent OS, Vibespace, RetrievalLab, and the rest of the Agentic Systems Studio catalog. Live demos, galleries, downloads, and GitHub."
+  description="Agentic Systems Studio catalog: live labs, a desktop download, an early gallery, and products still being built. GitHub for coming-soon — no fake Live buttons."
 >
   <section class="section">
     <p class="kicker">Products</p>
     <h1 class="page-title mt-4">The catalog</h1>
     <p class="mt-5 max-w-2xl text-lg leading-relaxed text-mute">
-      AI products from the studio. Open a product page, a live demo, a gallery, a download, or the GitHub repo.
+      The studio ships real systems over time. Live, Download / local, Gallery / early, or Building / coming soon — every card says which.
     </p>
 
     <div class="mt-12">
-      <p class="kicker">Phase 1</p>
+      <p class="kicker">Featured</p>
       <div class="mt-4 grid gap-4 lg:grid-cols-2">
         {featured.map((p) => <ProductCard product={p} featured />)}
       </div>
     </div>
 
     <div class="mt-14">
-      <p class="kicker">Also shipping</p>
+      <p class="kicker">Also in the catalog</p>
       <div class="mt-4 grid gap-4 sm:grid-cols-2">
         {rest.map((p) => <ProductCard product={p} />)}
       </div>

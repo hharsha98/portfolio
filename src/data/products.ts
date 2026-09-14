@@ -6,6 +6,19 @@ function hostFor(productName: string) {
 
 export type LinkKind = 'live' | 'gallery' | 'download' | 'github' | 'docs' | 'walkthrough'
 
+export type ProductStatus = 'live' | 'download' | 'gallery' | 'building'
+
+export const productStatus = {
+  live: 'Live',
+  download: 'Download / local',
+  gallery: 'Gallery / early',
+  building: 'Building / coming soon',
+} as const
+
+export function statusLabel(status: ProductStatus) {
+  return productStatus[status]
+}
+
 export type ProductLink = {
   kind: LinkKind
   label: string
@@ -21,7 +34,7 @@ export type Product = {
   body: string[]
   features: string[]
   stack: string[]
-  statusNote: string
+  status: ProductStatus
   featured: boolean
   github?: string
   links: ProductLink[]
@@ -43,11 +56,11 @@ export const products: Product[] = [
     tagline:
       'A self-hostable multi-agent operations platform — chat with a fleet of tool-using agents, or hand the orchestrator a goal and watch it execute as a live task DAG, with evals, cost governance, and guardrails.',
     description:
-      'Self-hostable multi-agent ops: streaming chat, DAG orchestration with approval gates, RAG with citations, MCP both ways, evals and cost budgets. Public repo — run it yourself.',
+      'Building. Public repo you can clone and self-host — not a live SaaS, and there is no owned public deploy yet.',
     body: [
-      'Agent Fleet is a self-hostable multi-agent operations platform. You chat with a roster of tool-using agents, or hand the orchestrator a goal and watch it decompose into a live task DAG with human-approval gates.',
+      'Agent Fleet is a self-hostable multi-agent operations platform in progress. You chat with a roster of tool-using agents, or hand the orchestrator a goal and watch it decompose into a task DAG with human-approval gates.',
       'The public repository is on GitHub under hharsha98/agentfleet. The product spine is FastAPI plus Next.js, Postgres with pgvector, and a hand-built agent runtime with an env-switchable LangGraph path. The fleet can consume external MCP servers and also expose itself as an MCP server for IDE clients.',
-      'Ops is part of the product: per-message metering, cost budgets, prompt-injection screening, PII masking, versioned agent publish/rollback, and an Eval Center with a CI regression gate. It is meant to be run locally or self-hosted — there is no public owned SaaS URL yet. A studio host at fleet.agentic-systems-studio.com is planned; until DNS is attached, use GitHub and the self-host docs.',
+      'There is no public owned deploy. Do not treat this page as a hosted app. A studio hostname (fleet.agentic-systems-studio.com) is planned only — it is not live and is not a product URL. Use GitHub and the self-host docs if you want to run it yourself.',
     ],
     features: [
       'Streaming multi-agent chat with per-agent tools and prompts',
@@ -57,7 +70,7 @@ export const products: Product[] = [
       'Eval Center, cost budgets, guardrails, versioned rollback',
     ],
     stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'pgvector', 'MCP', 'Docker'],
-    statusNote: 'Self-hostable',
+    status: 'building',
     featured: true,
     github: 'https://github.com/hharsha98/agentfleet',
     futureHost: hostFor('Agent Fleet'),
@@ -82,11 +95,11 @@ export const products: Product[] = [
     tagline:
       'Local-first Agent OS dashboard for Cursor, Claude, Codex, and Hermes — dry-run by default, sandboxed workspace, gated machine control.',
     description:
-      'A local command center for agents already on the machine. Honest status. Dry-run until you turn execution on.',
+      'Early gallery of a local-first command center. Not production SaaS — dry-run until you turn execution on.',
     body: [
       'Agent OS is a local-first operations dashboard for Cursor Agent, Claude Code, Codex, and Hermes. It reports real CLI presence instead of painting fake “connected” cards.',
       'Safety is a product decision: unified chat is labeled dry-run, the workspace sandbox is jailed to a dedicated folder, and machine-control stays gated. Execution, installs, and public mode are off unless you flip explicit flags.',
-      'This is a local app (React + Express), not hosted SaaS. The public gallery is a click-through of the product surfaces. A studio host at os.agentic-systems-studio.com is planned; until DNS is attached, use the gallery and the GitHub repo.',
+      'This is a local app (React + Express), not hosted SaaS. The public github.io gallery is a click-through of the product surfaces — an early look, not a production cloud. A studio hostname (os.agentic-systems-studio.com) is planned only; it is not live.',
     ],
     features: [
       'Mission Control with live local version checks',
@@ -96,7 +109,7 @@ export const products: Product[] = [
       'Machine control: status only until execution is enabled',
     ],
     stack: ['React', 'TypeScript', 'Vite', 'Express', 'Node'],
-    statusNote: 'Local-first · gallery',
+    status: 'gallery',
     featured: true,
     github: 'https://github.com/hharsha98/agent-os',
     futureHost: hostFor('Agent OS'),
@@ -113,12 +126,12 @@ export const products: Product[] = [
     tagline:
       'An open-source agentic development environment: run Claude Code, cursor-agent, Codex and shells side by side in a terminal grid, with a kanban board that dispatches them, shared agent memory, and multi-agent orchestration.',
     description:
-      'Desktop ADE for AI coding agents. Real PTYs in a grid, a board that launches them, and memory they can share — TypeScript and Tauri, not a chat wrapper.',
+      'Desktop ADE you download from GitHub Releases. Marketing and local app — not a hosted IDE.',
     body: [
       'Vibespace is a home base for running multiple AI coding agents at once instead of juggling separate terminal windows. Each pane is a real terminal session: Claude Code, cursor-agent, Codex, or a plain shell. A pane can also load a web page, so a local dev server can sit beside the agent that is building it.',
       'Work moves on a kanban board that dispatches agents the same way you would assign a ticket. Shared memory lets every agent in the workspace read and write notes so they do not rediscover the same facts. Multi-agent orchestration coordinates related pieces of a larger task. Skills follow the agentskills.io standard and are discovered from disk.',
-      'The core is usable today: split up to 16 panes, pick an agent per pane, browse and edit files, dispatch from the board. Sessions live on the server, so closing a tab does not kill the agents. Desktop builds ship for macOS, Windows, and Linux. The app is not Apple-notarized; first launch is blocked by Gatekeeper until you explicitly open it. Node.js 22+ is required. This project was previously called vibedeck; existing data migrates on first launch.',
-      'A studio host at vibespace.agentic-systems-studio.com is planned; until DNS is attached, download the latest GitHub release.',
+      'The core is usable today as a local/desktop app: split up to 16 panes, pick an agent per pane, browse and edit files, dispatch from the board. Desktop builds ship for macOS, Windows, and Linux. The app is not Apple-notarized; first launch is blocked by Gatekeeper until you explicitly open it. Node.js 22+ is required. This project was previously called vibedeck; existing data migrates on first launch.',
+      'There is no hosted IDE. Download the latest GitHub release. A studio hostname (vibespace.agentic-systems-studio.com) is planned only; it is not live.',
     ],
     features: [
       'Terminal grid with real PTYs, split layouts, and templates',
@@ -128,7 +141,7 @@ export const products: Product[] = [
       'Tauri desktop shell · Node 22+ required',
     ],
     stack: ['TypeScript', 'React', 'Tauri', 'Fastify', 'node-pty', 'MCP'],
-    statusNote: 'Desktop ADE · download',
+    status: 'download',
     featured: true,
     github: 'https://github.com/hharsha98/Vibespace',
     futureHost: hostFor('Vibespace'),
@@ -154,7 +167,7 @@ export const products: Product[] = [
       'RetrievalLab assembles contextual chunking, hybrid search (vector + BM25, fused with RRF), HyDE query transformation, and cross-encoder reranking into one pipeline you can inspect live.',
       'Ingestion uses contextual retrieval: before embedding, an LLM writes a one-sentence context that situates each chunk in its document. The Pipeline Inspector shows the HyDE probe, hybrid candidates with vector vs keyword rank, and the rerank step promoting chunks. A compare view puts naive vs advanced answers side by side.',
       'Eval reports recall@k and MRR for naive vs advanced on a labelled set. The repo is explicit that reranking’s margin is largest on large messy corpora; on a small clean corpus a strong embedding already does well. Measuring that, instead of assuming “advanced” always wins, is the point.',
-      'The live lab is at retrievallab.pages.dev. A studio host at rag.agentic-systems-studio.com is planned; until DNS is attached, use the Pages demo.',
+      'The live lab is at retrievallab.pages.dev. A studio hostname (rag.agentic-systems-studio.com) is planned only — it is not live. Use the Pages demo until a studio host exists.',
     ],
     features: [
       'Contextual chunking (Anthropic-style situating sentence)',
@@ -164,7 +177,7 @@ export const products: Product[] = [
       'Retrieval eval: recall@k and MRR',
     ],
     stack: ['FastAPI', 'React', 'pgvector', 'FlashRank', 'BM25', 'HyDE', 'Supabase'],
-    statusNote: 'Live lab',
+    status: 'live',
     featured: true,
     github: 'https://github.com/hharsha98/retrievallab',
     futureHost: hostFor('RetrievalLab'),
@@ -195,7 +208,7 @@ export const products: Product[] = [
       'Hybrid retrieval implemented; rerank available, off by default for latency',
     ],
     stack: ['Python', 'Ollama', 'FAISS', 'BM25', 'NLI', 'Gradio', 'Docker'],
-    statusNote: 'Live + walkthrough',
+    status: 'live',
     featured: false,
     github: 'https://github.com/hharsha98/rag-trustworthiness-industrial',
     links: [
@@ -234,7 +247,7 @@ export const products: Product[] = [
       'LLM-as-judge evals, including a trap question',
     ],
     stack: ['FastAPI', 'React', 'pgvector', 'SSE', 'Docker', 'Kubernetes', 'Supabase'],
-    statusNote: 'Live demo',
+    status: 'live',
     featured: false,
     github: 'https://github.com/hharsha98/careeragent',
     links: [
@@ -250,11 +263,11 @@ export const products: Product[] = [
     tagline:
       'From an SMT error code to an evidence-linked corrective plan — one incident, multiple sources, a decision you can inspect.',
     description:
-      'Public-data investigation workspace: specialist agents retrieve evidence, compare hypotheses, and leave a visible path to a human-reviewed plan. Plant data is fictional.',
+      'Building. Evidence-grounded investigation workspace on GitHub — not offered as a live product here.',
     body: [
-      'MARA Open is a public demonstration of an evidence-grounded multi-agent maintenance workflow. Public Opulo documentation supplies the technical references; every plant, machine, incident, and repair outcome is fictional. The project is not affiliated with Opulo.',
-      'You can compare the same error with different causes, inspect retrieved sources, follow specialist steps (plan, retrieve, hypothesize, evaluate), and record a human decision. Reference-rule execution needs no model key; live AI is optional and may be unavailable on the public host.',
-      'The README is explicit that reference-fixture scores test software behavior, not open-ended diagnostic generalization, and must not be quoted as LLM or thesis performance. This studio page does not reprint those numbers.',
+      'MARA Open is an evidence-grounded multi-agent maintenance workflow. Public Opulo documentation supplies the technical references; every plant, machine, incident, and repair outcome is fictional. The project is not affiliated with Opulo.',
+      'You can compare the same error with different causes, inspect retrieved sources, follow specialist steps (plan, retrieve, hypothesize, evaluate), and record a human decision. Reference-rule execution needs no model key.',
+      'This is not a studio Live product. A previous chatgpt.site preview was fragile and is not linked from this hub. GitHub is the source of truth until the project is migrated to an owned host. The README is explicit that reference-fixture scores test software behavior, not open-ended diagnostic generalization, and must not be quoted as LLM or thesis performance.',
     ],
     features: [
       'Visible specialist path: plan → evidence → hypotheses → evaluation → human review',
@@ -264,17 +277,10 @@ export const products: Product[] = [
       'Durable pause/resume of human review on the local backend',
     ],
     stack: ['Python', 'LangGraph', 'FastAPI', 'React', 'Chroma', 'SQLite'],
-    statusNote: 'Live investigation',
+    status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/mara-open',
-    links: [
-      {
-        kind: 'live',
-        label: 'Live',
-        href: 'https://mara-open-hharsha98.rtvision134.chatgpt.site',
-      },
-      { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/mara-open' },
-    ],
+    links: [{ kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/mara-open' }],
     category: 'industrial',
   },
   {
@@ -284,7 +290,7 @@ export const products: Product[] = [
     tagline:
       'BridgeSpace-inspired multi-agent terminal grid (Claude Code, cursor-agent, Codex, Gemini CLI, shell). Local ADE — marketing page only, no hosted demo.',
     description:
-      'A second agentic development environment, kept as its own repo on purpose. Real PTYs, grid presets, kanban dispatch, shared memory MCP. Run it locally.',
+      'Building. Local ADE — GitHub and run-it-yourself only. Not a hosted IDE.',
     body: [
       'Agent Grid is a BridgeSpace-inspired ADE: mission control for several AI coding agents in one browser window. It is intentionally separate from Vibespace. The two repos are not merged.',
       'A local Fastify server spawns real PTY sessions. The UI is React + xterm.js. You can launch Claude Code, cursor-agent, Codex, Gemini CLI, or a shell, in presets from 1 to 16 panes. Layout, cwd, and agent preference persist; workspace templates live on disk.',
@@ -298,7 +304,7 @@ export const products: Product[] = [
       'Optional Tauri desktop wrapper',
     ],
     stack: ['TypeScript', 'React', 'Fastify', 'xterm.js', 'Monaco', 'Tauri', 'MCP'],
-    statusNote: 'Local · no hosted demo',
+    status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/agentgrid',
     links: [{ kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentgrid' }],
@@ -325,7 +331,7 @@ export const products: Product[] = [
       'Docker, Kubernetes, Terraform, and CI skeletons',
     ],
     stack: ['FastAPI', 'React', 'Postgres', 'Redis', 'Docker', 'Kubernetes', 'Terraform'],
-    statusNote: 'Phase 0 scaffold',
+    status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
     links: [
@@ -358,7 +364,7 @@ export const products: Product[] = [
       'Learning log for incidents, fixes, and verification',
     ],
     stack: ['TypeScript', 'Python', 'FastAPI', 'Docker', 'Kubernetes', 'Terraform', 'MCP'],
-    statusNote: 'Product + deploy scaffolding',
+    status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/agentops-studio',
     featuresHeading: 'On the product',
@@ -409,8 +415,12 @@ export function badgeLinks(product: Product) {
 
 export function demoLinks(product: Product) {
   return product.links.filter((link) =>
-    ['live', 'gallery', 'download', 'walkthrough', 'docs'].includes(link.kind),
+    ['live', 'gallery', 'download', 'walkthrough'].includes(link.kind),
   )
+}
+
+export function publicSurfaces() {
+  return products.filter((p) => p.status === 'live' || p.status === 'download' || p.status === 'gallery')
 }
 
 export function productPaths() {
@@ -420,9 +430,9 @@ export function productPaths() {
 
 export function catalogStats() {
   return {
-    featured: products.filter((p) => p.featured).length,
-    catalog: products.length,
-    live: products.filter((p) => p.links.some((l) => l.kind === 'live')).length,
-    download: products.filter((p) => p.links.some((l) => l.kind === 'download')).length,
+    live: products.filter((p) => p.status === 'live').length,
+    download: products.filter((p) => p.status === 'download').length,
+    gallery: products.filter((p) => p.status === 'gallery').length,
+    building: products.filter((p) => p.status === 'building').length,
   }
 }

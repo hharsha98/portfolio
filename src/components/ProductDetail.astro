@@ -1,6 +1,6 @@
 ---
 import type { Product } from '../data/products'
-import { neighbors } from '../data/products'
+import { neighbors, statusLabel } from '../data/products'
 
 interface Props {
   product: Product
@@ -8,7 +8,10 @@ interface Props {
 
 const { product } = Astro.props
 const { prev, next } = neighbors(product.slug)
-const primary = product.links.find((l) => l.kind !== 'github') ?? product.links[0]
+const primary =
+  product.links.find((l) => l.kind === 'live' || l.kind === 'download' || l.kind === 'gallery') ??
+  product.links.find((l) => l.kind === 'github') ??
+  product.links[0]
 const rest = product.links.filter((l) => l !== primary)
 ---
 
@@ -21,7 +24,7 @@ const rest = product.links.filter((l) => l !== primary)
     <span class="text-brass">{product.name}</span>
   </nav>
 
-  <p class="mt-10 font-mono text-xs text-brass">{product.index} · {product.statusNote}</p>
+  <p class="mt-10 font-mono text-xs text-brass">{product.index} · {statusLabel(product.status)}</p>
   <h1 class="page-title mt-3">{product.name}</h1>
   <p class="mt-4 text-lg leading-relaxed text-mute">{product.tagline}</p>
 
@@ -36,7 +39,7 @@ const rest = product.links.filter((l) => l !== primary)
 
   {product.futureHost && (
     <p class="mt-6 font-mono text-[11px] leading-relaxed text-mute">
-      Coming on <span class="text-paper">{product.futureHost}</span> — DNS is not attached yet, so the buttons above use the working GitHub / demo links.
+      Planned hostname <span class="text-paper">{product.futureHost}</span> — not live, not attached, not a product URL.
     </p>
   )}
 

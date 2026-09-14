@@ -1,32 +1,30 @@
 ---
 import Base from '../layouts/Base.astro'
 import { site } from '../data/site'
-import { products, demoLinks } from '../data/products'
+import { publicSurfaces, demoLinks, statusLabel } from '../data/products'
 
-const rows = products
-  .map((product) => ({ product, links: demoLinks(product) }))
-  .filter((row) => row.links.length > 0)
+const rows = publicSurfaces().map((product) => ({ product, links: demoLinks(product) }))
 ---
 
 <Base
   title={`Demos — ${site.studio}`}
-  description="Working live demos, galleries, downloads, and self-host docs for Agentic Systems Studio products."
+  description="Working live labs, galleries, and downloads for Agentic Systems Studio. Scaffolds and coming-soon products are on GitHub, not this page."
 >
   <section class="section">
     <p class="kicker">Demos</p>
-    <h1 class="page-title mt-4">Try the products</h1>
+    <h1 class="page-title mt-4">Surfaces that work today</h1>
     <p class="mt-5 max-w-2xl text-lg leading-relaxed text-mute">
-      Public surfaces that work today. Studio subdomains such as fleet.agentic-systems-studio.com are listed on product pages as coming — they are not the primary buttons yet.
+      Live labs, a download, and an early gallery. Coming-soon products are GitHub-only — they do not get Live buttons. Studio hostnames such as fleet.agentic-systems-studio.com are planned names, not live URLs.
     </p>
 
     <div class="mt-12 space-y-4">
       {rows.map(({ product, links }) => (
         <article class="product-card panel p-5 sm:p-6">
-          <div class="flex flex-wrap items-baseline justify-between gap-3">
+          <div class="flex flex-wrap items-center justify-between gap-3">
             <h2 class="display text-2xl text-paper">
               <a class="hover:text-brass" href={`/products/${product.slug}`}>{product.name}</a>
             </h2>
-            <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">{product.statusNote}</span>
+            <span class={`badge badge-${product.status}`}>{statusLabel(product.status)}</span>
           </div>
           <p class="mt-2 max-w-3xl text-sm leading-relaxed text-mute">{product.description}</p>
           <div class="mt-5 flex flex-wrap gap-2">

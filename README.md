@@ -10,7 +10,7 @@ Production domain: [agentic-systems-studio.com](https://agentic-systems-studio.c
 
 The zone is on Cloudflare nameservers (`alec.ns.cloudflare.com`). Custom domains **agentic-systems-studio.com** and **www.agentic-systems-studio.com** are already attached to the Workers project `agentic-systems-studio`. Keep that project as the **product studio**. Do not add a CNAME by hand. `wrangler.jsonc` lists both hostnames with `custom_domain: true` so deploys do not drop www.
 
-Future product hosts (copy/config only — **do not attach Cloudflare DNS from this repo** until the apps are ready):
+Future product hosts (copy/config only — **planned names, not live URLs**. Do **not** attach Cloudflare DNS from this repo):
 
 | Host | Product | Primary CTA today |
 |---|---|---|
@@ -28,25 +28,25 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 | Route | Content |
 |---|---|
 | `/` | Product studio home: pitch, featured products, catalog, coming hosts |
-| `/products` | Full product catalog with Live / Gallery / Download / GitHub badges |
-| `/products/agentfleet` | Self-hostable multi-agent ops — GitHub + self-host docs |
-| `/products/agent-os` | Local-first Agent OS — [gallery](https://hharsha98.github.io/agent-os/) |
-| `/products/vibespace` | Desktop ADE — [download](https://github.com/hharsha98/Vibespace/releases/latest) |
-| `/products/retrievallab` | Advanced RAG + eval — [live lab](https://retrievallab.pages.dev) |
-| `/products/rag-trustworthiness` | Industrial RAG trust metrics — [live](https://ragtrust.169.58.185.43.sslip.io/) · [walkthrough](https://hharsha98.github.io/rag-trustworthiness-industrial/) |
-| `/products/careeragent` | Multi-agent job-hunt product — [live demo](https://careeragent-ceq.pages.dev) |
-| `/products/mara-open` | Evidence-grounded investigation workspace — [live](https://mara-open-hharsha98.rtvision134.chatgpt.site) |
-| `/products/agentgrid` | Multi-agent terminal grid (local; no hosted demo) |
-| `/products/agentops-studio` | Product + deploy scaffolding |
-| `/products/revenue-ops` | Revenue Ops control tower (Phase 0 scaffold) |
-| `/demos` | Working live / gallery / download / self-host links |
+| `/products` | Full product catalog with Live / Download / local / Gallery / early / Building badges |
+| `/products/agentfleet` | Building — GitHub + self-host docs (no public owned SaaS) |
+| `/products/agent-os` | Gallery / early — [gallery](https://hharsha98.github.io/agent-os/) |
+| `/products/vibespace` | Download / local — [GitHub Releases](https://github.com/hharsha98/Vibespace/releases/latest) |
+| `/products/retrievallab` | Live — [retrievallab.pages.dev](https://retrievallab.pages.dev) |
+| `/products/rag-trustworthiness` | Live — [sslip demo](https://ragtrust.169.58.185.43.sslip.io/) · [walkthrough](https://hharsha98.github.io/rag-trustworthiness-industrial/) |
+| `/products/careeragent` | Live — [careeragent-ceq.pages.dev](https://careeragent-ceq.pages.dev) |
+| `/products/mara-open` | Building — [GitHub](https://github.com/hharsha98/mara-open) (no Live CTA) |
+| `/products/agentgrid` | Building — GitHub only |
+| `/products/agentops-studio` | Building — GitHub only |
+| `/products/revenue-ops` | Building — Phase 0 scaffold |
+| `/demos` | Live / gallery / download surfaces only |
 | `/research` | DVS EBL 2026 paper (DOI) |
 | `/about` | Founder pointer to [harsha-vardhan.pages.dev](https://harsha-vardhan.pages.dev) |
 | `/contact` | Turnstile-protected contact form (sitekey `0x4AAAAAAEuwpaBEHtpcUX5g`). POST `/api/contact` verifies the token and stores the message in free D1 (`ass-db`) + KV (`ASS_KV`). No Email Sending / Workers Paid. |
 
 Copy is taken from public GitHub descriptions/READMEs. No invented star counts or eval headlines. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — never github.com/agentic-systems-studio. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Studio contact: `contact@agentic-systems-studio.com`. Do not put a personal Gmail address on public studio pages. Turnstile-protected form at `/contact` stores submissions in free D1 + KV — no Email Sending / Workers Paid.
 
-Do **not** link third-party Vercel hosts for Agent Fleet. Agent Fleet has no confirmed public owned SaaS URL.
+Do **not** link third-party Vercel or Pages hosts for Agent Fleet. Agent Fleet has no confirmed public owned SaaS URL. Do **not** present scaffolds as live SaaS. MARA Open has no Live button (GitHub only until migrated).
 
 ## Local
 
