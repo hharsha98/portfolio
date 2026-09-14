@@ -25,6 +25,9 @@ const accent = /^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7
   ]}
   style={`--accent:${accent}`}
 >
+  {featured && !compact && (
+    <span class="star-index" aria-hidden="true">{product.index}</span>
+  )}
   {product.visual && showArt ? (
     <a class="product-shot mb-5 block" href={href}>
       <img

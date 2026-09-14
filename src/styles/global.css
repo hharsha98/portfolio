@@ -55,12 +55,22 @@ body {
   @apply bg-ink text-mute antialiased;
   font-feature-settings: "ss01" 1, "kern" 1;
   background-image:
-    radial-gradient(ellipse 72% 52% at 82% 6%, rgb(88 70 200 / 0.3), transparent 58%),
-    radial-gradient(ellipse 42% 36% at 8% 78%, rgb(70 90 210 / 0.1), transparent 55%),
+    radial-gradient(ellipse 72% 52% at 82% 6%, rgb(88 70 200 / 0.22), transparent 58%),
+    radial-gradient(ellipse 42% 36% at 8% 78%, rgb(70 90 210 / 0.08), transparent 55%),
     linear-gradient(to right, rgb(255 255 255 / 0.018) 1px, transparent 1px),
     linear-gradient(to bottom, rgb(255 255 255 / 0.018) 1px, transparent 1px);
   background-size: auto, auto, var(--grid) var(--grid), var(--grid) var(--grid);
   background-attachment: fixed;
+}
+
+.is-home {
+  background-image:
+    radial-gradient(ellipse 90% 70% at 78% -8%, rgb(92 72 220 / 0.42), transparent 58%),
+    radial-gradient(ellipse 50% 40% at 6% 28%, rgb(201 162 74 / 0.08), transparent 52%),
+    radial-gradient(ellipse 55% 45% at 12% 92%, rgb(70 90 210 / 0.14), transparent 55%),
+    linear-gradient(to right, rgb(255 255 255 / 0.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.022) 1px, transparent 1px);
+  background-size: auto, auto, auto, var(--grid) var(--grid), var(--grid) var(--grid);
 }
 
 ::selection {
@@ -159,7 +169,7 @@ body {
 }
 
 .lede {
-  @apply max-w-xl text-lg leading-relaxed text-mute;
+  @apply max-w-xl text-lg leading-relaxed text-mute sm:text-xl;
 }
 
 .badge {
@@ -217,10 +227,10 @@ body {
 
 .title-xl {
   font-family: var(--font-serif);
-  font-size: clamp(2.7rem, 6.6vw, 4.7rem);
+  font-size: clamp(3.1rem, 8vw, 6.15rem);
   font-weight: 400;
-  line-height: 1.04;
-  letter-spacing: -0.035em;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
   color: var(--color-paper);
 }
 
@@ -253,10 +263,14 @@ body {
 .site-header {
   @apply sticky top-0 z-40 border-b border-white/8 bg-ink/80 backdrop-blur-xl;
 }
+.site-header-home {
+  border-bottom-color: transparent;
+  background: linear-gradient(180deg, rgb(7 8 12 / 0.78), rgb(7 8 12 / 0.28) 70%, transparent);
+}
 
 .logo-mark {
-  @apply flex h-8 w-8 items-center justify-center rounded-lg border border-aurora/35 bg-raised text-[11px] font-mono text-paper;
-  box-shadow: 0 0 16px rgb(139 124 255 / 0.22);
+  @apply flex h-9 w-9 items-center justify-center rounded-xl border border-aurora/40 bg-raised text-[11px] font-mono text-paper;
+  box-shadow: 0 0 22px rgb(139 124 255 / 0.32);
 }
 
 details.nav-menu > summary {
@@ -271,43 +285,94 @@ details.nav-menu > summary::-webkit-details-marker {
   overflow: hidden;
 }
 
+.hero-atmosphere {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
 .hero-inner {
-  min-height: min(68vh, 640px);
-  padding-top: 4.5rem;
-  padding-bottom: 2.75rem;
+  min-height: min(92vh, 920px);
+  padding-top: 5rem;
+  padding-bottom: 3rem;
 }
 @media (min-width: 640px) {
   .hero-inner {
-    padding-top: 5.25rem;
-    padding-bottom: 3.25rem;
+    padding-top: 6rem;
+    padding-bottom: 3.5rem;
   }
 }
 
 .hero-glow {
-  pointer-events: none;
   position: absolute;
-  inset: -12% 8% auto auto;
-  width: min(62vw, 680px);
-  height: min(62vw, 680px);
+  inset: -18% -6% auto auto;
+  width: min(72vw, 820px);
+  height: min(72vw, 820px);
   border-radius: 50%;
-  background: radial-gradient(circle, rgb(88 70 200 / 0.42), rgb(110 231 240 / 0.1) 42%, transparent 70%);
-  filter: blur(10px);
+  background: radial-gradient(circle, rgb(98 78 230 / 0.5), rgb(110 231 240 / 0.1) 42%, transparent 70%);
+  filter: blur(12px);
+}
+.hero-glow-warm {
+  inset: auto auto 8% -12%;
+  width: min(42vw, 420px);
+  height: min(42vw, 420px);
+  background: radial-gradient(circle, rgb(201 162 74 / 0.16), transparent 70%);
+  filter: blur(18px);
+}
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 42%, transparent 28%, rgb(7 8 12 / 0.55) 100%),
+    linear-gradient(180deg, rgb(7 8 12 / 0.2), transparent 18%, transparent 78%, rgb(7 8 12 / 0.55));
 }
 
 .stats-bar {
-  @apply border-t border-white/8 bg-black/20;
+  position: relative;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  background: rgb(0 0 0 / 0.28);
+}
+.stats-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(139 124 255 / 0.55), rgb(201 162 74 / 0.28), transparent);
 }
 
 .stat-cell {
   display: flex;
   flex-direction: column-reverse;
-  gap: 0.5rem;
-  padding: 1.6rem 1.25rem 1.75rem;
+  gap: 0.65rem;
+  padding: 1.85rem 1.25rem 2rem;
 }
 @media (min-width: 640px) {
   .stat-cell {
-    padding: 1.85rem 2rem 2rem;
+    padding: 2.15rem 2.25rem 2.35rem;
+    border-right: 1px solid rgb(255 255 255 / 0.06);
   }
+  .stat-cell:last-child {
+    border-right: 0;
+  }
+}
+.stat-value {
+  font-size: clamp(3rem, 7vw, 5.25rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--color-paper);
 }
 
 .product-shot {
@@ -382,6 +447,18 @@ details.nav-menu > summary::-webkit-details-marker {
 .product-name-link:hover {
   color: var(--accent);
 }
+.star-index {
+  position: absolute;
+  right: 0.7rem;
+  top: 0.15rem;
+  z-index: 0;
+  font-family: var(--font-serif);
+  font-size: 5.5rem;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: rgb(244 246 251 / 0.05);
+  pointer-events: none;
+}
 @media (hover: hover) {
   .has-accent {
     transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
@@ -440,17 +517,13 @@ details.nav-menu > summary::-webkit-details-marker {
 }
 
 .studio-orbit-wrap {
-  width: min(100%, 34rem);
+  width: min(100%, 46rem);
   margin-inline: auto;
 }
 
 .orbit-stage {
-  overflow: hidden;
-  border-radius: 1.6rem;
-  border: 1px solid rgb(255 255 255 / 0.08);
-  background:
-    radial-gradient(circle at 50% 45%, rgb(88 70 200 / 0.18), transparent 58%),
-    rgb(6 7 11 / 0.55);
+  overflow: visible;
+  background: transparent;
 }
 
 .studio-orbit {
@@ -461,11 +534,11 @@ details.nav-menu > summary::-webkit-details-marker {
 
 .orbit-glow {
   position: absolute;
-  inset: 18%;
+  inset: 14%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgb(88 70 200 / 0.4), rgb(110 231 240 / 0.08) 46%, transparent 70%);
-  filter: blur(18px);
-  animation: orbit-pulse 7s ease-in-out infinite;
+  background: radial-gradient(circle, rgb(98 78 230 / 0.5), rgb(110 231 240 / 0.1) 42%, transparent 70%);
+  filter: blur(22px);
+  animation: orbit-pulse 8s ease-in-out infinite;
 }
 
 .orbit-rings,
@@ -477,17 +550,21 @@ details.nav-menu > summary::-webkit-details-marker {
   border-radius: 50%;
 }
 .orbit-ring-a {
-  inset: 32%;
-  border: 1px solid rgb(255 255 255 / 0.08);
+  inset: 36%;
+  border: 1px solid rgb(255 255 255 / 0.07);
 }
 .orbit-ring-b {
-  inset: 18%;
-  border: 1px solid rgb(139 124 255 / 0.22);
+  inset: 24%;
+  border: 1px solid rgb(139 124 255 / 0.2);
 }
 .orbit-ring-c {
-  inset: 6%;
-  border: 1px dashed rgb(139 124 255 / 0.22);
-  animation: orbit-spin 90s linear infinite;
+  inset: 12%;
+  border: 1px solid rgb(139 124 255 / 0.16);
+}
+.orbit-ring-d {
+  inset: 2%;
+  border: 1px dashed rgb(201 162 74 / 0.22);
+  animation: orbit-spin 120s linear infinite;
 }
 
 .orbit-core {
@@ -496,30 +573,31 @@ details.nav-menu > summary::-webkit-details-marker {
   top: 50%;
   z-index: 2;
   display: flex;
-  width: 5.6rem;
-  height: 5.6rem;
-  margin: -2.8rem;
+  width: 6.6rem;
+  height: 6.6rem;
+  margin: -3.3rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 1.35rem;
-  border: 1px solid rgb(139 124 255 / 0.45);
-  background: #101218;
+  border-radius: 1.55rem;
+  border: 1px solid rgb(196 181 253 / 0.55);
+  background: linear-gradient(180deg, #171b28, #0c0e14);
   box-shadow:
-    0 0 0 8px rgb(6 7 11 / 0.55),
-    0 0 40px rgb(139 124 255 / 0.3);
+    0 0 0 10px rgb(7 8 12 / 0.45),
+    0 0 56px rgb(139 124 255 / 0.42);
   text-decoration: none;
 }
 .orbit-core-mark {
-  font-family: var(--font-mono);
-  font-size: 1rem;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  letter-spacing: -0.04em;
   color: var(--color-paper);
 }
 .orbit-core-sub {
-  margin-top: 0.15rem;
+  margin-top: 0.12rem;
   font-family: var(--font-mono);
   font-size: 0.58rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-mute);
 }
@@ -530,54 +608,86 @@ details.nav-menu > summary::-webkit-details-marker {
   top: calc(50% + sin(var(--a)) * var(--r) * 1%);
   z-index: 3;
   display: flex;
-  width: 3rem;
-  height: 3rem;
   align-items: center;
   justify-content: center;
-  border-radius: 0.9rem;
-  border: 1px solid color-mix(in srgb, var(--c) 75%, transparent);
+  border-radius: 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--c) 78%, transparent);
   background: #101218;
   color: var(--c);
-  box-shadow: 0 0 22px color-mix(in srgb, var(--c) 32%, transparent);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--c) 34%, transparent);
   transform: translate(-50%, -50%);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-decoration: none;
 }
-.orbit-node:hover {
-  transform: translate(-50%, -50%) scale(1.08);
-  box-shadow: 0 0 28px color-mix(in srgb, var(--c) 55%, transparent);
+.orbit-node.is-live {
+  width: 3.35rem;
+  height: 3.35rem;
+  box-shadow: 0 0 28px color-mix(in srgb, var(--c) 48%, transparent);
 }
-.orbit-icon {
-  display: block;
-  width: 1.35rem;
-  height: 1.35rem;
+.orbit-node.is-download,
+.orbit-node.is-gallery {
+  width: 2.85rem;
+  height: 2.85rem;
 }
-.orbit-icon svg {
-  display: block;
-  width: 100%;
-  height: 100%;
+.orbit-node.is-building {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  opacity: 0.78;
+}
+.orbit-node:hover,
+.orbit-node:focus-visible {
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 0 32px color-mix(in srgb, var(--c) 62%, transparent);
+  z-index: 4;
+}
+.orbit-mark {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: var(--color-paper);
+}
+.orbit-node.is-building .orbit-mark {
+  font-size: 0.55rem;
+}
+.orbit-label {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--color-paper);
+  opacity: 0;
+  pointer-events: none;
+  text-shadow: 0 4px 18px rgb(0 0 0 / 0.8);
+}
+.orbit-node:hover .orbit-label,
+.orbit-node:focus-visible .orbit-label {
+  opacity: 1;
 }
 
-.orbit-sat {
+.orbit-star {
   position: absolute;
   left: calc(50% + cos(var(--a)) * var(--r) * 1%);
   top: calc(50% + sin(var(--a)) * var(--r) * 1%);
   z-index: 1;
-  width: 0.42rem;
-  height: 0.42rem;
+  width: 0.22rem;
+  height: 0.22rem;
   border-radius: 50%;
-  background: var(--c);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--c) 70%, transparent);
+  background: rgb(244 246 251 / 0.55);
   transform: translate(-50%, -50%);
   pointer-events: none;
-  opacity: 0.85;
 }
 
 .orbit-caption {
-  margin-top: 0.75rem;
+  margin-top: 0.35rem;
   text-align: center;
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--color-mute);
 }
 
@@ -609,9 +719,11 @@ details.nav-menu > summary::-webkit-details-marker {
   position: relative;
   z-index: 1;
   border: 1px solid rgb(255 255 255 / 0.08);
-  border-radius: 1.15rem;
-  background: rgb(13 16 24 / 0.72);
-  padding: 1.35rem 1.25rem 1.5rem;
+  border-radius: 1.25rem;
+  background:
+    radial-gradient(ellipse at 0% 0%, rgb(139 124 255 / 0.1), transparent 55%),
+    rgb(13 16 24 / 0.72);
+  padding: 1.5rem 1.35rem 1.65rem;
 }
 .workflow-node {
   display: inline-flex;
@@ -667,12 +779,12 @@ details.nav-menu > summary::-webkit-details-marker {
 .close-glow {
   pointer-events: none;
   position: absolute;
-  inset: auto auto -30% 20%;
-  width: min(70vw, 720px);
-  height: min(50vw, 420px);
+  inset: -20% auto auto 10%;
+  width: min(90vw, 980px);
+  height: min(70vw, 560px);
   border-radius: 50%;
-  background: radial-gradient(circle, rgb(88 70 200 / 0.28), transparent 68%);
-  filter: blur(12px);
+  background: radial-gradient(circle, rgb(98 78 230 / 0.38), rgb(201 162 74 / 0.08) 48%, transparent 70%);
+  filter: blur(16px);
 }
 
 .led {

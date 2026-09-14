@@ -14,36 +14,41 @@ const rest = catalogProducts()
 const stats = catalogStats()
 ---
 
-<Base>
+<Base home>
   <section class="hero">
-    <div class="hero-glow" aria-hidden="true"></div>
-    <div class="hero-inner relative mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-12 lg:gap-8">
-      <div class="lg:col-span-6">
+    <div class="hero-atmosphere" aria-hidden="true">
+      <div class="hero-glow"></div>
+      <div class="hero-glow hero-glow-warm"></div>
+      <div class="hero-grain"></div>
+      <div class="hero-vignette"></div>
+    </div>
+    <div class="hero-inner relative mx-auto grid max-w-[88rem] items-center gap-10 px-4 lg:grid-cols-12 lg:gap-4">
+      <div class="hero-copy lg:col-span-5">
         <div class="flex flex-wrap gap-2">
           <span class="pill"><span class="pill-dot"></span> {stats.live} live</span>
           <span class="pill">Open source</span>
           <span class="pill">Self-hostable</span>
         </div>
         <h1 class="title-xl mt-8">
-          A studio of AI products
-          <span class="gradient-phrase block">you can run and inspect.</span>
+          A constellation
+          <span class="gradient-phrase block">of products you can run.</span>
         </h1>
         <p class="lede mt-6">
           {site.positioning} Open a live lab, download a desktop app, walk an early gallery, or follow a repo that is still being built — no fake Live buttons on scaffolds.
         </p>
         <div class="mt-10 flex flex-wrap items-center gap-x-5 gap-y-3">
-          <a class="btn btn-light" href="/products">Browse products →</a>
+          <a class="btn btn-light" href="/products">Enter the catalog →</a>
           <a class="btn-text" href="/demos">See demos</a>
           <a class="btn-text" href={site.github} rel="noreferrer" target="_blank">GitHub ↗</a>
         </div>
       </div>
-      <div class="lg:col-span-6">
+      <div class="lg:col-span-7">
         <StudioOrbit />
       </div>
     </div>
 
     <div class="stats-bar">
-      <dl class="mx-auto grid max-w-6xl grid-cols-2 sm:grid-cols-4">
+      <dl class="mx-auto grid max-w-[88rem] grid-cols-2 sm:grid-cols-4">
         {[
           [String(stats.live), 'Live'],
           [String(stats.download), 'Download / local'],
@@ -52,7 +57,7 @@ const stats = catalogStats()
         ].map(([value, label]) => (
           <div class="stat-cell">
             <dt class="font-mono text-[11px] uppercase tracking-[0.18em] text-mute">{label}</dt>
-            <dd class="display text-4xl tracking-tight text-paper sm:text-5xl">{value}</dd>
+            <dd class="display stat-value">{value}</dd>
           </div>
         ))}
       </dl>
@@ -61,8 +66,8 @@ const stats = catalogStats()
 
   <section class="section pt-16 sm:pt-20">
     <p class="kicker">Core lines</p>
-    <h2 class="display mt-3 max-w-2xl text-3xl leading-tight text-paper sm:text-5xl">
-      Ops, environments, and retrieval — as products, not a resume.
+    <h2 class="display mt-3 max-w-3xl text-4xl leading-tight text-paper sm:text-6xl">
+      Three lines. A whole catalog in orbit.
     </h2>
     <div class="mt-12 grid gap-4 lg:grid-cols-3">
       {[
@@ -83,7 +88,7 @@ const stats = catalogStats()
     <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
       <div>
         <p class="kicker">Shipping over time</p>
-        <h2 class="display mt-2 text-3xl text-paper sm:text-5xl">Product constellation</h2>
+        <h2 class="display mt-2 text-4xl text-paper sm:text-6xl">Product constellation</h2>
         <p class="mt-3 max-w-xl text-sm text-mute">
           Status on every card: Live, Download / local, Gallery / early, or Building / coming soon. Working links only — no invented eval numbers.
         </p>
@@ -99,7 +104,7 @@ const stats = catalogStats()
 
     <div class="mt-24 mb-8">
       <p class="kicker">Catalog</p>
-      <h2 class="display mt-2 text-3xl text-paper sm:text-5xl">More systems</h2>
+      <h2 class="display mt-2 text-4xl text-paper sm:text-6xl">More systems</h2>
     </div>
     <div class="constellation-grid">
       {rest.map((p) => <ProductCard product={p} compact />)}

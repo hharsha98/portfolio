@@ -174,6 +174,9 @@ if (indexHtml.includes('94ms') || /17 built-in/i.test(indexHtml)) {
 if (!indexHtml.includes('Studio constellation')) {
   fail('built home must include the studio constellation graphic')
 }
+if (!indexHtml.includes('products around one core')) {
+  fail('built home constellation must be the full catalog, not a four-node Fleet clone')
+}
 if (!indexHtml.includes('Studio workflow')) fail('built home must include the studio workflow section')
 if (!indexHtml.includes('Tech we actually use')) fail('built home must include tech credibility pills')
 if (!indexHtml.includes('Write the studio')) fail('built home must close on studio contact, not a SaaS funnel')

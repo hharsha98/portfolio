@@ -8,10 +8,12 @@ interface Props {
   title?: string
   description?: string
   canonical?: string
+  home?: boolean
 }
 
 const title = Astro.props.title ?? site.title
 const description = Astro.props.description ?? site.description
+const home = Astro.props.home ?? false
 const canonical = new URL(Astro.props.canonical ?? Astro.url.pathname, site.url).toString()
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -56,7 +58,7 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body>
+  <body class:list={[home && 'is-home']}>
     <a class="skip" href="#content">Skip to content</a>
     <Header />
     <main id="content">

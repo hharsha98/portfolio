@@ -1,115 +1,71 @@
 ---
-import { products } from '../data/products'
+import { products, statusLabel } from '../data/products'
 
-const icons = {
-  agentfleet: 'fleet',
-  'agent-os': 'os',
-  vibespace: 'vibe',
-  retrievallab: 'rag',
-} as const
+const layout: Record<string, { a: number; r: number }> = {
+  retrievallab: { a: -22, r: 37 },
+  careeragent: { a: 18, r: 41 },
+  'rag-trustworthiness': { a: 54, r: 34 },
+  'agent-os': { a: 94, r: 39 },
+  vibespace: { a: 132, r: 33 },
+  agentgrid: { a: 168, r: 42 },
+  'mara-open': { a: 204, r: 30 },
+  'revenue-ops': { a: 246, r: 36 },
+  'agentops-studio': { a: 286, r: 32 },
+  agentfleet: { a: 328, r: 40 },
+}
 
-const orbit = [
-  { slug: 'agentfleet', a: -48, r: 38 },
-  { slug: 'agent-os', a: 28, r: 34 },
-  { slug: 'vibespace', a: 132, r: 36 },
-  { slug: 'retrievallab', a: 208, r: 33 },
-] as const
-
-const nodes = orbit.map((item) => {
-  const product = products.find((p) => p.slug === item.slug)
-  if (!product) throw new Error(`orbit product missing: ${item.slug}`)
-  return {
-    href: `/products/${product.slug}`,
-    label: product.name,
-    a: item.a,
-    r: item.r,
-    color: product.accent,
-    icon: icons[item.slug],
-  }
+const nodes = products.map((product) => {
+  const pos = layout[product.slug]
+  if (!pos) throw new Error(`constellation layout missing: ${product.slug}`)
+  return { product, ...pos }
 })
 
-const satelliteSlugs = ['careeragent', 'rag-trustworthiness', 'revenue-ops', 'agentops-studio'] as const
-const satellitePos = [
-  { a: 70, r: 44 },
-  { a: 168, r: 41 },
-  { a: -12, r: 45 },
-  { a: 250, r: 42 },
+const stars = [
+  { a: 8, r: 46 },
+  { a: 76, r: 47 },
+  { a: 118, r: 45 },
+  { a: 190, r: 48 },
+  { a: 230, r: 46 },
+  { a: 270, r: 47 },
+  { a: 310, r: 45 },
+  { a: 350, r: 48 },
 ] as const
-const satellites = satelliteSlugs.map((slug, i) => {
-  const product = products.find((p) => p.slug === slug)
-  const pos = satellitePos[i]
-  if (!product || !pos) throw new Error(`orbit satellite missing: ${slug}`)
-  return { ...pos, color: product.accent }
-})
 ---
 
 <figure class="studio-orbit-wrap">
   <div class="orbit-stage">
     <div class="studio-orbit">
-    <div class="orbit-glow" aria-hidden="true"></div>
-    <div class="orbit-rings" aria-hidden="true">
-      <span class="orbit-ring orbit-ring-a"></span>
-      <span class="orbit-ring orbit-ring-b"></span>
-      <span class="orbit-ring orbit-ring-c"></span>
-    </div>
+      <div class="orbit-glow" aria-hidden="true"></div>
+      <div class="orbit-rings" aria-hidden="true">
+        <span class="orbit-ring orbit-ring-a"></span>
+        <span class="orbit-ring orbit-ring-b"></span>
+        <span class="orbit-ring orbit-ring-c"></span>
+        <span class="orbit-ring orbit-ring-d"></span>
+      </div>
 
-    {satellites.map((sat) => (
-      <span
-        class="orbit-sat"
-        style={`--a:${sat.a}deg;--r:${sat.r};--c:${sat.color}`}
-        aria-hidden="true"
-      ></span>
-    ))}
+      {stars.map((star) => (
+        <span class="orbit-star" style={`--a:${star.a}deg;--r:${star.r}`} aria-hidden="true"></span>
+      ))}
 
-    <a class="orbit-core" href="/products" aria-label="Browse studio products">
-      <span class="orbit-core-mark">A·S</span>
-      <span class="orbit-core-sub">Studio</span>
-    </a>
-
-    {nodes.map((node) => (
-      <a
-        class="orbit-node"
-        href={node.href}
-        style={`--a:${node.a}deg;--r:${node.r};--c:${node.color}`}
-        title={node.label}
-        aria-label={node.label}
-      >
-        <span class="orbit-icon" aria-hidden="true">
-          {node.icon === 'fleet' && (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <circle cx="7" cy="12" r="2.1" />
-              <circle cx="17" cy="7" r="2.1" />
-              <circle cx="17" cy="17" r="2.1" />
-              <path d="M9 11.2 15 8.2M9 12.8 15 15.8" />
-            </svg>
-          )}
-          {node.icon === 'os' && (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <rect x="4" y="5.5" width="16" height="13" rx="2" />
-              <path d="M8 13h4M8 9.5h8" />
-            </svg>
-          )}
-          {node.icon === 'vibe' && (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <rect x="4.5" y="4.5" width="6.2" height="6.2" rx="1.2" />
-              <rect x="13.3" y="4.5" width="6.2" height="6.2" rx="1.2" />
-              <rect x="4.5" y="13.3" width="6.2" height="6.2" rx="1.2" />
-              <rect x="13.3" y="13.3" width="6.2" height="6.2" rx="1.2" />
-            </svg>
-          )}
-          {node.icon === 'rag' && (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <path d="M7 5.5h7.5L19 10v8.5H7z" />
-              <path d="M14.5 5.5V10H19" />
-              <path d="M9.5 13.5h5M9.5 16.5h3.5" />
-            </svg>
-          )}
-        </span>
+      <a class="orbit-core" href="/products" aria-label="Browse studio products">
+        <span class="orbit-core-mark">A·S</span>
+        <span class="orbit-core-sub">Studio</span>
       </a>
-    ))}
+
+      {nodes.map((node) => (
+        <a
+          class:list={['orbit-node', `is-${node.product.status}`]}
+          href={`/products/${node.product.slug}`}
+          style={`--a:${node.a}deg;--r:${node.r};--c:${node.product.accent}`}
+          aria-label={`${node.product.name} — ${statusLabel(node.product.status)}`}
+        >
+          <span class="orbit-mark">{node.product.index}</span>
+          <span class="orbit-label">{node.product.name}</span>
+        </a>
+      ))}
     </div>
   </div>
   <figcaption class="orbit-caption">
-    Studio constellation — Fleet, OS, Vibespace, RetrievalLab.
+    Studio constellation — {products.length} products around one core.
   </figcaption>
 </figure>
