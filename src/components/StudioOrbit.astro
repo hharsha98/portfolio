@@ -1,34 +1,45 @@
 ---
 import { products, statusLabel } from '../data/products'
 
+/** Polar map: 0° is east, clockwise. Live systems sit on the outer ring. */
 const layout: Record<string, { a: number; r: number }> = {
-  retrievallab: { a: -22, r: 37 },
-  careeragent: { a: 18, r: 41 },
-  'rag-trustworthiness': { a: 54, r: 34 },
-  'agent-os': { a: 94, r: 39 },
-  vibespace: { a: 132, r: 33 },
-  agentgrid: { a: 168, r: 42 },
-  'mara-open': { a: 204, r: 30 },
-  'revenue-ops': { a: 246, r: 36 },
-  'agentops-studio': { a: 286, r: 32 },
-  agentfleet: { a: 328, r: 40 },
+  agentfleet: { a: -90, r: 34 },
+  'agent-os': { a: -54, r: 38 },
+  vibespace: { a: -18, r: 38 },
+  retrievallab: { a: 18, r: 42 },
+  'rag-trustworthiness': { a: 54, r: 42 },
+  careeragent: { a: 90, r: 41 },
+  'mara-open': { a: 126, r: 33 },
+  agentgrid: { a: 162, r: 35 },
+  'revenue-ops': { a: 198, r: 34 },
+  'agentops-studio': { a: 234, r: 35 },
+}
+
+function labelDir(a: number) {
+  const rad = (a * Math.PI) / 180
+  const x = Math.cos(rad)
+  const y = Math.sin(rad)
+  if (Math.abs(x) > Math.abs(y)) return x > 0 ? 'e' : 'w'
+  return y > 0 ? 's' : 'n'
 }
 
 const nodes = products.map((product) => {
   const pos = layout[product.slug]
   if (!pos) throw new Error(`constellation layout missing: ${product.slug}`)
-  return { product, ...pos }
+  return { product, ...pos, dir: labelDir(pos.a) }
 })
 
 const stars = [
   { a: 8, r: 46 },
+  { a: 36, r: 47 },
   { a: 76, r: 47 },
-  { a: 118, r: 45 },
-  { a: 190, r: 48 },
-  { a: 230, r: 46 },
-  { a: 270, r: 47 },
-  { a: 310, r: 45 },
-  { a: 350, r: 48 },
+  { a: 108, r: 46 },
+  { a: 148, r: 48 },
+  { a: 186, r: 46 },
+  { a: 220, r: 47 },
+  { a: 258, r: 45 },
+  { a: 300, r: 47 },
+  { a: 338, r: 48 },
 ] as const
 ---
 
@@ -43,11 +54,19 @@ const stars = [
         <span class="orbit-ring orbit-ring-d"></span>
       </div>
 
+      {nodes.map((node) => (
+        <span
+          class:list={['orbit-spoke', `is-${node.product.status}`]}
+          style={`--a:${node.a}deg;--r:${node.r};--c:${node.product.accent}`}
+          aria-hidden="true"
+        ></span>
+      ))}
+
       {stars.map((star) => (
         <span class="orbit-star" style={`--a:${star.a}deg;--r:${star.r}`} aria-hidden="true"></span>
       ))}
 
-      <a class="orbit-core" href="/products" aria-label="Browse studio products">
+      <a class="orbit-core" href="/products" aria-label="Open the studio catalog">
         <span class="orbit-core-mark">A·S</span>
         <span class="orbit-core-sub">Studio</span>
       </a>
@@ -57,15 +76,24 @@ const stars = [
           class:list={['orbit-node', `is-${node.product.status}`]}
           href={`/products/${node.product.slug}`}
           style={`--a:${node.a}deg;--r:${node.r};--c:${node.product.accent}`}
+          data-dir={node.dir}
           aria-label={`${node.product.name} — ${statusLabel(node.product.status)}`}
         >
           <span class="orbit-mark">{node.product.index}</span>
-          <span class="orbit-label">{node.product.name}</span>
+          <span class="orbit-label">
+            <span class="orbit-label-name">{node.product.name}</span>
+            <span class="orbit-label-status">{statusLabel(node.product.status)}</span>
+          </span>
         </a>
       ))}
     </div>
   </div>
   <figcaption class="orbit-caption">
     Studio constellation — {products.length} products around one core.
+    <span class="orbit-legend">
+      <span>Live · square</span>
+      <span>Download / gallery · rounded</span>
+      <span>Building · circle</span>
+    </span>
   </figcaption>
 </figure>

@@ -177,6 +177,9 @@ if (!indexHtml.includes('Studio constellation')) {
 if (!indexHtml.includes('products around one core')) {
   fail('built home constellation must be the full catalog, not a four-node Fleet clone')
 }
+if (!indexHtml.includes('Live · square')) {
+  fail('built home constellation must encode honesty in node shape, not clone Fleet tool glyphs')
+}
 if (!indexHtml.includes('Studio workflow')) fail('built home must include the studio workflow section')
 if (!indexHtml.includes('Tech we actually use')) fail('built home must include tech credibility pills')
 if (!indexHtml.includes('Write the studio')) fail('built home must close on studio contact, not a SaaS funnel')
