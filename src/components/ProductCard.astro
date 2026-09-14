@@ -15,7 +15,14 @@ const badges = badgeLinks(product)
 <article class:list={['product-card panel flex flex-col p-5 sm:p-6', featured && 'product-card-featured sm:p-7']}>
   {product.visual ? (
     <a class="product-shot mb-5 block" href={href}>
-      <img src={product.visual.src} alt={product.visual.alt} />
+      <img
+        src={product.visual.src}
+        alt={product.visual.alt}
+        width="1200"
+        height="1168"
+        loading="lazy"
+        decoding="async"
+      />
     </a>
   ) : featured ? (
     <a class={`product-shot product-art art-${product.slug} mb-5`} href={href}>

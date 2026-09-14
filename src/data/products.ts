@@ -63,7 +63,7 @@ export const products: Product[] = [
     futureHost: hostFor('Agent Fleet'),
     visual: {
       src: '/media/agentfleet-landing.png',
-      alt: 'Owned Agent Fleet landing: dark grid, orbital diagram, open-source and self-hostable tags',
+      alt: 'Owned Agent Fleet orbital diagram on a dark grid — product visual from the public repo, not a hosted app',
     },
     links: [
       { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentfleet' },

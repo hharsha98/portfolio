@@ -36,7 +36,8 @@ const nodes = [
 ---
 
 <figure class="studio-orbit-wrap">
-  <div class="studio-orbit">
+  <div class="orbit-stage">
+    <div class="studio-orbit">
     <div class="orbit-glow" aria-hidden="true"></div>
     <div class="orbit-rings" aria-hidden="true">
       <span class="orbit-ring orbit-ring-a"></span>
@@ -44,7 +45,7 @@ const nodes = [
       <span class="orbit-ring orbit-ring-c"></span>
     </div>
 
-    <a class="orbit-core" href="/products">
+    <a class="orbit-core" href="/products" aria-label="Browse studio products">
       <span class="orbit-core-mark">A·S</span>
       <span class="orbit-core-sub">Studio</span>
     </a>
@@ -54,6 +55,7 @@ const nodes = [
         class="orbit-node"
         href={node.href}
         style={`--a:${node.a}deg;--r:${node.r};--c:${node.color}`}
+        title={node.label}
         aria-label={node.label}
       >
         <span class="orbit-icon" aria-hidden="true">
@@ -89,6 +91,7 @@ const nodes = [
         </span>
       </a>
     ))}
+    </div>
   </div>
   <figcaption class="orbit-caption">
     Phase 1 constellation — Fleet, OS, Vibespace, RetrievalLab.

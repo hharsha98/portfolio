@@ -42,7 +42,15 @@ const rest = product.links.filter((l) => l !== primary)
 
   {product.visual && (
     <figure class="product-shot mt-10">
-      <img src={product.visual.src} alt={product.visual.alt} class="!h-auto max-h-[28rem] object-cover object-top" />
+      <img
+        src={product.visual.src}
+        alt={product.visual.alt}
+        width="1200"
+        height="1168"
+        class="!h-auto max-h-[28rem] object-cover object-center"
+        loading="lazy"
+        decoding="async"
+      />
       <figcaption class="border-t border-white/8 px-4 py-3 font-mono text-[11px] text-mute">
         Owned product landing from the public repo — not a hosted SaaS URL.
       </figcaption>

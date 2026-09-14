@@ -48,8 +48,8 @@ const stats = catalogStats()
           [String(stats.download), 'Desktop download'],
         ].map(([value, label]) => (
           <div class="stat-cell">
+            <dt class="font-mono text-[11px] uppercase tracking-[0.18em] text-mute">{label}</dt>
             <dd class="display text-4xl tracking-tight text-paper sm:text-5xl">{value}</dd>
-            <dt class="mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-mute">{label}</dt>
           </div>
         ))}
       </dl>

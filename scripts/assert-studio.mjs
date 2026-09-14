@@ -176,5 +176,8 @@ if (!productsHtml.includes('Open product') && !productsHtml.includes('GitHub')) 
 if (wrangler.includes('fleet.agentic-systems-studio.com')) {
   fail('do not attach future product hosts in wrangler routes / DNS')
 }
+if (wrangler.includes('os.agentic-systems-studio.com') || wrangler.includes('vibespace.agentic-systems-studio.com') || wrangler.includes('rag.agentic-systems-studio.com')) {
+  fail('do not attach future product hosts in wrangler routes / DNS')
+}
 
 console.log('assert-studio: ok')
