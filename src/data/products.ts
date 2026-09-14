@@ -1,3 +1,9 @@
+import { futureHosts } from './site'
+
+function hostFor(productName: string) {
+  return futureHosts.find((item) => item.product === productName)?.host
+}
+
 export type LinkKind = 'live' | 'gallery' | 'download' | 'github' | 'docs' | 'walkthrough'
 
 export type ProductLink = {
@@ -24,10 +30,9 @@ export type Product = {
   category: 'ops' | 'environment' | 'retrieval' | 'industrial'
 }
 
-export const legacySlugs: Record<string, string> = {
+export const legacySlugs = {
   vibedeck: 'vibespace',
-  'ai-rag': 'retrievallab',
-}
+} as const
 
 export const products: Product[] = [
   {
@@ -40,7 +45,7 @@ export const products: Product[] = [
       'Self-hostable multi-agent ops: streaming chat, DAG orchestration with approval gates, RAG with citations, MCP both ways, evals and cost budgets. Public repo — run it yourself.',
     body: [
       'Agent Fleet is a self-hostable multi-agent operations platform. You chat with a roster of tool-using agents, or hand the orchestrator a goal and watch it decompose into a live task DAG with human-approval gates.',
-      'The public repository is https://github.com/hharsha98/agentfleet. The product spine is FastAPI plus Next.js, Postgres with pgvector, and a hand-built agent runtime with an env-switchable LangGraph path. The fleet can consume external MCP servers and also expose itself as an MCP server for IDE clients.',
+      'The public repository is on GitHub under hharsha98/agentfleet. The product spine is FastAPI plus Next.js, Postgres with pgvector, and a hand-built agent runtime with an env-switchable LangGraph path. The fleet can consume external MCP servers and also expose itself as an MCP server for IDE clients.',
       'Ops is part of the product: per-message metering, cost budgets, prompt-injection screening, PII masking, versioned agent publish/rollback, and an Eval Center with a CI regression gate. It is meant to be run locally or self-hosted — there is no public owned SaaS URL yet. A studio host at fleet.agentic-systems-studio.com is planned; until DNS is attached, use GitHub and the self-host docs.',
     ],
     features: [
@@ -54,7 +59,7 @@ export const products: Product[] = [
     statusNote: 'Self-hostable',
     featured: true,
     github: 'https://github.com/hharsha98/agentfleet',
-    futureHost: 'fleet.agentic-systems-studio.com',
+    futureHost: hostFor('Agent Fleet'),
     links: [
       { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentfleet' },
       {
@@ -89,7 +94,7 @@ export const products: Product[] = [
     statusNote: 'Local-first · gallery',
     featured: true,
     github: 'https://github.com/hharsha98/agent-os',
-    futureHost: 'os.agentic-systems-studio.com',
+    futureHost: hostFor('Agent OS'),
     links: [
       { kind: 'gallery', label: 'Gallery', href: 'https://hharsha98.github.io/agent-os/' },
       { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agent-os' },
@@ -121,7 +126,7 @@ export const products: Product[] = [
     statusNote: 'Desktop ADE · download',
     featured: true,
     github: 'https://github.com/hharsha98/Vibespace',
-    futureHost: 'vibespace.agentic-systems-studio.com',
+    futureHost: hostFor('Vibespace'),
     links: [
       {
         kind: 'download',
@@ -157,7 +162,7 @@ export const products: Product[] = [
     statusNote: 'Live lab',
     featured: true,
     github: 'https://github.com/hharsha98/retrievallab',
-    futureHost: 'rag.agentic-systems-studio.com',
+    futureHost: hostFor('RetrievalLab'),
     links: [
       { kind: 'live', label: 'Live', href: 'https://retrievallab.pages.dev' },
       { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/retrievallab' },
@@ -337,7 +342,7 @@ export const products: Product[] = [
       'Product and deploy scaffolding for a multi-agent ops command center — Docker, local Kubernetes, Terraform placeholders. Related to Agent Fleet, which is the public platform repo.',
     body: [
       'AgentOps Studio is the public product/ops scaffolding: a command-center surface and deploy foundation (Docker Compose, local Kubernetes structure, Terraform placeholders) for running AI workforces with operational visibility.',
-      'The full self-hostable platform source is Agent Fleet at https://github.com/hharsha98/agentfleet. This repo is the product shell and portable-infra trail — not a second claim that the fleet is private.',
+      'The full self-hostable platform source is Agent Fleet. This repo is the product shell and portable-infra trail — not a second claim that the fleet is private.',
       'Named on the product: streaming multi-agent chat, visual workflows, document intelligence with citations, MCP registry, Langfuse observability, cost and token tracking.',
     ],
     features: [
@@ -361,11 +366,19 @@ export const products: Product[] = [
 ]
 
 export function resolveProductSlug(slug: string) {
-  return legacySlugs[slug] ?? slug
+  return slug in legacySlugs ? legacySlugs[slug as keyof typeof legacySlugs] : slug
 }
 
 export function getProduct(slug: string) {
   return products.find((p) => p.slug === resolveProductSlug(slug))
+}
+
+export function requireProduct(slug: string) {
+  const product = getProduct(slug)
+  if (!product) {
+    throw new Error(`Unknown product slug: ${slug}`)
+  }
+  return product
 }
 
 export function neighbors(slug: string) {
@@ -386,9 +399,7 @@ export function catalogProducts() {
 }
 
 export function badgeLinks(product: Product) {
-  return product.links.filter((link) =>
-    ['live', 'gallery', 'download', 'github'].includes(link.kind),
-  )
+  return product.links
 }
 
 export function demoLinks(product: Product) {
