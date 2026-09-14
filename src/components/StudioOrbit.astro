@@ -1,0 +1,96 @@
+---
+const nodes = [
+  {
+    href: '/products/agentfleet',
+    label: 'Agent Fleet',
+    a: -48,
+    r: 38,
+    color: '#8b7cff',
+    icon: 'fleet',
+  },
+  {
+    href: '/products/agent-os',
+    label: 'Agent OS',
+    a: 28,
+    r: 34,
+    color: '#c9a24a',
+    icon: 'os',
+  },
+  {
+    href: '/products/vibespace',
+    label: 'Vibespace',
+    a: 132,
+    r: 36,
+    color: '#6ee7f0',
+    icon: 'vibe',
+  },
+  {
+    href: '/products/retrievallab',
+    label: 'RetrievalLab',
+    a: 208,
+    r: 33,
+    color: '#4caf8a',
+    icon: 'rag',
+  },
+] as const
+---
+
+<figure class="studio-orbit-wrap">
+  <div class="studio-orbit">
+    <div class="orbit-glow" aria-hidden="true"></div>
+    <div class="orbit-rings" aria-hidden="true">
+      <span class="orbit-ring orbit-ring-a"></span>
+      <span class="orbit-ring orbit-ring-b"></span>
+      <span class="orbit-ring orbit-ring-c"></span>
+    </div>
+
+    <a class="orbit-core" href="/products">
+      <span class="orbit-core-mark">A·S</span>
+      <span class="orbit-core-sub">Studio</span>
+    </a>
+
+    {nodes.map((node) => (
+      <a
+        class="orbit-node"
+        href={node.href}
+        style={`--a:${node.a}deg;--r:${node.r};--c:${node.color}`}
+        aria-label={node.label}
+      >
+        <span class="orbit-icon" aria-hidden="true">
+          {node.icon === 'fleet' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <circle cx="7" cy="12" r="2.1" />
+              <circle cx="17" cy="7" r="2.1" />
+              <circle cx="17" cy="17" r="2.1" />
+              <path d="M9 11.2 15 8.2M9 12.8 15 15.8" />
+            </svg>
+          )}
+          {node.icon === 'os' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="4" y="5.5" width="16" height="13" rx="2" />
+              <path d="M8 13h4M8 9.5h8" />
+            </svg>
+          )}
+          {node.icon === 'vibe' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="4.5" y="4.5" width="6.2" height="6.2" rx="1.2" />
+              <rect x="13.3" y="4.5" width="6.2" height="6.2" rx="1.2" />
+              <rect x="4.5" y="13.3" width="6.2" height="6.2" rx="1.2" />
+              <rect x="13.3" y="13.3" width="6.2" height="6.2" rx="1.2" />
+            </svg>
+          )}
+          {node.icon === 'rag' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M7 5.5h7.5L19 10v8.5H7z" />
+              <path d="M14.5 5.5V10H19" />
+              <path d="M9.5 13.5h5M9.5 16.5h3.5" />
+            </svg>
+          )}
+        </span>
+      </a>
+    ))}
+  </div>
+  <figcaption class="orbit-caption">
+    Phase 1 constellation — Fleet, OS, Vibespace, RetrievalLab.
+  </figcaption>
+</figure>

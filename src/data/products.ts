@@ -28,6 +28,7 @@ export type Product = {
   futureHost?: string
   featuresHeading?: string
   category: 'ops' | 'environment' | 'retrieval' | 'industrial'
+  visual?: { src: string; alt: string }
 }
 
 export const legacySlugs = {
@@ -60,6 +61,10 @@ export const products: Product[] = [
     featured: true,
     github: 'https://github.com/hharsha98/agentfleet',
     futureHost: hostFor('Agent Fleet'),
+    visual: {
+      src: '/media/agentfleet-landing.png',
+      alt: 'Owned Agent Fleet landing: dark grid, orbital diagram, open-source and self-hostable tags',
+    },
     links: [
       { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentfleet' },
       {
@@ -411,4 +416,13 @@ export function demoLinks(product: Product) {
 export function productPaths() {
   const slugs = [...products.map((p) => p.slug), ...Object.keys(legacySlugs)]
   return [...new Set(slugs)]
+}
+
+export function catalogStats() {
+  return {
+    featured: products.filter((p) => p.featured).length,
+    catalog: products.length,
+    live: products.filter((p) => p.links.some((l) => l.kind === 'live')).length,
+    download: products.filter((p) => p.links.some((l) => l.kind === 'download')).length,
+  }
 }

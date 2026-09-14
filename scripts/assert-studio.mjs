@@ -83,8 +83,12 @@ for (const needle of ['evehicleshop', 'rtvision7@gmail.com', 'EmailMessage', 'ma
 if (blob.includes('rtvision7@gmail.com')) fail('rtvision7@gmail.com still present')
 if (blob.toLowerCase().includes('mechaharsh@')) fail('personal mechaharsh@ email must not appear on studio pages')
 if (blob.includes('agentfleet.vercel.app')) fail('do not link third-party Agent Fleet vercel.app')
+if (blob.includes('agentfleet.pages.dev')) fail('do not link third-party agentfleet.pages.dev')
 if (blob.includes('agentfleet.169.58.185.43.sslip.io')) {
   fail('Agent Fleet has no confirmed public owned SaaS URL — do not link the sslip live app')
+}
+if (!existsSync(join(root, 'public', 'media', 'agentfleet-landing.png'))) {
+  fail('owned Agent Fleet landing visual missing at public/media/agentfleet-landing.png')
 }
 if (/\bdossier\b/i.test(blob)) fail('CV/dossier framing must not remain in studio copy')
 if (blob.includes('Open dossier')) fail('replace Open dossier with product CTAs')
@@ -147,6 +151,18 @@ if (!indexHtml.includes('retrievallab.pages.dev')) fail('built home must use Ret
 if (!indexHtml.includes('hharsha98.github.io/agent-os')) fail('built home must use Agent OS gallery URL')
 if (indexHtml.includes('agentfleet.vercel.app') || indexHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
   fail('built home must not present Agent Fleet as hosted SaaS')
+}
+if (indexHtml.includes('agentfleet.pages.dev')) {
+  fail('do not link third-party agentfleet.pages.dev')
+}
+if (!indexHtml.includes('/media/agentfleet-landing.png')) {
+  fail('built home must use the owned Agent Fleet landing visual')
+}
+if (indexHtml.includes('94ms') || /17 built-in/i.test(indexHtml)) {
+  fail('do not copy Agent Fleet marketing metrics onto the studio hub')
+}
+if (!indexHtml.includes('Phase 1 constellation')) {
+  fail('built home must include the studio constellation graphic')
 }
 if (!existsSync(join(root, 'dist', 'products.html'))) fail('built products page missing')
 if (!existsSync(join(root, 'dist', 'demos.html'))) fail('built demos page missing')

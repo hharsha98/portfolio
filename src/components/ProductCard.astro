@@ -12,13 +12,23 @@ const href = `/products/${product.slug}`
 const badges = badgeLinks(product)
 ---
 
-<article
-  class:list={[
-    'frame panel flex flex-col p-5 sm:p-6',
-    featured && 'sm:p-7',
-  ]}
->
-  <span class="frame-b"></span>
+<article class:list={['product-card panel flex flex-col p-5 sm:p-6', featured && 'product-card-featured sm:p-7']}>
+  {product.visual ? (
+    <a class="product-shot mb-5 block" href={href}>
+      <img src={product.visual.src} alt={product.visual.alt} />
+    </a>
+  ) : featured ? (
+    <a class={`product-shot product-art art-${product.slug} mb-5`} href={href}>
+      <span class="art-panes" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </span>
+      <span class="art-copy">
+        <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-mute">{product.index}</span>
+        <span class="display mt-1 block text-2xl text-paper">{product.name}</span>
+      </span>
+    </a>
+  ) : null}
+
   <div class="flex items-baseline justify-between gap-3">
     <span class="font-mono text-[11px] text-brass">{product.index}</span>
     <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">{product.statusNote}</span>
@@ -37,7 +47,7 @@ const badges = badgeLinks(product)
     ))}
   </div>
 
-  <h3 class:list={['mt-4 font-semibold tracking-tight text-paper', featured ? 'text-2xl sm:text-3xl' : 'text-xl']}>
+  <h3 class:list={['mt-4 tracking-tight text-paper', featured ? 'display text-3xl' : 'text-xl font-medium']}>
     <a class="hover:text-brass" href={href}>{product.name}</a>
   </h3>
   <p class="mt-2 max-w-2xl flex-1 text-sm leading-relaxed text-mute">
