@@ -125,6 +125,30 @@ body {
   @apply border border-line bg-ink/40 px-2 py-0.5 font-mono text-[11px] text-mute;
 }
 
+.lede {
+  @apply max-w-xl text-lg leading-relaxed text-mute;
+}
+
+.badge {
+  @apply inline-flex items-center border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em];
+}
+.badge-live {
+  @apply border-signal/40 text-signal;
+}
+.badge-gallery {
+  @apply border-brass/40 text-brass;
+}
+.badge-download {
+  @apply border-paper/30 text-paper;
+}
+.badge-github {
+  @apply border-line text-mute hover:border-brass/40 hover:text-brass;
+}
+.badge-docs,
+.badge-walkthrough {
+  @apply border-line text-mute hover:border-brass/40 hover:text-brass;
+}
+
 .btn {
   @apply inline-flex items-center justify-center gap-2 border px-4 py-2.5 text-sm font-medium transition-colors;
   min-height: 44px;

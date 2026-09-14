@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro'
+import ProductCard from '../../components/ProductCard.astro'
+import ComingHosts from '../../components/ComingHosts.astro'
+import { site } from '../../data/site'
+import { featuredProducts, catalogProducts } from '../../data/products'
+
+const featured = featuredProducts()
+const rest = catalogProducts()
+---
+
+<Base
+  title={`Products — ${site.studio}`}
+  description="Agent Fleet, Agent OS, Vibespace, RetrievalLab, and the rest of the Agentic Systems Studio catalog. Live demos, galleries, downloads, and GitHub."
+>
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <p class="kicker">Products</p>
+    <h1 class="mt-4 text-3xl font-semibold tracking-tight text-paper sm:text-5xl">
+      The catalog
+    </h1>
+    <p class="mt-5 max-w-2xl text-lg leading-relaxed text-mute">
+      AI products from the studio. Open a product page, a live demo, a gallery, a download, or the GitHub repo — not a CV.
+    </p>
+
+    <div class="mt-12">
+      <p class="kicker">Phase 1</p>
+      <div class="mt-4 grid gap-4 lg:grid-cols-2">
+        {featured.map((p) => <ProductCard product={p} featured />)}
+      </div>
+    </div>
+
+    <div class="mt-14">
+      <p class="kicker">Also shipping</p>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2">
+        {rest.map((p) => <ProductCard product={p} />)}
+      </div>
+    </div>
+
+    <div class="mt-14">
+      <ComingHosts />
+    </div>
+  </section>
+</Base>

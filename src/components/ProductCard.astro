@@ -1,0 +1,54 @@
+---
+import type { Product } from '../data/products'
+import { badgeLinks } from '../data/products'
+
+interface Props {
+  product: Product
+  featured?: boolean
+}
+
+const { product, featured = false } = Astro.props
+const href = `/products/${product.slug}`
+const badges = badgeLinks(product)
+---
+
+<article
+  class:list={[
+    'frame panel flex flex-col p-5 sm:p-6',
+    featured && 'sm:p-7',
+  ]}
+>
+  <span class="frame-b"></span>
+  <div class="flex items-baseline justify-between gap-3">
+    <span class="font-mono text-[11px] text-brass">{product.index}</span>
+    <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">{product.statusNote}</span>
+  </div>
+
+  <div class="mt-3 flex flex-wrap gap-1.5">
+    {badges.map((link) => (
+      <a
+        class={`badge badge-${link.kind}`}
+        href={link.href}
+        rel="noreferrer"
+        target="_blank"
+      >
+        {link.label}
+      </a>
+    ))}
+  </div>
+
+  <h3 class:list={['mt-4 font-semibold tracking-tight text-paper', featured ? 'text-2xl sm:text-3xl' : 'text-xl']}>
+    <a class="hover:text-brass" href={href}>{product.name}</a>
+  </h3>
+  <p class="mt-2 max-w-2xl flex-1 text-sm leading-relaxed text-mute">
+    {product.description}
+  </p>
+  <div class="mt-4 flex flex-wrap gap-1.5">
+    {product.stack.slice(0, featured ? 6 : 4).map((t) => (
+      <span class="chip">{t}</span>
+    ))}
+  </div>
+  <p class="mt-5 font-mono text-[11px] uppercase tracking-[0.16em] text-brass">
+    <a href={href}>Open product →</a>
+  </p>
+</article>

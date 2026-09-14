@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro'
+import { site } from '../data/site'
+import { products, demoLinks } from '../data/products'
+
+const rows = products
+  .map((product) => ({ product, links: demoLinks(product) }))
+  .filter((row) => row.links.length > 0)
+---
+
+<Base
+  title={`Demos — ${site.studio}`}
+  description="Working live demos, galleries, downloads, and self-host docs for Agentic Systems Studio products."
+>
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <p class="kicker">Demos</p>
+    <h1 class="mt-4 text-3xl font-semibold tracking-tight text-paper sm:text-5xl">
+      Try the products
+    </h1>
+    <p class="mt-5 max-w-2xl text-lg leading-relaxed text-mute">
+      Public surfaces that work today. Studio subdomains such as fleet.agentic-systems-studio.com are listed on product pages as coming — they are not the primary buttons yet.
+    </p>
+
+    <div class="mt-12 space-y-4">
+      {rows.map(({ product, links }) => (
+        <article class="frame panel p-5 sm:p-6">
+          <span class="frame-b"></span>
+          <div class="flex flex-wrap items-baseline justify-between gap-3">
+            <h2 class="text-xl font-semibold tracking-tight text-paper">
+              <a class="hover:text-brass" href={`/products/${product.slug}`}>{product.name}</a>
+            </h2>
+            <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute">{product.statusNote}</span>
+          </div>
+          <p class="mt-2 max-w-3xl text-sm leading-relaxed text-mute">{product.description}</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            {links.map((link) => (
+              <a
+                class:list={['btn', link.kind === 'live' || link.kind === 'download' ? 'btn-primary' : 'btn-ghost']}
+                href={link.href}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {link.label} ↗
+              </a>
+            ))}
+            <a class="btn btn-ghost" href={`/products/${product.slug}`}>Open product</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>

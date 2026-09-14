@@ -6,18 +6,17 @@ export const site = {
   url: 'https://agentic-systems-studio.com',
   title: 'Agentic Systems Studio',
   description:
-    'Work studio for shipped agentic systems: Agent Fleet, VibeDeck, Agent OS, AgentOps Studio, RetrievalLab, CareerAgent. GitHub github.com/hharsha98.',
+    'A studio of AI products: Agent Fleet, Agent OS, Vibespace, RetrievalLab, and related systems. Self-host, local-first, and live demos. GitHub github.com/hharsha98.',
   location: 'Nuremberg, Germany',
   coordinates: '49.45°N · 11.08°E',
-  role: 'AI Engineer / Agentic Systems',
   positioning:
-    'A studio for shipped agentic systems — local-first agent environments, multi-agent ops, evaluated retrieval.',
+    'A studio of AI products — self-hostable multi-agent ops, local-first agent environments, and retrieval you can inspect.',
   email: 'contact@agentic-systems-studio.com',
   linkedin: 'https://www.linkedin.com/in/hanumanthu1',
   github: 'https://github.com/hharsha98',
   huggingface: 'https://huggingface.co/hharsha',
-  profile: 'https://cursor-harsha-profile-pages.harsha-ai.pages.dev',
-  now: 'Shipping public systems',
+  profile: 'https://harsha-vardhan.pages.dev',
+  now: 'Public products',
 }
 
 export const paper = {
@@ -37,9 +36,16 @@ export const paper = {
     'Local knowledge retrieval for industrial settings, with trustworthiness and verification metrics in the evaluation loop — not retrieval quality alone.',
 }
 
+export const futureHosts = [
+  { product: 'Agent Fleet', host: 'fleet.agentic-systems-studio.com' },
+  { product: 'Agent OS', host: 'os.agentic-systems-studio.com' },
+  { product: 'Vibespace', host: 'vibespace.agentic-systems-studio.com' },
+  { product: 'RetrievalLab', host: 'rag.agentic-systems-studio.com' },
+] as const
+
 export const nav = [
-  { href: '/', label: 'Studio' },
-  { href: '/#work', label: 'Work' },
+  { href: '/products', label: 'Products' },
+  { href: '/demos', label: 'Demos' },
   { href: '/research', label: 'Research' },
   { href: '/contact', label: 'Contact' },
 ] as const

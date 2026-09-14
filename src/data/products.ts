@@ -1,0 +1,403 @@
+export type LinkKind = 'live' | 'gallery' | 'download' | 'github' | 'docs' | 'walkthrough'
+
+export type ProductLink = {
+  kind: LinkKind
+  label: string
+  href: string
+}
+
+export type Product = {
+  slug: string
+  index: string
+  name: string
+  tagline: string
+  description: string
+  body: string[]
+  features: string[]
+  stack: string[]
+  statusNote: string
+  featured: boolean
+  github?: string
+  links: ProductLink[]
+  futureHost?: string
+  featuresHeading?: string
+  category: 'ops' | 'environment' | 'retrieval' | 'industrial'
+}
+
+export const legacySlugs: Record<string, string> = {
+  vibedeck: 'vibespace',
+  'ai-rag': 'retrievallab',
+}
+
+export const products: Product[] = [
+  {
+    slug: 'agentfleet',
+    index: '01',
+    name: 'Agent Fleet',
+    tagline:
+      'A self-hostable multi-agent operations platform — chat with a fleet of tool-using agents, or hand the orchestrator a goal and watch it execute as a live task DAG, with evals, cost governance, and guardrails.',
+    description:
+      'Self-hostable multi-agent ops: streaming chat, DAG orchestration with approval gates, RAG with citations, MCP both ways, evals and cost budgets. Public repo — run it yourself.',
+    body: [
+      'Agent Fleet is a self-hostable multi-agent operations platform. You chat with a roster of tool-using agents, or hand the orchestrator a goal and watch it decompose into a live task DAG with human-approval gates.',
+      'The public repository is https://github.com/hharsha98/agentfleet. The product spine is FastAPI plus Next.js, Postgres with pgvector, and a hand-built agent runtime with an env-switchable LangGraph path. The fleet can consume external MCP servers and also expose itself as an MCP server for IDE clients.',
+      'Ops is part of the product: per-message metering, cost budgets, prompt-injection screening, PII masking, versioned agent publish/rollback, and an Eval Center with a CI regression gate. It is meant to be run locally or self-hosted — there is no public owned SaaS URL yet. A studio host at fleet.agentic-systems-studio.com is planned; until DNS is attached, use GitHub and the self-host docs.',
+    ],
+    features: [
+      'Streaming multi-agent chat with per-agent tools and prompts',
+      'Orchestrator: goal → async DAG with human-approval gates',
+      'Document RAG: local embeddings (fastembed) + pgvector citations',
+      'MCP in both directions — consume servers and expose the fleet',
+      'Eval Center, cost budgets, guardrails, versioned rollback',
+    ],
+    stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'pgvector', 'MCP', 'Docker'],
+    statusNote: 'Self-hostable',
+    featured: true,
+    github: 'https://github.com/hharsha98/agentfleet',
+    futureHost: 'fleet.agentic-systems-studio.com',
+    links: [
+      { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentfleet' },
+      {
+        kind: 'docs',
+        label: 'Self-host docs',
+        href: 'https://github.com/hharsha98/agentfleet/blob/main/docs/DEPLOY.md',
+      },
+    ],
+    category: 'ops',
+  },
+  {
+    slug: 'agent-os',
+    index: '02',
+    name: 'Agent OS',
+    tagline:
+      'Local-first Agent OS dashboard for Cursor, Claude, Codex, and Hermes — dry-run by default, sandboxed workspace, gated machine control.',
+    description:
+      'A local command center for agents already on the machine. Honest status. Dry-run until you turn execution on.',
+    body: [
+      'Agent OS is a local-first operations dashboard for Cursor Agent, Claude Code, Codex, and Hermes. It reports real CLI presence instead of painting fake “connected” cards.',
+      'Safety is a product decision: unified chat is labeled dry-run, the workspace sandbox is jailed to a dedicated folder, and machine-control stays gated. Execution, installs, and public mode are off unless you flip explicit flags.',
+      'This is a local app (React + Express), not hosted SaaS. The public gallery is a click-through of the product surfaces. A studio host at os.agentic-systems-studio.com is planned; until DNS is attached, use the gallery and the GitHub repo.',
+    ],
+    features: [
+      'Mission Control with live local version checks',
+      'Unified chat — dry-run by default',
+      'Sandboxed workspace preview',
+      'Goals, kanban, memory, notebook as local stores',
+      'Machine control: status only until execution is enabled',
+    ],
+    stack: ['React', 'TypeScript', 'Vite', 'Express', 'Node'],
+    statusNote: 'Local-first · gallery',
+    featured: true,
+    github: 'https://github.com/hharsha98/agent-os',
+    futureHost: 'os.agentic-systems-studio.com',
+    links: [
+      { kind: 'gallery', label: 'Gallery', href: 'https://hharsha98.github.io/agent-os/' },
+      { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agent-os' },
+    ],
+    category: 'ops',
+  },
+  {
+    slug: 'vibespace',
+    index: '03',
+    name: 'Vibespace',
+    tagline:
+      'An open-source agentic development environment: run Claude Code, cursor-agent, Codex and shells side by side in a terminal grid, with a kanban board that dispatches them, shared agent memory, and multi-agent orchestration.',
+    description:
+      'Desktop ADE for AI coding agents. Real PTYs in a grid, a board that launches them, and memory they can share — TypeScript and Tauri, not a chat wrapper.',
+    body: [
+      'Vibespace is a home base for running multiple AI coding agents at once instead of juggling separate terminal windows. Each pane is a real terminal session: Claude Code, cursor-agent, Codex, or a plain shell. A pane can also load a web page, so a local dev server can sit beside the agent that is building it.',
+      'Work moves on a kanban board that dispatches agents the same way you would assign a ticket. Shared memory lets every agent in the workspace read and write notes so they do not rediscover the same facts. Multi-agent orchestration coordinates related pieces of a larger task. Skills follow the agentskills.io standard and are discovered from disk.',
+      'The core is usable today: split up to 16 panes, pick an agent per pane, browse and edit files, dispatch from the board. Sessions live on the server, so closing a tab does not kill the agents. Desktop builds ship for macOS, Windows, and Linux. The app is not Apple-notarized; first launch is blocked by Gatekeeper until you explicitly open it. Node.js 22+ is required. This project was previously called vibedeck; existing data migrates on first launch.',
+      'A studio host at vibespace.agentic-systems-studio.com is planned; until DNS is attached, download the latest GitHub release.',
+    ],
+    features: [
+      'Terminal grid with real PTYs, split layouts, and templates',
+      'Kanban dispatch into live agent sessions',
+      'Shared agent memory and swarm missions',
+      'Skills on the agentskills.io standard, discovered from disk',
+      'Tauri desktop shell · Node 22+ required',
+    ],
+    stack: ['TypeScript', 'React', 'Tauri', 'Fastify', 'node-pty', 'MCP'],
+    statusNote: 'Desktop ADE · download',
+    featured: true,
+    github: 'https://github.com/hharsha98/Vibespace',
+    futureHost: 'vibespace.agentic-systems-studio.com',
+    links: [
+      {
+        kind: 'download',
+        label: 'Download',
+        href: 'https://github.com/hharsha98/Vibespace/releases/latest',
+      },
+      { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/Vibespace' },
+    ],
+    category: 'environment',
+  },
+  {
+    slug: 'retrievallab',
+    index: '04',
+    name: 'RetrievalLab',
+    tagline:
+      'Advanced RAG made visible — contextual chunking, hybrid search, cross-encoder reranking, query transformation, and retrieval eval (recall@k, MRR).',
+    description:
+      'The retrieval upgrades that sit between naive RAG and production, instrumented so you can watch each stage — and measure whether they help.',
+    body: [
+      'RetrievalLab assembles contextual chunking, hybrid search (vector + BM25, fused with RRF), HyDE query transformation, and cross-encoder reranking into one pipeline you can inspect live.',
+      'Ingestion uses contextual retrieval: before embedding, an LLM writes a one-sentence context that situates each chunk in its document. The Pipeline Inspector shows the HyDE probe, hybrid candidates with vector vs keyword rank, and the rerank step promoting chunks. A compare view puts naive vs advanced answers side by side.',
+      'Eval reports recall@k and MRR for naive vs advanced on a labelled set. The repo is explicit that reranking’s margin is largest on large messy corpora; on a small clean corpus a strong embedding already does well. Measuring that, instead of assuming “advanced” always wins, is the point.',
+      'The live lab is at retrievallab.pages.dev. A studio host at rag.agentic-systems-studio.com is planned; until DNS is attached, use the Pages demo.',
+    ],
+    features: [
+      'Contextual chunking (Anthropic-style situating sentence)',
+      'Hybrid retrieve: vector + BM25 + RRF, plus HyDE',
+      'FlashRank / MiniLM cross-encoder rerank',
+      'Pipeline Inspector and naive vs advanced compare',
+      'Retrieval eval: recall@k and MRR',
+    ],
+    stack: ['FastAPI', 'React', 'pgvector', 'FlashRank', 'BM25', 'HyDE', 'Supabase'],
+    statusNote: 'Live lab',
+    featured: true,
+    github: 'https://github.com/hharsha98/retrievallab',
+    futureHost: 'rag.agentic-systems-studio.com',
+    links: [
+      { kind: 'live', label: 'Live', href: 'https://retrievallab.pages.dev' },
+      { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/retrievallab' },
+    ],
+    category: 'retrieval',
+  },
+  {
+    slug: 'rag-trustworthiness',
+    index: '05',
+    name: 'RAG Trustworthiness Industrial',
+    tagline:
+      'A RAG system that cannot return an answer without the evidence and a measurement of how well that evidence supports it — or it declines to answer.',
+    description:
+      'Local / open-weight retrieval with citations, claim-level entailment, and five trust metrics. Live demo plus a walkthrough.',
+    body: [
+      'Most RAG systems return a fluent answer and leave you to trust it. This one returns the retrieved passages, decomposes the answer into claims scored for entailment, reports five trust metrics plus two aggregate scores — or refuses, with a reason.',
+      'Everything can run locally against open-weight models via Ollama, or against a hosted inference endpoint. Answering is deterministic by default (greedy decoding, fixed seed) so the same question against the same corpus returns the same answer and the same trust score.',
+      'The live instance is a small VPS running open-weight models; answers take a few seconds. Uploads are rate-limited and deleted after 24 hours. Metric definitions, third-party validation notes, and retrieval ablations live in the repo and the walkthrough — the studio site does not reprint those tables as marketing numbers.',
+    ],
+    features: [
+      'Cited answers, or a refusal when the corpus does not support one',
+      'Five trust metrics: faithfulness, attribution, relevance, conciseness, contradiction',
+      'Non-compensatory aggregation (arithmetic and geometric)',
+      'Two-stage abstention: retrieval gate before generation, grounding gate after',
+      'Hybrid retrieval implemented; rerank available, off by default for latency',
+    ],
+    stack: ['Python', 'Ollama', 'FAISS', 'BM25', 'NLI', 'Gradio', 'Docker'],
+    statusNote: 'Live + walkthrough',
+    featured: false,
+    github: 'https://github.com/hharsha98/rag-trustworthiness-industrial',
+    links: [
+      { kind: 'live', label: 'Live', href: 'https://ragtrust.169.58.185.43.sslip.io/' },
+      {
+        kind: 'walkthrough',
+        label: 'Walkthrough',
+        href: 'https://hharsha98.github.io/rag-trustworthiness-industrial/',
+      },
+      {
+        kind: 'github',
+        label: 'GitHub',
+        href: 'https://github.com/hharsha98/rag-trustworthiness-industrial',
+      },
+    ],
+    category: 'retrieval',
+  },
+  {
+    slug: 'careeragent',
+    index: '06',
+    name: 'CareerAgent',
+    tagline:
+      'AI agents for the job hunt — RAG chat over a CV with citations, live company research, evidence-anchored CV tailoring, Kanban tracker.',
+    description:
+      'A deployed multi-agent product: cited RAG, a hand-rolled research tool loop, evidence-anchored tailoring, metering, and an LLM-as-judge suite.',
+    body: [
+      'CareerAgent chats over a CV with page-level citations and refuses questions the documents cannot support. A research agent runs a tool loop over live web search, then structured output (JSON mode, Pydantic, one self-correction retry) shapes the brief. The tailor agent retrieves CV evidence for a job description; every bullet carries the supporting quote, plus honest gaps.',
+      'There is no agent framework on purpose. Tool loop, structured output, and provider fallback (Groq, then Mistral) are a small amount of plain Python. Every LLM request logs tokens, latency, and list-price cost. An LLM-as-judge suite includes a hallucination trap where only a refusal counts as a pass.',
+      'The public demo runs on Cloudflare Pages. API docs are disabled in production; CORS is pinned; LLM endpoints are rate-limited. The demo workspace uses a synthetic candidate and resets regularly.',
+    ],
+    features: [
+      'Cited RAG chat with refusal when the answer is not in the docs',
+      'Research agent: tool loop + structured brief',
+      'Tailor agent anchored to CV evidence',
+      'Per-request cost metering',
+      'LLM-as-judge evals, including a trap question',
+    ],
+    stack: ['FastAPI', 'React', 'pgvector', 'SSE', 'Docker', 'Kubernetes', 'Supabase'],
+    statusNote: 'Live demo',
+    featured: false,
+    github: 'https://github.com/hharsha98/careeragent',
+    links: [
+      { kind: 'live', label: 'Live', href: 'https://careeragent-ceq.pages.dev' },
+      { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/careeragent' },
+    ],
+    category: 'ops',
+  },
+  {
+    slug: 'mara-open',
+    index: '07',
+    name: 'MARA Open',
+    tagline:
+      'From an SMT error code to an evidence-linked corrective plan — one incident, multiple sources, a decision you can inspect.',
+    description:
+      'Public-data investigation workspace: specialist agents retrieve evidence, compare hypotheses, and leave a visible path to a human-reviewed plan. Plant data is fictional.',
+    body: [
+      'MARA Open is a public demonstration of an evidence-grounded multi-agent maintenance workflow. Public Opulo documentation supplies the technical references; every plant, machine, incident, and repair outcome is fictional. The project is not affiliated with Opulo.',
+      'You can compare the same error with different causes, inspect retrieved sources, follow specialist steps (plan, retrieve, hypothesize, evaluate), and record a human decision. Reference-rule execution needs no model key; live AI is optional and may be unavailable on the public host.',
+      'The README is explicit that reference-fixture scores test software behavior, not open-ended diagnostic generalization, and must not be quoted as LLM or thesis performance. This studio page does not reprint those numbers.',
+    ],
+    features: [
+      'Visible specialist path: plan → evidence → hypotheses → evaluation → human review',
+      'Same error, different cause — comparable fictional PICK-001 cases',
+      'Evidence board with source links and machine/line boundaries',
+      'Reference mode without a model key; optional live AI behind the API',
+      'Durable pause/resume of human review on the local backend',
+    ],
+    stack: ['Python', 'LangGraph', 'FastAPI', 'React', 'Chroma', 'SQLite'],
+    statusNote: 'Live investigation',
+    featured: false,
+    github: 'https://github.com/hharsha98/mara-open',
+    links: [
+      {
+        kind: 'live',
+        label: 'Live',
+        href: 'https://mara-open-hharsha98.rtvision134.chatgpt.site',
+      },
+      { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/mara-open' },
+    ],
+    category: 'industrial',
+  },
+  {
+    slug: 'agentgrid',
+    index: '08',
+    name: 'Agent Grid',
+    tagline:
+      'BridgeSpace-inspired multi-agent terminal grid (Claude Code, cursor-agent, Codex, Gemini CLI, shell). Local ADE — marketing page only, no hosted demo.',
+    description:
+      'A second agentic development environment, kept as its own repo on purpose. Real PTYs, grid presets, kanban dispatch, shared memory MCP. Run it locally.',
+    body: [
+      'Agent Grid is a BridgeSpace-inspired ADE: mission control for several AI coding agents in one browser window. It is intentionally separate from Vibespace. The two repos are not merged.',
+      'A local Fastify server spawns real PTY sessions. The UI is React + xterm.js. You can launch Claude Code, cursor-agent, Codex, Gemini CLI, or a shell, in presets from 1 to 16 panes. Layout, cwd, and agent preference persist; workspace templates live on disk.',
+      'On top of the grid: Warp-style command blocks, a kanban board that dispatches into a pane, Monaco file editing, shared memory notes, an MCP server, swarm roles with file-ownership claims, a small skills library, and an optional Tauri desktop shell. There is no public hosted instance — GitHub and local install only.',
+    ],
+    features: [
+      'node-pty sessions that survive a browser refresh',
+      'Layout presets through 16 panes',
+      'Kanban → agent session dispatch',
+      'Shared memory MCP (STDIO) + swarm roles',
+      'Optional Tauri desktop wrapper',
+    ],
+    stack: ['TypeScript', 'React', 'Fastify', 'xterm.js', 'Monaco', 'Tauri', 'MCP'],
+    statusNote: 'Local · no hosted demo',
+    featured: false,
+    github: 'https://github.com/hharsha98/agentgrid',
+    links: [{ kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentgrid' }],
+    category: 'environment',
+  },
+  {
+    slug: 'revenue-ops',
+    index: '09',
+    name: 'Revenue Ops Control Tower',
+    tagline:
+      'Enterprise-style RevenueOps multi-agent control tower — a supervisor coordinates sales, support, outreach, engineering handoff, risk checks, evals, and audit trails.',
+    description:
+      'Phase 0 scaffold: API contracts, sandbox-first autonomy, Docker/K8s/Terraform skeletons. Not a live product.',
+    body: [
+      'Revenue Ops Control Tower is a multi-agent control tower: one supervisor coordinates specialists for sales, support, customer communication, engineering handoff, risk checks, evals, and audit trails.',
+      'The README is explicit about current status: Phase 0 scaffold. FastAPI contracts, supervisor routing, safety and allowlist checks, a tool registry (Gmail, Slack, GitHub, RAG, lead scoring, ticket triage), a React dashboard with a workflow canvas, and Docker / Kubernetes / Terraform / CI skeletons.',
+      'Autonomy defaults to sandbox. Real-account mode is meant to require explicit configuration and allowlists — power with control, not reckless live actions. This is not a hosted demo.',
+    ],
+    features: [
+      'Supervisor / specialist agent graph',
+      'Sandbox-first autonomy (real-account mode gated)',
+      'Tool registry: Gmail, Slack, GitHub, RAG, triage',
+      'React dashboard with workflow canvas',
+      'Docker, Kubernetes, Terraform, and CI skeletons',
+    ],
+    stack: ['FastAPI', 'React', 'Postgres', 'Redis', 'Docker', 'Kubernetes', 'Terraform'],
+    statusNote: 'Phase 0 scaffold',
+    featured: false,
+    github: 'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
+    links: [
+      {
+        kind: 'github',
+        label: 'GitHub',
+        href: 'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
+      },
+    ],
+    category: 'ops',
+  },
+  {
+    slug: 'agentops-studio',
+    index: '10',
+    name: 'AgentOps Studio',
+    tagline:
+      'Multi-agent AI operations platform with agent orchestration, RAG, MCP tools, observability, Docker, Kubernetes, and Terraform scaffolding.',
+    description:
+      'Product and deploy scaffolding for a multi-agent ops command center — Docker, local Kubernetes, Terraform placeholders. Related to Agent Fleet, which is the public platform repo.',
+    body: [
+      'AgentOps Studio is the public product/ops scaffolding: a command-center surface and deploy foundation (Docker Compose, local Kubernetes structure, Terraform placeholders) for running AI workforces with operational visibility.',
+      'The full self-hostable platform source is Agent Fleet at https://github.com/hharsha98/agentfleet. This repo is the product shell and portable-infra trail — not a second claim that the fleet is private.',
+      'Named on the product: streaming multi-agent chat, visual workflows, document intelligence with citations, MCP registry, Langfuse observability, cost and token tracking.',
+    ],
+    features: [
+      'Orchestration + RAG + MCP as the product spine',
+      'Docker Compose foundation and local Kubernetes structure',
+      'Terraform placeholders for portable managed deploys',
+      'Observability and cost-tracking in the planned surface',
+      'Learning log for incidents, fixes, and verification',
+    ],
+    stack: ['TypeScript', 'Python', 'FastAPI', 'Docker', 'Kubernetes', 'Terraform', 'MCP'],
+    statusNote: 'Product + deploy scaffolding',
+    featured: false,
+    github: 'https://github.com/hharsha98/agentops-studio',
+    featuresHeading: 'On the product',
+    links: [
+      { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentops-studio' },
+      { kind: 'github', label: 'Agent Fleet', href: 'https://github.com/hharsha98/agentfleet' },
+    ],
+    category: 'ops',
+  },
+]
+
+export function resolveProductSlug(slug: string) {
+  return legacySlugs[slug] ?? slug
+}
+
+export function getProduct(slug: string) {
+  return products.find((p) => p.slug === resolveProductSlug(slug))
+}
+
+export function neighbors(slug: string) {
+  const resolved = resolveProductSlug(slug)
+  const i = products.findIndex((p) => p.slug === resolved)
+  return {
+    prev: i > 0 ? products[i - 1] : undefined,
+    next: i >= 0 && i < products.length - 1 ? products[i + 1] : undefined,
+  }
+}
+
+export function featuredProducts() {
+  return products.filter((p) => p.featured)
+}
+
+export function catalogProducts() {
+  return products.filter((p) => !p.featured)
+}
+
+export function badgeLinks(product: Product) {
+  return product.links.filter((link) =>
+    ['live', 'gallery', 'download', 'github'].includes(link.kind),
+  )
+}
+
+export function demoLinks(product: Product) {
+  return product.links.filter((link) =>
+    ['live', 'gallery', 'download', 'walkthrough', 'docs'].includes(link.kind),
+  )
+}
+
+export function productPaths() {
+  const slugs = [...products.map((p) => p.slug), ...Object.keys(legacySlugs)]
+  return [...new Set(slugs)]
+}

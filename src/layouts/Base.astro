@@ -15,7 +15,7 @@ const description = Astro.props.description ?? site.description
 const canonical = new URL(Astro.props.canonical ?? Astro.url.pathname, site.url).toString()
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
+  '@type': 'Organization',
   name: site.studio,
   url: site.url,
   email: `mailto:${site.email}`,
@@ -28,6 +28,7 @@ const jsonLd = {
   founder: {
     '@type': 'Person',
     name: site.name,
+    url: site.profile,
     sameAs: [site.github, site.profile, site.linkedin, site.huggingface],
   },
   sameAs: [site.github],
