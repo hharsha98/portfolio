@@ -21,13 +21,11 @@ const scholarly = {
   title={`Research — ${site.studio}`}
   description={`${paper.title}. ${paper.venue}. doi:${paper.doi}`}
 >
-  <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+  <article class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
     <p class="kicker">Research</p>
-    <h1 class="mt-4 text-3xl font-semibold tracking-tight text-paper sm:text-5xl">
-      Local retrieval, industrial trust
-    </h1>
+    <h1 class="page-title mt-4">Local retrieval, industrial trust</h1>
     <p class="mt-5 text-lg leading-relaxed text-mute">
-      Conference paper from the FAPS research assistantship, published at DVS EBL 2026: retrieval that stays on local knowledge, scored with trustworthiness metrics rather than fluency alone.
+      Conference paper published at DVS EBL 2026: retrieval that stays on local knowledge, scored with trustworthiness metrics rather than fluency alone.
     </p>
 
     <div class="frame panel mt-10 p-6 sm:p-8">
@@ -49,13 +47,11 @@ const scholarly = {
         <dd class="font-sans text-base text-paper/85">Institute FAPS, Nuremberg · FAU</dd>
       </dl>
       <p class="mt-6 text-[15px] leading-relaxed text-paper/85">{paper.summary}</p>
-      <p class="mt-4 text-sm leading-relaxed text-mute">
-        The assistantship work used local embedding models, retrieval pipelines, prototype agent workflows, and reliability evaluation for industrial decision support.
-      </p>
       <div class="mt-8 flex flex-wrap gap-3">
         <a class="btn btn-primary" href={paper.doiUrl} rel="noreferrer" target="_blank">DOI ↗</a>
         <a class="btn btn-ghost" href={paper.researchgate} rel="noreferrer" target="_blank">ResearchGate ↗</a>
-        <a class="btn btn-ghost" href="/projects/retrievallab">Related: RetrievalLab</a>
+        <a class="btn btn-ghost" href="/products/retrievallab">RetrievalLab</a>
+        <a class="btn btn-ghost" href="/products/rag-trustworthiness">RAG Trustworthiness</a>
       </div>
     </div>
   </article>

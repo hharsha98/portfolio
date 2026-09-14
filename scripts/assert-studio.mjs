@@ -34,6 +34,35 @@ if (site.includes('rtvision7@gmail.com')) fail('rtvision7@gmail.com must not rem
 if (!site.includes('https://www.linkedin.com/in/hanumanthu1')) fail('LinkedIn www URL missing')
 if (!site.includes('https://github.com/hharsha98')) fail('GitHub URL missing')
 if (!site.includes('https://huggingface.co/hharsha')) fail('Hugging Face URL missing')
+if (!site.includes("profile: 'https://harsha-vardhan.pages.dev'")) {
+  fail('founder profile must be https://harsha-vardhan.pages.dev')
+}
+for (const host of [
+  'fleet.agentic-systems-studio.com',
+  'os.agentic-systems-studio.com',
+  'vibespace.agentic-systems-studio.com',
+  'rag.agentic-systems-studio.com',
+]) {
+  if (!site.includes(host)) fail(`future host missing from site config: ${host}`)
+}
+
+const header = read(join(root, 'src', 'components', 'Header.astro'))
+for (const label of ["label: 'Products'", "label: 'Demos'", "label: 'Research'", "label: 'Contact'"]) {
+  if (!site.includes(label)) fail(`nav must include ${label}`)
+}
+if (!header.includes('Founder')) fail('nav must include Founder')
+if (header.includes('Profile')) fail('header Profile link must be Founder')
+if (header.includes('Browse products')) fail('header must stay a studio nav, not a SaaS launch CTA')
+if (header.includes('Sign in') || header.includes('Launch app') || header.includes('Launch the fleet')) {
+  fail('header must not clone a SaaS sign-in funnel')
+}
+if (site.includes("label: 'Studio'") || site.includes("label: 'Work'")) {
+  fail('nav must not use CV/dossier labels Studio/Work')
+}
+
+if (!existsSync(join(root, 'src', 'pages', 'products', 'index.astro'))) fail('products index missing')
+if (!existsSync(join(root, 'src', 'pages', 'demos.astro'))) fail('demos page missing')
+if (!existsSync(join(root, 'src', 'data', 'products.ts'))) fail('products catalog missing')
 
 const sourceFiles = []
 function walk(dir) {
@@ -56,10 +85,43 @@ for (const needle of ['evehicleshop', 'rtvision7@gmail.com', 'EmailMessage', 'ma
   }
 }
 if (blob.includes('rtvision7@gmail.com')) fail('rtvision7@gmail.com still present')
+if (blob.toLowerCase().includes('mechaharsh@')) fail('personal mechaharsh@ email must not appear on studio pages')
+if (blob.includes('agentfleet.vercel.app')) fail('do not link third-party Agent Fleet vercel.app')
+if (blob.includes('agentfleet.pages.dev')) fail('do not link third-party agentfleet.pages.dev')
+if (!existsSync(join(root, 'public', 'media', 'agentfleet-landing.png'))) {
+  fail('owned Agent Fleet landing visual missing at public/media/agentfleet-landing.png')
+}
+if (/\bdossier\b/i.test(blob)) fail('CV/dossier framing must not remain in studio copy')
+if (blob.includes('Open dossier')) fail('replace Open dossier with product CTAs')
 if (!blob.includes('0x4AAAAAAEuwpaBEHtpcUX5g')) fail('Turnstile sitekey missing')
 if (!blob.includes('/api/contact')) fail('contact webhook path missing')
 if (!existsSync(join(root, 'src', 'pages', 'contact.astro'))) fail('contact page missing')
 if (!existsSync(join(root, 'migrations', '0001_contact_submissions.sql'))) fail('D1 migration missing')
+
+const products = read(join(root, 'src', 'data', 'products.ts'))
+for (const url of [
+  'https://github.com/hharsha98/agentfleet',
+  'https://agentfleet.169.58.185.43.sslip.io/',
+  'https://github.com/hharsha98/agent-os',
+  'https://hharsha98.github.io/agent-os/',
+  'https://github.com/hharsha98/Vibespace',
+  'https://github.com/hharsha98/Vibespace/releases/latest',
+  'https://github.com/hharsha98/retrievallab',
+  'https://retrievallab.pages.dev',
+  'https://ragtrust.169.58.185.43.sslip.io/',
+  'https://hharsha98.github.io/rag-trustworthiness-industrial/',
+  'https://careeragent-ceq.pages.dev',
+  'https://github.com/hharsha98/mara-open',
+  'https://github.com/hharsha98/agentgrid',
+  'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
+  'https://github.com/hharsha98/agentops-studio',
+]) {
+  if (!products.includes(url)) fail(`product catalog missing required URL: ${url}`)
+}
+
+if ((products.match(/accent: '#[0-9a-fA-F]{6}'/g) || []).length < 10) {
+  fail('each catalog product must declare a hex accent')
+}
 
 const tests = spawnSync(process.execPath, ['--experimental-strip-types', '--test', 'worker/contact.test.ts'], {
   cwd: root,
@@ -83,6 +145,109 @@ if (!contactHtml.includes('0x4AAAAAAEuwpaBEHtpcUX5g')) fail('built contact page 
 if (!contactHtml.includes('contact@agentic-systems-studio.com')) fail('built contact page missing studio email')
 if (contactHtml.includes('</html>') && contactHtml.split('</html>')[1]?.includes('<script')) {
   fail('Turnstile scripts must stay inside the HTML document')
+}
+
+const indexHtml = read(join(root, 'dist', 'index.html'))
+if (indexHtml.includes('Open dossier') || /\bdossier\b/i.test(indexHtml)) {
+  fail('built home still uses dossier framing')
+}
+if (!indexHtml.includes('harsha-vardhan.pages.dev')) fail('built home must link the founder site')
+if (!indexHtml.includes('Vibespace')) fail('built home must feature Vibespace')
+if (!indexHtml.includes('retrievallab.pages.dev')) fail('built home must use RetrievalLab live URL')
+if (!indexHtml.includes('careeragent-ceq.pages.dev')) fail('built home must include CareerAgent live URL')
+if (!indexHtml.includes('ragtrust.169.58.185.43.sslip.io')) fail('built home must include RAG Trust live URL')
+if (!indexHtml.includes('hharsha98.github.io/agent-os')) fail('built home must use Agent OS gallery URL')
+if (!indexHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
+  fail('built home must link the owned Agent Fleet Contabo/sslip live demo')
+}
+if (indexHtml.includes('agentfleet.vercel.app')) {
+  fail('do not link third-party Agent Fleet vercel.app')
+}
+if (indexHtml.includes('agentfleet.pages.dev')) {
+  fail('do not link third-party agentfleet.pages.dev')
+}
+if (!indexHtml.includes('/media/agentfleet-landing.png')) {
+  fail('built home must use the owned Agent Fleet landing visual')
+}
+if (indexHtml.includes('94ms') || /17 built-in/i.test(indexHtml)) {
+  fail('do not copy Agent Fleet marketing metrics onto the studio hub')
+}
+if (!indexHtml.includes('Studio constellation')) {
+  fail('built home must include the studio constellation graphic')
+}
+if (!indexHtml.includes('products around one core')) {
+  fail('built home constellation must be the full catalog, not a four-node Fleet clone')
+}
+if (!indexHtml.includes('Live · square')) {
+  fail('built home constellation must encode honesty in node shape, not clone Fleet tool glyphs')
+}
+if (!indexHtml.includes('Studio workflow')) fail('built home must include the studio workflow section')
+if (!indexHtml.includes('Tech we actually use')) fail('built home must include tech credibility pills')
+if (!indexHtml.includes('Write the studio')) fail('built home must close on studio contact, not a SaaS funnel')
+if (!indexHtml.includes('contact@agentic-systems-studio.com')) {
+  fail('built home must expose contact@agentic-systems-studio.com')
+}
+if (indexHtml.includes('Sign in') || indexHtml.includes('Launch app') || indexHtml.includes('Launch the fleet')) {
+  fail('built home must not clone a SaaS sign-in funnel')
+}
+if (!indexHtml.includes('Building / coming soon')) {
+  fail('built home must mark coming-soon products')
+}
+if (!indexHtml.includes('Gallery / early')) fail('built home must mark Agent OS as gallery / early')
+if (!indexHtml.includes('Download / local')) fail('built home must mark Vibespace as download / local')
+if (/href=["'][^"']*chatgpt\.site/.test(indexHtml)) {
+  fail('built home must not link MARA chatgpt.site as Live')
+}
+if (!existsSync(join(root, 'dist', 'products.html'))) fail('built products page missing')
+if (!existsSync(join(root, 'dist', 'demos.html'))) fail('built demos page missing')
+
+const productsHtml = read(join(root, 'dist', 'products.html'))
+if (productsHtml.includes('Open dossier')) fail('products page still says Open dossier')
+if (!productsHtml.includes('Open product') && !productsHtml.includes('GitHub')) {
+  fail('products page must use product CTAs')
+}
+if (!productsHtml.includes('Building / coming soon')) fail('products page must show building status')
+if (!productsHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
+  fail('products catalog must link the Agent Fleet Contabo/sslip live demo')
+}
+if (!productsHtml.includes('Live demo / Contabo')) {
+  fail('products catalog must label the Fleet demo as Live demo / Contabo')
+}
+if (/href=["'][^"']*chatgpt\.site/.test(productsHtml)) {
+  fail('products catalog must not link MARA chatgpt.site as Live')
+}
+
+const demosHtml = read(join(root, 'dist', 'demos.html'))
+if (/href=["'][^"']*chatgpt\.site/.test(demosHtml)) fail('demos page must not link MARA chatgpt.site')
+if (!demosHtml.includes('retrievallab.pages.dev')) fail('demos page must include RetrievalLab live URL')
+if (!demosHtml.includes('careeragent-ceq.pages.dev')) fail('demos page must include CareerAgent live URL')
+if (!demosHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
+  fail('demos page must include the Agent Fleet Contabo/sslip live demo')
+}
+if (demosHtml.includes('Self-host docs')) fail('Fleet self-host docs belong on the product page, not the demos list')
+
+const maraHtml = read(join(root, 'dist', 'products', 'mara-open.html'))
+if (/href=["'][^"']*chatgpt\.site/.test(maraHtml)) fail('MARA product page must not link chatgpt.site')
+if (!maraHtml.includes('github.com/hharsha98/mara-open')) fail('MARA product page must link GitHub')
+
+const fleetHtml = read(join(root, 'dist', 'products', 'agentfleet.html'))
+if (!fleetHtml.includes('01 · Live')) fail('Agent Fleet product page must be Live')
+if (!fleetHtml.includes('Live demo / Contabo')) fail('Agent Fleet product page must label the Contabo demo')
+if (!fleetHtml.includes('https://agentfleet.169.58.185.43.sslip.io/')) {
+  fail('Agent Fleet product page must link the owned sslip demo')
+}
+if (!fleetHtml.includes('github.com/hharsha98/agentfleet')) fail('Agent Fleet product page must keep GitHub')
+if (!fleetHtml.includes('docs/DEPLOY.md')) fail('Agent Fleet product page must keep self-host docs')
+if (fleetHtml.includes('agentfleet.pages.dev') || fleetHtml.includes('agentfleet.vercel.app')) {
+  fail('do not link third-party Agent Fleet Pages or Vercel hosts')
+}
+if (fleetHtml.includes('01 · Building')) fail('Agent Fleet must not remain Building / coming soon')
+
+if (wrangler.includes('fleet.agentic-systems-studio.com')) {
+  fail('do not attach future product hosts in wrangler routes / DNS')
+}
+if (wrangler.includes('os.agentic-systems-studio.com') || wrangler.includes('vibespace.agentic-systems-studio.com') || wrangler.includes('rag.agentic-systems-studio.com')) {
+  fail('do not attach future product hosts in wrangler routes / DNS')
 }
 
 console.log('assert-studio: ok')

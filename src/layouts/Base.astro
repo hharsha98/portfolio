@@ -8,14 +8,16 @@ interface Props {
   title?: string
   description?: string
   canonical?: string
+  home?: boolean
 }
 
 const title = Astro.props.title ?? site.title
 const description = Astro.props.description ?? site.description
+const home = Astro.props.home ?? false
 const canonical = new URL(Astro.props.canonical ?? Astro.url.pathname, site.url).toString()
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
+  '@type': 'Organization',
   name: site.studio,
   url: site.url,
   email: `mailto:${site.email}`,
@@ -28,6 +30,7 @@ const jsonLd = {
   founder: {
     '@type': 'Person',
     name: site.name,
+    url: site.profile,
     sameAs: [site.github, site.profile, site.linkedin, site.huggingface],
   },
   sameAs: [site.github],
@@ -39,7 +42,7 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0a0b0d" />
+    <meta name="theme-color" content="#07080c" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={site.name} />
@@ -55,7 +58,7 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body>
+  <body class:list={[home && 'is-home']}>
     <a class="skip" href="#content">Skip to content</a>
     <Header />
     <main id="content">

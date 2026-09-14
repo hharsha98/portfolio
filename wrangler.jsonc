@@ -9,7 +9,7 @@
   "observability": {
     "enabled": true
   },
-  // Static Astro output (dist/*.html, dist/projects/*.html). Do not use
+  // Static Astro output (dist/*.html, dist/products/*.html). Do not use
   // not_found_handling: "single-page-application" — that pairs with a
   // public/_redirects `/* /index.html 200` rule and Cloudflare rejects
   // the deploy with 100324 (infinite loop: html_handling strips .html /

@@ -1,14 +1,23 @@
 # Agentic Systems Studio
 
-Work studio for shipped agentic systems — Agent Fleet, VibeDeck, Agent OS, AgentOps Studio, RetrievalLab, CareerAgent, and related case studies.
+Product studio for AI systems — Agent Fleet, Agent OS, Vibespace, RetrievalLab, and related tools.
 
-This domain is **not** a LinkedIn-style personal profile. The recruiter profile is a separate Pages site: [cursor-harsha-profile-pages.harsha-ai.pages.dev](https://cursor-harsha-profile-pages.harsha-ai.pages.dev). Do not retarget DNS of agentic-systems-studio.com to that project.
+This domain is **not** a personal CV. The founder site is [harsha-vardhan.pages.dev](https://harsha-vardhan.pages.dev). Do not retarget DNS of agentic-systems-studio.com to that project.
 
 Production domain: [agentic-systems-studio.com](https://agentic-systems-studio.com).
 
 ## Domain / DNS
 
-The zone is on Cloudflare nameservers (`alec.ns.cloudflare.com`). Custom domains **agentic-systems-studio.com** and **www.agentic-systems-studio.com** are already attached to the Workers project `agentic-systems-studio`. Keep that project as the **work studio**. Do not add a CNAME by hand. `wrangler.jsonc` lists both hostnames with `custom_domain: true` so deploys do not drop www.
+The zone is on Cloudflare nameservers (`alec.ns.cloudflare.com`). Custom domains **agentic-systems-studio.com** and **www.agentic-systems-studio.com** are already attached to the Workers project `agentic-systems-studio`. Keep that project as the **product studio**. Do not add a CNAME by hand. `wrangler.jsonc` lists both hostnames with `custom_domain: true` so deploys do not drop www.
+
+Future product hosts (copy/config only — **planned names, not live URLs**. Do **not** attach Cloudflare DNS from this repo):
+
+| Host | Product | Primary CTA today |
+|---|---|---|
+| `fleet.agentic-systems-studio.com` | Agent Fleet | [Live demo / Contabo](https://agentfleet.169.58.185.43.sslip.io/) — studio hostname is planned only, not attached |
+| `os.agentic-systems-studio.com` | Agent OS | [Gallery](https://hharsha98.github.io/agent-os/) |
+| `vibespace.agentic-systems-studio.com` | Vibespace | [Download](https://github.com/hharsha98/Vibespace/releases/latest) |
+| `rag.agentic-systems-studio.com` | RetrievalLab | [Live lab](https://retrievallab.pages.dev) |
 
 ## Stack
 
@@ -18,21 +27,26 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 
 | Route | Content |
 |---|---|
-| `/` | Studio homepage: schematic, featured systems, paper band |
-| `/projects/agentfleet` | Self-hostable multi-agent ops platform — [live app](https://agentfleet.169.58.185.43.sslip.io) · [live gallery](https://agentfleet-gallery.pages.dev) |
-| `/projects/vibedeck` | Agentic dev environment — [live gallery](https://vibedeck-gallery.pages.dev) |
-| `/projects/agent-os` | Local-first Agent OS — [live gallery](https://hharsha98.github.io/agent-os/) |
-| `/projects/agentops-studio` | Product + deploy scaffolding |
-| `/projects/agentgrid` | Multi-agent terminal grid |
-| `/projects/retrievallab` | Advanced RAG + eval — [live lab](https://retrievallab.pages.dev) |
-| `/projects/careeragent` | Multi-agent job-hunt product — [live demo](https://careeragent-ceq.pages.dev) |
-| `/projects/ai-rag` | Origin RAG system |
-| `/projects/revenue-ops` | RevenueOps control tower (Phase 0 scaffold) |
+| `/` | Product studio home: pitch, featured products, catalog, coming hosts |
+| `/products` | Full product catalog with Live / Download / local / Gallery / early / Building badges |
+| `/products/agentfleet` | Live — [Contabo/sslip demo](https://agentfleet.169.58.185.43.sslip.io/) · [GitHub](https://github.com/hharsha98/agentfleet) · [self-host docs](https://github.com/hharsha98/agentfleet/blob/main/docs/DEPLOY.md) |
+| `/products/agent-os` | Gallery / early — [gallery](https://hharsha98.github.io/agent-os/) |
+| `/products/vibespace` | Download / local — [GitHub Releases](https://github.com/hharsha98/Vibespace/releases/latest) |
+| `/products/retrievallab` | Live — [retrievallab.pages.dev](https://retrievallab.pages.dev) |
+| `/products/rag-trustworthiness` | Live — [sslip demo](https://ragtrust.169.58.185.43.sslip.io/) · [walkthrough](https://hharsha98.github.io/rag-trustworthiness-industrial/) |
+| `/products/careeragent` | Live — [careeragent-ceq.pages.dev](https://careeragent-ceq.pages.dev) |
+| `/products/mara-open` | Building — [GitHub](https://github.com/hharsha98/mara-open) (no Live CTA) |
+| `/products/agentgrid` | Building — GitHub only |
+| `/products/agentops-studio` | Building — GitHub only |
+| `/products/revenue-ops` | Building — Phase 0 scaffold |
+| `/demos` | Live / gallery / download surfaces only |
 | `/research` | DVS EBL 2026 paper (DOI) |
-| `/about` | Pointer to the recruiter profile, LinkedIn, and Hugging Face — not a CV |
+| `/about` | Founder pointer to [harsha-vardhan.pages.dev](https://harsha-vardhan.pages.dev) |
 | `/contact` | Turnstile-protected contact form (sitekey `0x4AAAAAAEuwpaBEHtpcUX5g`). POST `/api/contact` verifies the token and stores the message in free D1 (`ass-db`) + KV (`ASS_KV`). No Email Sending / Workers Paid. |
 
-Copy is taken from public GitHub descriptions/READMEs. No invented star counts or GPA. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — never github.com/agentic-systems-studio. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Studio contact: `contact@agentic-systems-studio.com`. Turnstile-protected form at `/contact` stores submissions in free D1 + KV — no Email Sending / Workers Paid.
+Copy is taken from public GitHub descriptions/READMEs. No invented star counts or eval headlines. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — never github.com/agentic-systems-studio. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Studio contact: `contact@agentic-systems-studio.com`. Do not put a personal Gmail address on public studio pages. Turnstile-protected form at `/contact` stores submissions in free D1 + KV — no Email Sending / Workers Paid.
+
+Do **not** link third-party Vercel or Pages hosts for Agent Fleet. The owned live demo is the Contabo/sslip host. Do **not** attach `fleet.agentic-systems-studio.com` in this repo. Do **not** present remaining scaffolds (Grid, Tower, MARA, AgentOps) as live SaaS. MARA Open has no Live button (GitHub only until migrated).
 
 ## Local
 
@@ -48,11 +62,17 @@ npm run build
 npm run preview
 ```
 
+Guards (content, Turnstile, free-plan Worker, Astro build):
+
+```bash
+npm test
+```
+
 ## Deploy (Cloudflare Workers)
 
 Workers project: **agentic-systems-studio**. This repo is a **static Astro** site, not a Vite SPA.
 
-Cloudflare Git must build **this studio branch** (`cursor/agentic-systems-studio-7fff`) or `main` after this PR merges. Building old `main` (Vite + `public/_redirects` `/* /index.html 200`) fails deploy with:
+Cloudflare Git must build **this studio branch** (`cursor/agentic-systems-studio-7fff`) or `main` after this PR is merged. Building old `main` (Vite + `public/_redirects` `/* /index.html 200`) fails deploy with:
 
 ```
 Invalid _redirects configuration: Line 1: Infinite loop detected
@@ -86,4 +106,3 @@ npx wrangler secret put TURNSTILE_SECRET
 ```
 
 Local test secret is in `.dev.vars.example` (Cloudflare's always-pass test key).
-
