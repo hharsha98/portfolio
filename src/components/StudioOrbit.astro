@@ -1,5 +1,5 @@
 ---
-import { products, statusLabel } from '../data/products'
+import { products, statusLabel, type Product } from '../data/products'
 
 /** Polar map: 0° is east, clockwise. Live systems sit on the outer ring. */
 const layout: Record<string, { a: number; r: number }> = {
@@ -15,6 +15,24 @@ const layout: Record<string, { a: number; r: number }> = {
   'agentops-studio': { a: 234, r: 35 },
 }
 
+const orbitStatus = {
+  live: 'Live',
+  download: 'Download',
+  gallery: 'Gallery',
+  building: 'Building',
+} as const
+
+function orbitName(product: Product) {
+  if (product.slug === 'rag-trustworthiness') return 'RAG Trust'
+  if (product.slug === 'revenue-ops') return 'Revenue Ops'
+  if (product.slug === 'agentops-studio') return 'AgentOps'
+  return product.name
+}
+
+function accentOf(product: Product) {
+  return /^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7cff'
+}
+
 function labelDir(a: number) {
   const rad = (a * Math.PI) / 180
   const x = Math.cos(rad)
@@ -26,7 +44,13 @@ function labelDir(a: number) {
 const nodes = products.map((product) => {
   const pos = layout[product.slug]
   if (!pos) throw new Error(`constellation layout missing: ${product.slug}`)
-  return { product, ...pos, dir: labelDir(pos.a) }
+  return {
+    product,
+    ...pos,
+    dir: product.slug === 'careeragent' ? 'in' : labelDir(pos.a),
+    accent: accentOf(product),
+    short: orbitName(product),
+  }
 })
 
 const stars = [
@@ -57,7 +81,7 @@ const stars = [
       {nodes.map((node) => (
         <span
           class:list={['orbit-spoke', `is-${node.product.status}`]}
-          style={`--a:${node.a}deg;--r:${node.r};--c:${node.product.accent}`}
+          style={`--a:${node.a}deg;--r:${node.r};--c:${node.accent}`}
           aria-hidden="true"
         ></span>
       ))}
@@ -75,14 +99,14 @@ const stars = [
         <a
           class:list={['orbit-node', `is-${node.product.status}`]}
           href={`/products/${node.product.slug}`}
-          style={`--a:${node.a}deg;--r:${node.r};--c:${node.product.accent}`}
+          style={`--a:${node.a}deg;--r:${node.r};--c:${node.accent}`}
           data-dir={node.dir}
-          aria-label={`${node.product.name} — ${statusLabel(node.product.status)}`}
+          aria-label={`${node.product.index} ${node.product.name} — ${statusLabel(node.product.status)}`}
         >
           <span class="orbit-mark">{node.product.index}</span>
           <span class="orbit-label">
-            <span class="orbit-label-name">{node.product.name}</span>
-            <span class="orbit-label-status">{statusLabel(node.product.status)}</span>
+            <span class="orbit-label-name">{node.short}</span>
+            <span class="orbit-label-status">{orbitStatus[node.product.status]}</span>
           </span>
         </a>
       ))}
