@@ -52,6 +52,10 @@ for (const label of ["label: 'Products'", "label: 'Demos'", "label: 'Research'",
 }
 if (!header.includes('Founder')) fail('nav must include Founder')
 if (header.includes('Profile')) fail('header Profile link must be Founder')
+if (header.includes('Browse products')) fail('header must stay a studio nav, not a SaaS launch CTA')
+if (header.includes('Sign in') || header.includes('Launch app') || header.includes('Launch the fleet')) {
+  fail('header must not clone a SaaS sign-in funnel')
+}
 if (site.includes("label: 'Studio'") || site.includes("label: 'Work'")) {
   fail('nav must not use CV/dossier labels Studio/Work')
 }
@@ -165,6 +169,15 @@ if (indexHtml.includes('94ms') || /17 built-in/i.test(indexHtml)) {
 }
 if (!indexHtml.includes('Studio constellation')) {
   fail('built home must include the studio constellation graphic')
+}
+if (!indexHtml.includes('Studio workflow')) fail('built home must include the studio workflow section')
+if (!indexHtml.includes('Tech we actually use')) fail('built home must include tech credibility pills')
+if (!indexHtml.includes('Write the studio')) fail('built home must close on studio contact, not a SaaS funnel')
+if (!indexHtml.includes('contact@agentic-systems-studio.com')) {
+  fail('built home must expose contact@agentic-systems-studio.com')
+}
+if (indexHtml.includes('Sign in') || indexHtml.includes('Launch app') || indexHtml.includes('Launch the fleet')) {
+  fail('built home must not clone a SaaS sign-in funnel')
 }
 if (!indexHtml.includes('Building / coming soon')) {
   fail('built home must mark coming-soon products')

@@ -36,6 +36,8 @@ export type Product = {
   stack: string[]
   status: ProductStatus
   featured: boolean
+  /** Saturated accent for orbit, bento, and constellation tiles. */
+  accent: string
   github?: string
   links: ProductLink[]
   futureHost?: string
@@ -70,6 +72,7 @@ export const products: Product[] = [
       'Eval Center, cost budgets, guardrails, versioned rollback',
     ],
     stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'pgvector', 'MCP', 'Docker'],
+    accent: '#8b7cff',
     status: 'building',
     featured: true,
     github: 'https://github.com/hharsha98/agentfleet',
@@ -109,6 +112,7 @@ export const products: Product[] = [
       'Machine control: status only until execution is enabled',
     ],
     stack: ['React', 'TypeScript', 'Vite', 'Express', 'Node'],
+    accent: '#c9a24a',
     status: 'gallery',
     featured: true,
     github: 'https://github.com/hharsha98/agent-os',
@@ -141,6 +145,7 @@ export const products: Product[] = [
       'Tauri desktop shell · Node 22+ required',
     ],
     stack: ['TypeScript', 'React', 'Tauri', 'Fastify', 'node-pty', 'MCP'],
+    accent: '#6ee7f0',
     status: 'download',
     featured: true,
     github: 'https://github.com/hharsha98/Vibespace',
@@ -177,6 +182,7 @@ export const products: Product[] = [
       'Retrieval eval: recall@k and MRR',
     ],
     stack: ['FastAPI', 'React', 'pgvector', 'FlashRank', 'BM25', 'HyDE', 'Supabase'],
+    accent: '#4caf8a',
     status: 'live',
     featured: true,
     github: 'https://github.com/hharsha98/retrievallab',
@@ -208,6 +214,7 @@ export const products: Product[] = [
       'Hybrid retrieval implemented; rerank available, off by default for latency',
     ],
     stack: ['Python', 'Ollama', 'FAISS', 'BM25', 'NLI', 'Gradio', 'Docker'],
+    accent: '#22d3ee',
     status: 'live',
     featured: false,
     github: 'https://github.com/hharsha98/rag-trustworthiness-industrial',
@@ -247,6 +254,7 @@ export const products: Product[] = [
       'LLM-as-judge evals, including a trap question',
     ],
     stack: ['FastAPI', 'React', 'pgvector', 'SSE', 'Docker', 'Kubernetes', 'Supabase'],
+    accent: '#fb923c',
     status: 'live',
     featured: false,
     github: 'https://github.com/hharsha98/careeragent',
@@ -277,6 +285,7 @@ export const products: Product[] = [
       'Durable pause/resume of human review on the local backend',
     ],
     stack: ['Python', 'LangGraph', 'FastAPI', 'React', 'Chroma', 'SQLite'],
+    accent: '#f97316',
     status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/mara-open',
@@ -304,6 +313,7 @@ export const products: Product[] = [
       'Optional Tauri desktop wrapper',
     ],
     stack: ['TypeScript', 'React', 'Fastify', 'xterm.js', 'Monaco', 'Tauri', 'MCP'],
+    accent: '#60a5fa',
     status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/agentgrid',
@@ -331,6 +341,7 @@ export const products: Product[] = [
       'Docker, Kubernetes, Terraform, and CI skeletons',
     ],
     stack: ['FastAPI', 'React', 'Postgres', 'Redis', 'Docker', 'Kubernetes', 'Terraform'],
+    accent: '#f472b6',
     status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
@@ -364,6 +375,7 @@ export const products: Product[] = [
       'Learning log for incidents, fixes, and verification',
     ],
     stack: ['TypeScript', 'Python', 'FastAPI', 'Docker', 'Kubernetes', 'Terraform', 'MCP'],
+    accent: '#a78bfa',
     status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/agentops-studio',
@@ -436,3 +448,19 @@ export function catalogStats() {
     building: products.filter((p) => p.status === 'building').length,
   }
 }
+
+/** Stack names that appear in the catalog (plus Workers for this hub). */
+export const credibilityStack = [
+  'Python',
+  'FastAPI',
+  'Next.js',
+  'React',
+  'TypeScript',
+  'PostgreSQL',
+  'pgvector',
+  'Tauri',
+  'MCP',
+  'Docker',
+  'Gradio',
+  'Cloudflare Workers',
+] as const

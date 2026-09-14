@@ -5,15 +5,26 @@ import { badgeLinks, statusLabel } from '../data/products'
 interface Props {
   product: Product
   featured?: boolean
+  compact?: boolean
+  class?: string
 }
 
-const { product, featured = false } = Astro.props
+const { product, featured = false, compact = false, class: className } = Astro.props
 const href = `/products/${product.slug}`
 const badges = badgeLinks(product)
+const showArt = featured && !compact
 ---
 
-<article class:list={['product-card panel flex flex-col p-5 sm:p-6', featured && 'product-card-featured sm:p-7']}>
-  {product.visual ? (
+<article
+  class:list={[
+    'product-card panel flex h-full flex-col p-5 sm:p-6',
+    featured && 'product-card-featured sm:p-7',
+    compact && 'constellation-card',
+    className,
+  ]}
+  style={`--accent:${product.accent}`}
+>
+  {product.visual && showArt ? (
     <a class="product-shot mb-5 block" href={href}>
       <img
         src={product.visual.src}
@@ -24,8 +35,8 @@ const badges = badgeLinks(product)
         decoding="async"
       />
     </a>
-  ) : featured ? (
-    <a class={`product-shot product-art art-${product.slug} mb-5`} href={href}>
+  ) : showArt ? (
+    <a class="product-shot product-art mb-5" href={href}>
       <span class="art-panes" aria-hidden="true">
         <span></span><span></span><span></span><span></span>
       </span>
@@ -37,7 +48,7 @@ const badges = badgeLinks(product)
   ) : null}
 
   <div class="flex flex-wrap items-center justify-between gap-2">
-    <span class="font-mono text-[11px] text-brass">{product.index}</span>
+    <span class="font-mono text-[11px]" style={`color:var(--accent)`}>{product.index}</span>
     <span class={`badge badge-${product.status}`}>{statusLabel(product.status)}</span>
   </div>
 
@@ -54,18 +65,18 @@ const badges = badgeLinks(product)
     ))}
   </div>
 
-  <h3 class:list={['mt-4 tracking-tight text-paper', featured ? 'display text-3xl' : 'text-xl font-medium']}>
-    <a class="hover:text-brass" href={href}>{product.name}</a>
+  <h3 class:list={['mt-4 tracking-tight text-paper', featured && !compact ? 'display text-3xl' : 'text-xl font-medium']}>
+    <a class="product-name-link" href={href}>{product.name}</a>
   </h3>
   <p class="mt-2 max-w-2xl flex-1 text-sm leading-relaxed text-mute">
     {product.description}
   </p>
   <div class="mt-4 flex flex-wrap gap-1.5">
-    {product.stack.slice(0, featured ? 6 : 4).map((t) => (
+    {product.stack.slice(0, featured && !compact ? 6 : 4).map((t) => (
       <span class="chip">{t}</span>
     ))}
   </div>
-  <p class="mt-5 font-mono text-[11px] uppercase tracking-[0.16em] text-brass">
+  <p class="mt-5 font-mono text-[11px] uppercase tracking-[0.16em]" style={`color:var(--accent)`}>
     <a href={href}>Open product →</a>
   </p>
 </article>

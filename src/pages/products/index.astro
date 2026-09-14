@@ -22,15 +22,31 @@ const rest = catalogProducts()
 
     <div class="mt-12">
       <p class="kicker">Featured</p>
-      <div class="mt-4 grid gap-4 lg:grid-cols-2">
-        {featured.map((p) => <ProductCard product={p} featured />)}
+      <div class="bento mt-4">
+        {featured.map((p) => (
+          <ProductCard
+            product={p}
+            featured
+            class={
+              p.slug === 'agentfleet'
+                ? 'bento-agentfleet'
+                : p.slug === 'agent-os'
+                  ? 'bento-agent-os'
+                  : p.slug === 'vibespace'
+                    ? 'bento-vibespace'
+                    : p.slug === 'retrievallab'
+                      ? 'bento-retrievallab'
+                      : ''
+            }
+          />
+        ))}
       </div>
     </div>
 
     <div class="mt-14">
       <p class="kicker">Also in the catalog</p>
-      <div class="mt-4 grid gap-4 sm:grid-cols-2">
-        {rest.map((p) => <ProductCard product={p} />)}
+      <div class="constellation-grid mt-4">
+        {rest.map((p) => <ProductCard product={p} compact />)}
       </div>
     </div>
 

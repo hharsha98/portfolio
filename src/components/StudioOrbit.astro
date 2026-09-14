@@ -33,6 +33,13 @@ const nodes = [
     icon: 'rag',
   },
 ] as const
+
+const satellites = [
+  { a: 70, r: 44, color: '#fb923c' },
+  { a: 168, r: 41, color: '#22d3ee' },
+  { a: -12, r: 45, color: '#f472b6' },
+  { a: 250, r: 42, color: '#a78bfa' },
+] as const
 ---
 
 <figure class="studio-orbit-wrap">
@@ -44,6 +51,14 @@ const nodes = [
       <span class="orbit-ring orbit-ring-b"></span>
       <span class="orbit-ring orbit-ring-c"></span>
     </div>
+
+    {satellites.map((sat) => (
+      <span
+        class="orbit-sat"
+        style={`--a:${sat.a}deg;--r:${sat.r};--c:${sat.color}`}
+        aria-hidden="true"
+      ></span>
+    ))}
 
     <a class="orbit-core" href="/products" aria-label="Browse studio products">
       <span class="orbit-core-mark">A·S</span>
