@@ -7,18 +7,11 @@ import StudioWorkflow from '../components/StudioWorkflow.astro'
 import TechPills from '../components/TechPills.astro'
 import CloseBand from '../components/CloseBand.astro'
 import { site, paper } from '../data/site'
-import { featuredProducts, catalogProducts, catalogStats } from '../data/products'
+import { featuredProducts, catalogProducts, catalogStats, featuredBentoClass } from '../data/products'
 
 const featured = featuredProducts()
 const rest = catalogProducts()
 const stats = catalogStats()
-
-const bentoClass: Record<string, string> = {
-  agentfleet: 'bento-agentfleet',
-  'agent-os': 'bento-agent-os',
-  vibespace: 'bento-vibespace',
-  retrievallab: 'bento-retrievallab',
-}
 ---
 
 <Base>
@@ -27,7 +20,7 @@ const bentoClass: Record<string, string> = {
     <div class="hero-inner relative mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-12 lg:gap-8">
       <div class="lg:col-span-6">
         <div class="flex flex-wrap gap-2">
-          <span class="pill"><span class="pill-dot"></span> {stats.live} labs live</span>
+          <span class="pill"><span class="pill-dot"></span> {stats.live} live</span>
           <span class="pill">Open source</span>
           <span class="pill">Self-hostable</span>
         </div>
@@ -66,7 +59,7 @@ const bentoClass: Record<string, string> = {
     </div>
   </section>
 
-  <section class="section">
+  <section class="section pt-16 sm:pt-20">
     <p class="kicker">Core lines</p>
     <h2 class="display mt-3 max-w-2xl text-3xl leading-tight text-paper sm:text-5xl">
       Ops, environments, and retrieval — as products, not a resume.
@@ -100,7 +93,7 @@ const bentoClass: Record<string, string> = {
 
     <div class="bento">
       {featured.map((p) => (
-        <ProductCard product={p} featured class={bentoClass[p.slug] ?? ''} />
+        <ProductCard product={p} featured class={featuredBentoClass(p)} />
       ))}
     </div>
 
@@ -113,9 +106,7 @@ const bentoClass: Record<string, string> = {
     </div>
   </section>
 
-  <section class="section pt-0 sm:pt-0">
-    <StudioWorkflow />
-  </section>
+  <StudioWorkflow />
 
   <TechPills />
 

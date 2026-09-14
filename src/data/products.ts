@@ -413,8 +413,24 @@ export function neighbors(slug: string) {
   }
 }
 
+const bentoLayouts = {
+  agentfleet: 'bento-agentfleet',
+  'agent-os': 'bento-agent-os',
+  vibespace: 'bento-vibespace',
+  retrievallab: 'bento-retrievallab',
+} as const
+
 export function featuredProducts() {
   return products.filter((p) => p.featured)
+}
+
+export function featuredBentoClass(product: Product) {
+  if (!product.featured) return ''
+  const cls = bentoLayouts[product.slug as keyof typeof bentoLayouts]
+  if (!cls) {
+    throw new Error(`featured product ${product.slug} is missing a bento layout class`)
+  }
+  return cls
 }
 
 export function catalogProducts() {

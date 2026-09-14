@@ -13,16 +13,17 @@ const { product, featured = false, compact = false, class: className } = Astro.p
 const href = `/products/${product.slug}`
 const badges = badgeLinks(product)
 const showArt = featured && !compact
+const accent = /^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7cff'
 ---
 
 <article
   class:list={[
-    'product-card panel flex h-full flex-col p-5 sm:p-6',
+    'product-card has-accent panel flex h-full flex-col p-5 sm:p-6',
     featured && 'product-card-featured sm:p-7',
     compact && 'constellation-card',
     className,
   ]}
-  style={`--accent:${product.accent}`}
+  style={`--accent:${accent}`}
 >
   {product.visual && showArt ? (
     <a class="product-shot mb-5 block" href={href}>

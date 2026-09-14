@@ -1,45 +1,46 @@
 ---
-const nodes = [
-  {
-    href: '/products/agentfleet',
-    label: 'Agent Fleet',
-    a: -48,
-    r: 38,
-    color: '#8b7cff',
-    icon: 'fleet',
-  },
-  {
-    href: '/products/agent-os',
-    label: 'Agent OS',
-    a: 28,
-    r: 34,
-    color: '#c9a24a',
-    icon: 'os',
-  },
-  {
-    href: '/products/vibespace',
-    label: 'Vibespace',
-    a: 132,
-    r: 36,
-    color: '#6ee7f0',
-    icon: 'vibe',
-  },
-  {
-    href: '/products/retrievallab',
-    label: 'RetrievalLab',
-    a: 208,
-    r: 33,
-    color: '#4caf8a',
-    icon: 'rag',
-  },
+import { products } from '../data/products'
+
+const icons = {
+  agentfleet: 'fleet',
+  'agent-os': 'os',
+  vibespace: 'vibe',
+  retrievallab: 'rag',
+} as const
+
+const orbit = [
+  { slug: 'agentfleet', a: -48, r: 38 },
+  { slug: 'agent-os', a: 28, r: 34 },
+  { slug: 'vibespace', a: 132, r: 36 },
+  { slug: 'retrievallab', a: 208, r: 33 },
 ] as const
 
-const satellites = [
-  { a: 70, r: 44, color: '#fb923c' },
-  { a: 168, r: 41, color: '#22d3ee' },
-  { a: -12, r: 45, color: '#f472b6' },
-  { a: 250, r: 42, color: '#a78bfa' },
+const nodes = orbit.map((item) => {
+  const product = products.find((p) => p.slug === item.slug)
+  if (!product) throw new Error(`orbit product missing: ${item.slug}`)
+  return {
+    href: `/products/${product.slug}`,
+    label: product.name,
+    a: item.a,
+    r: item.r,
+    color: product.accent,
+    icon: icons[item.slug],
+  }
+})
+
+const satelliteSlugs = ['careeragent', 'rag-trustworthiness', 'revenue-ops', 'agentops-studio'] as const
+const satellitePos = [
+  { a: 70, r: 44 },
+  { a: 168, r: 41 },
+  { a: -12, r: 45 },
+  { a: 250, r: 42 },
 ] as const
+const satellites = satelliteSlugs.map((slug, i) => {
+  const product = products.find((p) => p.slug === slug)
+  const pos = satellitePos[i]
+  if (!product || !pos) throw new Error(`orbit satellite missing: ${slug}`)
+  return { ...pos, color: product.accent }
+})
 ---
 
 <figure class="studio-orbit-wrap">

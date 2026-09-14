@@ -121,6 +121,10 @@ for (const url of [
   if (!products.includes(url)) fail(`product catalog missing required URL: ${url}`)
 }
 
+if ((products.match(/accent: '#[0-9a-fA-F]{6}'/g) || []).length < 10) {
+  fail('each catalog product must declare a hex accent')
+}
+
 const tests = spawnSync(process.execPath, ['--experimental-strip-types', '--test', 'worker/contact.test.ts'], {
   cwd: root,
   encoding: 'utf8',

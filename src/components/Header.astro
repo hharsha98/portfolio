@@ -53,14 +53,14 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/'
       </summary>
       <div class="absolute right-0 mt-2 w-56 rounded-2xl border border-line bg-panel p-2 shadow-xl">
         {nav.map((item) => (
-          <a href={item.href} class="block min-h-11 rounded-lg px-3 py-3 text-sm text-paper hover:text-brass">
+          <a href={item.href} class="block min-h-11 rounded-lg px-3 py-3 text-sm text-mute hover:bg-white/5 hover:text-paper">
             {item.label}
           </a>
         ))}
-        <a href={site.profile} rel="noreferrer" target="_blank" class="block min-h-11 rounded-lg px-3 py-3 text-sm text-paper hover:text-brass">
+        <a href={site.profile} rel="noreferrer" target="_blank" class="block min-h-11 rounded-lg px-3 py-3 text-sm text-mute hover:bg-white/5 hover:text-paper">
           Founder
         </a>
-        <a href={site.github} rel="noreferrer" target="_blank" class="block min-h-11 rounded-lg px-3 py-3 text-sm text-paper hover:text-brass">
+        <a href={site.github} rel="noreferrer" target="_blank" class="block min-h-11 rounded-lg px-3 py-3 text-sm text-mute hover:bg-white/5 hover:text-paper">
           GitHub ↗
         </a>
       </div>

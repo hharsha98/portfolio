@@ -272,14 +272,14 @@ details.nav-menu > summary::-webkit-details-marker {
 }
 
 .hero-inner {
-  min-height: min(82vh, 800px);
-  padding-top: 4.75rem;
-  padding-bottom: 3.75rem;
+  min-height: min(68vh, 640px);
+  padding-top: 4.5rem;
+  padding-bottom: 2.75rem;
 }
 @media (min-width: 640px) {
   .hero-inner {
-    padding-top: 6rem;
-    padding-bottom: 5rem;
+    padding-top: 5.25rem;
+    padding-bottom: 3.25rem;
   }
 }
 
@@ -327,9 +327,6 @@ details.nav-menu > summary::-webkit-details-marker {
 .product-card-featured .product-shot img {
   height: 14.5rem;
 }
-.bento-agentfleet .product-shot img {
-  height: min(22rem, 42vh);
-}
 
 .product-art {
   display: flex;
@@ -360,12 +357,14 @@ details.nav-menu > summary::-webkit-details-marker {
   background: rgb(255 255 255 / 0.04);
 }
 
-.product-card {
+.has-accent {
   --accent: var(--color-aurora);
   border-radius: 1.15rem;
+  position: relative;
+  overflow: hidden;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
-.product-card::before {
+.has-accent::before {
   content: "";
   pointer-events: none;
   position: absolute;
@@ -376,11 +375,7 @@ details.nav-menu > summary::-webkit-details-marker {
   border-radius: 50%;
   background: radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%);
 }
-.product-card.panel {
-  position: relative;
-  overflow: hidden;
-}
-.product-card > * {
+.has-accent > * {
   position: relative;
   z-index: 1;
 }
@@ -388,10 +383,10 @@ details.nav-menu > summary::-webkit-details-marker {
   color: var(--accent);
 }
 @media (hover: hover) {
-  .product-card {
+  .has-accent {
     transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   }
-  .product-card:hover {
+  .has-accent:hover {
     transform: translateY(-3px);
     border-color: color-mix(in srgb, var(--accent) 55%, transparent);
     box-shadow: 0 18px 50px rgb(0 0 0 / 0.35), 0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent);
@@ -429,6 +424,9 @@ details.nav-menu > summary::-webkit-details-marker {
   }
   .bento-retrievallab {
     grid-column: 1 / -1;
+  }
+  .bento-agentfleet .product-shot img {
+    height: min(22rem, 42vh);
   }
   .constellation-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
