@@ -1,0 +1,22 @@
+---
+import { showcase } from '../data/showcase'
+import { requireProduct } from '../data/products'
+import WorkflowVisual from './WorkflowVisual.astro'
+---
+<section class="product-stage" aria-label="Explore example product workflows" data-showcase data-motion>
+  <div class="stage-top"><p class="visual-kicker">Systems in motion</p><button class="motion-toggle" type="button" data-motion-toggle hidden>Pause animation</button></div>
+  <div class="stage-tabs" aria-label="Choose an example workflow" data-stage-tabs hidden>
+    {showcase.map((scene) => <button type="button" id={`tab-${scene.id}`} data-stage-tab={scene.id}>{scene.label}<span aria-hidden="true">↗</span></button>)}
+  </div>
+  {showcase.map((scene) => {
+    const product = requireProduct(scene.slug)
+    const live = product.links.find(link => link.kind === 'live')!
+    return <section class="stage-panel" id={`panel-${scene.id}`} data-stage-panel={scene.id}>
+      <div class="stage-intro"><div><p class="stage-product">{product.name}</p><h2>{scene.title}</h2><p>{scene.description}</p></div><a class="stage-open" href={live.href} rel="noreferrer" target="_blank">{scene.action}<span aria-hidden="true">↗</span></a></div>
+      <WorkflowVisual kind={scene.id} />
+    </section>
+  })}
+</section>
+<script>
+  import '../scripts/showcase'
+</script>

@@ -16,7 +16,7 @@ const rest = product.links.filter((l) => l !== primary)
 const accent = /^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7cff'
 ---
 
-<article class="product-detail mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16" style={`--accent:${accent}`}>
+<article data-product-status={product.status} class="product-detail mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16" style={`--accent:${accent}`}>
   <nav class="font-mono text-[11px] uppercase tracking-[0.16em] text-mute" aria-label="Breadcrumb">
     <a class="hover:text-brass" href="/">Home</a>
     <span class="px-2" aria-hidden="true">/</span>
@@ -26,7 +26,7 @@ const accent = /^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7
   </nav>
 
   <div class="product-detail-rule" aria-hidden="true"></div>
-  <p class="mt-8 font-mono text-xs" style={`color:var(--accent)`}>{product.index} · {statusLabel(product.status)}</p>
+  <p class="mt-8 font-mono text-xs" style={`color:var(--accent)`}>{statusLabel(product.status)}</p>
   <h1 class="page-title mt-3">{product.name}</h1>
   <p class="mt-4 text-lg leading-relaxed text-mute">{product.tagline}</p>
 

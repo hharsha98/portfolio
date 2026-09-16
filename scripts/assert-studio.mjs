@@ -166,29 +166,22 @@ if (indexHtml.includes('agentfleet.vercel.app')) {
 if (indexHtml.includes('agentfleet.pages.dev')) {
   fail('do not link third-party agentfleet.pages.dev')
 }
-if (!indexHtml.includes('/media/agentfleet-landing.png')) {
-  fail('built home must use the owned Agent Fleet landing visual')
-}
+// Verify user-facing contracts without binding the page to one illustration.
 if (indexHtml.includes('94ms') || /17 built-in/i.test(indexHtml)) {
-  fail('do not copy Agent Fleet marketing metrics onto the studio hub')
+  fail('do not copy product marketing metrics onto the studio hub')
 }
-if (!indexHtml.includes('Studio constellation')) {
-  fail('built home must include the studio constellation graphic')
+for (const label of ['Studio constellation', 'Coordinate agents', 'Search documents', 'Verify answers', 'Example workflow', 'Engineering', 'In development']) {
+  if (!indexHtml.includes(label)) fail(`built home missing product-showcase content: ${label}`)
 }
-if (!indexHtml.includes('products around one core')) {
-  fail('built home constellation must be the full catalog, not a four-node Fleet clone')
+if (/\b(?:\d+|ten)\s+(?:systems|products)\b/i.test(indexHtml)) fail('home must not advertise catalog totals')
+if (indexHtml.includes('orbit-plate') || indexHtml.includes('products around one core')) fail('remove the numbered catalog orbit')
+if (!/href="\/products"[^>]*>Explore all products/.test(indexHtml)) fail('primary hero action must open the catalog')
+for (const match of products.matchAll(/^    slug: '([^']+)'/gm)) {
+  if (!indexHtml.includes(`/products/${match[1]}`)) fail(`home must keep ${match[1]} discoverable`)
 }
-if (!indexHtml.includes('Live · square')) {
-  fail('built home constellation must encode honesty in node shape, not clone Fleet tool glyphs')
+for (const scene of ['coordinate', 'retrieve', 'verify']) {
+  if (!indexHtml.includes(`id="panel-${scene}"`)) fail(`example workflow missing: ${scene}`)
 }
-if (!indexHtml.includes('orbit-plate')) {
-  fail('built home constellation must be a chart plate, not a CSS radar clone')
-}
-if (indexHtml.includes('orbit-spoke')) {
-  fail('built home constellation must not use Fleet-style radial spokes')
-}
-if (!indexHtml.includes('Studio workflow')) fail('built home must include the studio workflow section')
-if (!indexHtml.includes('Tech we actually use')) fail('built home must include tech credibility pills')
 if (!indexHtml.includes('Write the studio')) fail('built home must close on studio contact, not a SaaS funnel')
 if (!indexHtml.includes('contact@agentic-systems-studio.com')) {
   fail('built home must expose contact@agentic-systems-studio.com')
@@ -237,7 +230,7 @@ if (/href=["'][^"']*chatgpt\.site/.test(maraHtml)) fail('MARA product page must 
 if (!maraHtml.includes('github.com/hharsha98/mara-open')) fail('MARA product page must link GitHub')
 
 const fleetHtml = read(join(root, 'dist', 'products', 'agentfleet.html'))
-if (!fleetHtml.includes('01 · Live')) fail('Agent Fleet product page must be Live')
+if (!fleetHtml.includes('data-product-status="live"')) fail('Agent Fleet product page must be Live')
 if (!fleetHtml.includes('Live demo / Contabo')) fail('Agent Fleet product page must label the Contabo demo')
 if (!fleetHtml.includes('https://agentfleet.169.58.185.43.sslip.io/')) {
   fail('Agent Fleet product page must link the owned sslip demo')
@@ -247,7 +240,7 @@ if (!fleetHtml.includes('docs/DEPLOY.md')) fail('Agent Fleet product page must k
 if (fleetHtml.includes('agentfleet.pages.dev') || fleetHtml.includes('agentfleet.vercel.app')) {
   fail('do not link third-party Agent Fleet Pages or Vercel hosts')
 }
-if (fleetHtml.includes('01 · Building')) fail('Agent Fleet must not remain Building / coming soon')
+if (fleetHtml.includes('data-product-status="building"')) fail('Agent Fleet must not remain Building / coming soon')
 
 if (wrangler.includes('fleet.agentic-systems-studio.com')) {
   fail('do not attach future product hosts in wrangler routes / DNS')

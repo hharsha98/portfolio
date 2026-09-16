@@ -1,149 +1,64 @@
 ---
 import Base from '../layouts/Base.astro'
-import StudioOrbit from '../components/StudioOrbit.astro'
+import ProductStage from '../components/ProductStage.astro'
+import WorkflowVisual from '../components/WorkflowVisual.astro'
 import ProductCard from '../components/ProductCard.astro'
-import ComingHosts from '../components/ComingHosts.astro'
-import StudioWorkflow from '../components/StudioWorkflow.astro'
-import TechPills from '../components/TechPills.astro'
-import CloseBand from '../components/CloseBand.astro'
+import StudioMark from '../components/StudioMark.astro'
 import { site, paper } from '../data/site'
-import { featuredProducts, catalogProducts, catalogStats, featuredBentoClass } from '../data/products'
-
-const featured = featuredProducts()
-const rest = catalogProducts()
-const stats = catalogStats()
+import { products, requireProduct } from '../data/products'
+import type { ShowcaseKind } from '../data/showcase'
+const spotlights: { slug: string; kind: ShowcaseKind; eyebrow: string; title: string; copy: string; capabilities: string[] }[] = [
+  { slug: 'agentfleet', kind: 'coordinate', eyebrow: 'Agent orchestration', title: 'Give the work a team.', copy: 'Bring agents, missions, documents, and workflows into one place. Follow the work, inspect the result, and stay in control.', capabilities: ['Multi-agent chat', 'Workflow orchestration', 'Human approval'] },
+  { slug: 'retrievallab', kind: 'retrieve', eyebrow: 'Retrieval, made visible', title: 'Watch knowledge become useful.', copy: 'Look inside retrieval. Explore contextual chunks, hybrid search, and reranking, then compare the evidence behind the answer.', capabilities: ['Contextual chunking', 'Hybrid search + reranking', 'Retrieval evaluation'] },
+  { slug: 'rag-trustworthiness', kind: 'verify', eyebrow: 'Trust through evidence', title: 'An answer is only the beginning.', copy: 'Inspect citations and claim-level evidence. See where an answer is supported, where it contradicts a source, and when the system should decline.', capabilities: ['Claim-level entailment', 'Citation inspection', 'Grounding + abstention'] },
+]
+const spotlightSlugs = new Set(spotlights.map(item => item.slug))
+const otherLive = products.filter(p => p.status === 'live' && !spotlightSlugs.has(p.slug))
+const local = products.filter(p => p.status === 'download')
+const developing = products.filter(p => p.status === 'gallery' || p.status === 'building')
 ---
-
 <Base home>
-  <section class="hero" data-motion>
-    <div class="hero-atmosphere" aria-hidden="true">
-      <div class="hero-glow ambient"></div>
-      <div class="hero-glow hero-glow-warm ambient"></div>
-      <div class="hero-grain"></div>
-      <div class="hero-vignette"></div>
+  <section class="showcase-hero" aria-labelledby="studio-headline" data-motion>
+    <div class="hero-haze ambient" aria-hidden="true"></div>
+    <div class="hero-copy-new" data-reveal>
+      <p class="hero-eyebrow"><span aria-hidden="true"></span>Independent AI product studio</p>
+      <h1 id="studio-headline">Agentic systems.<br /><span>Built to run.</span></h1>
+      <p class="hero-summary">Explore working AI products for coordinating agents, searching knowledge, and checking answers against evidence.</p>
+      <div class="hero-actions"><a class="btn btn-light" href="/products">Explore all products <span aria-hidden="true">↗</span></a><a class="btn btn-ghost" href="/demos">See demos <span aria-hidden="true">→</span></a></div>
     </div>
-    <p class="hero-spine" aria-hidden="true"><span>Independent studio · Nuremberg · 2026</span></p>
-    <div class="hero-inner relative mx-auto grid max-w-[88rem] items-center gap-8 px-4 pl-4 xl:pl-14 lg:grid-cols-12 lg:gap-8">
-      <div class="hero-copy lg:col-span-5">
-        <p class="hero-brand" data-reveal>Agentic Systems Studio</p>
-        <h1 class="title-xl" data-reveal style="--reveal-delay:70ms">
-          Agentic systems.
-          <span class="gradient-phrase block">Built to run.</span>
-        </h1>
-        <p class="lede mt-6" data-reveal style="--reveal-delay:140ms">
-          Explore live agent products, retrieval labs, local tools, and experiments taking shape.
-        </p>
-        <div class="hero-actions" data-reveal style="--reveal-delay:210ms">
-          <a class="btn btn-light" href="/products">Explore all products <span aria-hidden="true">↗</span></a>
-          <a class="btn-text" href="/demos">See demos <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="hero-facts flex flex-wrap gap-2" data-reveal style="--reveal-delay:280ms">
-          <span class="pill"><span class="pill-dot"></span> {stats.live} live</span>
-          <span class="pill">Open source</span>
-          <span class="pill">Self-hostable</span>
-        </div>
-      </div>
-      <div class="hero-chart lg:col-span-7" data-reveal style="--reveal-delay:100ms">
-        <StudioOrbit />
-      </div>
-    </div>
-
-    <div class="stats-bar">
-      <dl class="mx-auto grid max-w-[88rem] grid-cols-2 sm:grid-cols-4">
-        {[
-          [String(stats.live), 'Live', 'live'],
-          [String(stats.download), 'Download / local', 'download'],
-          [String(stats.gallery), 'Gallery / early', 'gallery'],
-          [String(stats.building), 'Building', 'building'],
-        ].map(([value, label, kind]) => (
-          <div class:list={['stat-cell', `is-${kind}`]}>
-            <dt class="font-mono text-[11px] uppercase tracking-[0.18em]">{label}</dt>
-            <dd class="display stat-value">{value}</dd>
-          </div>
-        ))}
-      </dl>
-    </div>
+    <div class="hero-stage-wrap" data-reveal><ProductStage /></div>
+    <p class="hero-bottom-note">Built by Harsha Vardhan <span aria-hidden="true">/</span> Open source. Working demos. Inspectable systems.</p>
   </section>
 
-  <section class="section pt-16 sm:pt-20">
-    <p class="kicker">Core lines</p>
-    <h2 class="display mt-3 max-w-3xl text-4xl leading-tight text-paper sm:text-6xl">
-      Three lines. A whole catalog in orbit.
-    </h2>
-    <div class="mt-12 grid gap-4 lg:grid-cols-3">
-      {[
-        ['01', 'Multi-agent ops', 'Agent Fleet is live as a Contabo sslip demo. Self-host from GitHub. AgentOps Studio and Revenue Ops are still scaffolds in the same line.'],
-        ['02', 'Agent environments', 'Vibespace is a desktop download. Agent OS is an early local-first gallery — not production SaaS. Agent Grid is still building.'],
-        ['03', 'Evaluated retrieval', 'RetrievalLab and RAG Trustworthiness are live labs you can open. Cite a source, or refuse.'],
-      ].map(([index, label, copy], i) => (
-        <div class="panel core-panel px-5 py-7 sm:px-7 sm:py-8" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-          <p class="kicker">{index}</p>
-          <h3 class="display mt-4 text-2xl text-paper">{label}</h3>
-          <p class="mt-3 text-sm leading-relaxed text-mute">{copy}</p>
-        </div>
-      ))}
-    </div>
+  <section class="studio-section live-showcases" aria-labelledby="constellation-title">
+    <div class="section-heading" data-reveal><p class="kicker">Studio constellation</p><h2 id="constellation-title">Ideas you can<br /><span>actually open.</span></h2><p>Working products, each with a purpose. Go straight to a demo or explore how it was built.</p></div>
+    {spotlights.map((item, i) => {
+      const product = requireProduct(item.slug)
+      const live = product.links.find(link => link.kind === 'live')!
+      return <article class:list={['product-spotlight', `spotlight-${item.kind}`, i % 2 === 1 && 'spotlight-reverse']} data-reveal>
+        <div class="spotlight-copy"><div class="spotlight-overline"><span>{product.name}</span><span class="badge badge-live">Live</span></div><p class="kicker">{item.eyebrow}</p><h3>{item.title}</h3><p>{item.copy}</p><ul class="capability-list">{item.capabilities.map(cap => <li><span aria-hidden="true">✓</span>{cap}</li>)}</ul><div class="spotlight-actions"><a class="btn btn-light" href={live.href} target="_blank" rel="noreferrer">{live.label === 'Live demo / Contabo' ? live.label : `Open ${product.name === 'RAG Trustworthiness Industrial' ? 'RAG Trust' : product.name}`} ↗</a><a class="catalog-link" href={product.github} target="_blank" rel="noreferrer">Source ↗</a><a class="catalog-link" href={`/products/${product.slug}`}>Details →</a></div></div>
+        <div class="spotlight-visual"><WorkflowVisual kind={item.kind} compact /></div>
+      </article>
+    })}
+    <div class="other-live">{otherLive.map(p => <ProductCard product={p} compact />)}</div>
   </section>
 
-  <section id="products" class="section pt-0 sm:pt-0">
-    <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <p class="kicker">Shipping over time</p>
-        <h2 class="display mt-2 text-4xl text-paper sm:text-6xl">Product constellation</h2>
-        <p class="mt-3 max-w-xl text-sm text-mute">
-          Status on every card: Live, Download / local, Gallery / early, or Building / coming soon. Working links only — no invented eval numbers.
-        </p>
-      </div>
-      <a class="btn-text" href="/products">All products →</a>
+  <section class="evidence-section" aria-labelledby="evidence-title"><div class="studio-section">
+    <div class="section-heading" data-reveal><p class="kicker">Beyond the interface</p><h2 id="evidence-title">Engineering<br /><span>you can inspect.</span></h2><p>Follow the implementation, question the evaluation, and read the research behind the work.</p></div>
+    <div class="evidence-grid">
+      <a class="evidence-card" href="https://github.com/hharsha98/agentfleet/blob/main/docs/DEPLOY.md" target="_blank" rel="noreferrer" data-reveal><span class="evidence-symbol" aria-hidden="true">↗</span><p class="kicker">Build & run</p><h3>From source<br />to a running system.</h3><p>Inspect Agent Fleet’s application code and self-host deployment instructions.</p><div class="evidence-tech">FastAPI · Next.js · PostgreSQL</div><span class="catalog-link">Read deployment docs ↗</span></a>
+      <a class="evidence-card" href="https://retrievallab.pages.dev/eval" target="_blank" rel="noreferrer" data-reveal><span class="evidence-symbol" aria-hidden="true">≋</span><p class="kicker">Evaluate</p><h3>Compare retrieval.<br />Inspect the trade-offs.</h3><p>Explore naive and advanced retrieval against the lab’s labelled demo corpus.</p><div class="evidence-tech">pgvector · BM25 · FlashRank</div><span class="catalog-link">Open retrieval evaluation ↗</span></a>
+      <a class="evidence-card" href="https://github.com/hharsha98/rag-trustworthiness-industrial/blob/main/METRICS.md" target="_blank" rel="noreferrer" data-reveal><span class="evidence-symbol" aria-hidden="true">✓</span><p class="kicker">Verify</p><h3>Make the definition<br />of trust explicit.</h3><p>Read how RAG Trust defines its metrics, aggregation, and grounding decisions.</p><div class="evidence-tech">Ollama · FAISS · Entailment</div><span class="catalog-link">Read the metric definitions ↗</span></a>
     </div>
+    <article class="research-feature" data-reveal><div><p class="kicker">Published research · {paper.venue}</p><h3>{paper.title}</h3></div><div><p>{paper.summary}</p><div class="spotlight-actions"><a class="catalog-link" href="/research">Research note →</a><a class="catalog-link" href={paper.doiUrl} target="_blank" rel="noreferrer">Read the publication ↗</a></div></div></article>
+  </div></section>
 
-    <div class="bento">
-      {featured.map((p) => (
-        <ProductCard product={p} featured class={featuredBentoClass(p)} />
-      ))}
-    </div>
-
-    <div class="mt-24 mb-8">
-      <p class="kicker">Catalog</p>
-      <h2 class="display mt-2 text-4xl text-paper sm:text-6xl">More systems</h2>
-    </div>
-    <div class="constellation-grid">
-      {rest.map((p) => <ProductCard product={p} compact />)}
-    </div>
+  <section class="studio-section workshop" aria-labelledby="workshop-title">
+    <div class="section-heading" data-reveal><p class="kicker">The workshop</p><h2 id="workshop-title">Local tools.<br /><span>Next possibilities.</span></h2><p>Download what runs on your machine. Explore early galleries and follow the projects taking shape.</p></div>
+    <div class="local-tools">{local.map(p => <ProductCard product={p} compact />)}</div>
+    <div class="workshop-heading"><h3>In development</h3><a class="catalog-link" href="/products">Explore the full catalog →</a></div>
+    <div class="workshop-grid">{developing.map(p => <ProductCard product={p} compact />)}</div>
   </section>
 
-  <StudioWorkflow />
-
-  <TechPills />
-
-  <section class="section">
-    <ComingHosts />
-  </section>
-
-  <section class="section pt-0 sm:pt-0">
-    <article class="panel p-6 sm:p-10">
-      <p class="kicker">Research</p>
-      <h2 class="display mt-3 max-w-3xl text-2xl leading-snug text-paper sm:text-4xl">
-        {paper.title}
-      </h2>
-      <p class="mt-4 max-w-2xl text-sm leading-relaxed text-mute">{paper.summary}</p>
-      <p class="mt-2 font-mono text-[11px] text-mute">{paper.venue} · doi:{paper.doi}</p>
-      <div class="mt-7 flex flex-wrap gap-3">
-        <a class="btn btn-light" href="/research">Research note</a>
-        <a class="btn btn-ghost" href={paper.doiUrl} rel="noreferrer" target="_blank">DOI ↗</a>
-        <a class="btn btn-ghost" href="/products/rag-trustworthiness">Related product</a>
-      </div>
-    </article>
-  </section>
-
-  <section class="border-t border-white/8">
-    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-10 sm:px-6">
-      <p class="text-sm text-mute">
-        Founded by {site.shortName}. Personal site is separate from this studio.
-      </p>
-      <a class="btn btn-ghost" href={site.profile} rel="noreferrer" target="_blank">About Harsha ↗</a>
-    </div>
-  </section>
-
-  <CloseBand />
+  <section class="founder-close studio-section" aria-labelledby="founder-title" data-reveal><div class="founder-stamp"><StudioMark size={80} /><p>Independent by design.<br />Open by default.</p></div><div><p class="kicker">Meet the builder</p><h2 id="founder-title">Built with intent.<br />By Harsha Vardhan.</h2><p>I build agent systems and retrieval products with an emphasis on work you can run, inspect, and evaluate.</p><div class="spotlight-actions"><a class="btn btn-light" href="/contact">Write the studio ↗</a><a class="catalog-link" href={site.profile} target="_blank" rel="noreferrer">About Harsha ↗</a></div><a class="contact-address" href={`mailto:${site.email}`}>{site.email}</a></div></section>
 </Base>

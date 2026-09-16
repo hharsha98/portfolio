@@ -11,9 +11,9 @@ function syncMotion() {
     region.style.setProperty('--ambient-play-state', playing ? 'running' : 'paused')
   }
   for (const button of controls) {
-    button.textContent = reducedMotion.matches ? 'Reduced motion' : paused ? 'Play motion' : 'Pause motion'
+    button.textContent = reducedMotion.matches ? 'Reduced motion' : paused ? 'Play animation' : 'Pause animation'
     button.disabled = reducedMotion.matches
-    button.setAttribute('aria-label', reducedMotion.matches ? 'System reduced motion is enabled' : paused ? 'Play decorative motion' : 'Pause decorative motion')
+    button.setAttribute('aria-label', reducedMotion.matches ? 'System reduced motion is enabled' : paused ? 'Play animation' : 'Pause animation')
   }
 }
 

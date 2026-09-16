@@ -1,0 +1,23 @@
+---
+import type { ShowcaseKind } from '../data/showcase'
+interface Props { kind: ShowcaseKind; compact?: boolean }
+const { kind, compact = false } = Astro.props
+---
+<div class:list={['workflow-visual', `visual-${kind}`, compact && 'visual-compact']}>
+  <div class="visual-toolbar"><span class="window-dot"></span><span>{kind === 'coordinate' ? 'Mission workspace' : kind === 'retrieve' ? 'Retrieval inspector' : 'Evidence inspector'}</span><span class="example-label">Example workflow</span></div>
+  {kind === 'coordinate' && <div class="mission-visual">
+    <div class="mission-brief"><span class="visual-kicker">Assignment</span><h3>Prepare a research brief</h3><p>Find the evidence. Summarise the findings. Review the result.</p><span class="task-tag">Human review enabled</span></div>
+    <div class="agent-work"><span class="visual-kicker">Agent work</span><div class="agent-line signal-step ambient" style="--step-delay:0s"><span class="agent-avatar">P</span><div><strong>Planner</strong><small>Break down the task</small></div><span class="work-indicator"></span></div><div class="agent-line signal-step ambient" style="--step-delay:1.8s"><span class="agent-avatar">R</span><div><strong>Researcher</strong><small>Gather source material</small></div><span class="work-indicator"></span></div><div class="agent-line signal-step ambient" style="--step-delay:3.6s"><span class="agent-avatar">R</span><div><strong>Reviewer</strong><small>Check the findings</small></div><span class="work-indicator"></span></div></div>
+    <div class="mission-result"><span class="visual-kicker">Review</span><div class="result-icon" aria-hidden="true">✓</div><h3>A brief you can inspect.</h3><p>Findings, source material, and the work that led here.</p><div class="result-lines" aria-hidden="true"><i></i><i></i><i></i></div><span class="task-tag">Ready for your review</span></div>
+  </div>}
+  {kind === 'retrieve' && <div class="retrieval-visual">
+    <div class="document-card"><span class="visual-kicker">Document</span><div class="document-icon" aria-hidden="true"><i></i><i></i><i></i></div><strong>Equipment handbook</strong><p>“Inspect the safety enclosure before starting the machine.”</p></div>
+    <div class="chunk-stack"><span class="visual-kicker">Searchable passages</span><div class="chunk ambient" style="--chunk-order:0"><span>Installation</span><i></i><i></i></div><div class="chunk selected-chunk ambient" style="--chunk-order:1"><span>Safety checks</span><p>Inspect the safety enclosure…</p></div><div class="chunk ambient" style="--chunk-order:2"><span>Maintenance</span><i></i><i></i></div></div>
+    <div class="answer-card"><span class="visual-kicker">Cited answer</span><p class="example-question">What should I check first?</p><h3>Inspect the safety enclosure.</h3><p>The relevant passage is attached to the answer.</p><span class="citation-highlight ambient">↗ Equipment handbook · Safety checks</span></div>
+  </div>}
+  {kind === 'verify' && <div class="trust-visual">
+    <div class="source-card"><span class="visual-kicker">Source passage</span><blockquote>“Inspect the safety enclosure before starting the machine.”</blockquote><span class="source-reference">Equipment handbook / Safety checks</span><div class="source-scan ambient" aria-hidden="true"></div></div>
+    <div class="claim-list"><span class="visual-kicker">Claim → evidence verdict</span><div class="claim supported"><span class="verdict-icon" aria-hidden="true">✓</span><div><p>Check the enclosure before startup.</p><strong>Supported by this passage</strong></div></div><div class="claim unsupported"><span class="verdict-icon" aria-hidden="true">—</span><div><p>The inspection takes five minutes.</p><strong>Not established by this passage</strong></div></div><p class="trust-note">A fluent answer still needs evidence.</p></div>
+  </div>}
+  <div class="visual-footnote"><span class="small-square" aria-hidden="true"></span>Illustrative sequence · open the product to run your own</div>
+</div>

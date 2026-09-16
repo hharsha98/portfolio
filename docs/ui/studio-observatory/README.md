@@ -1,3 +1,5 @@
+> Historical evidence: superseded by the [living product showcase](../studio-product-showcase/README.md).
+
 # Cinematic observatory — review evidence
 
 ## Before and after
