@@ -36,8 +36,12 @@ Screenshots are browser captures. The small floating assistant bubble is a brows
 
 ## Preview and deployment
 
-`npx wrangler versions upload` was attempted against the existing Worker and could not authenticate. `wrangler whoami` reported that the saved token had expired and could not refresh. No version preview URL was returned, and production was not deployed.
+The local `npx wrangler versions upload` attempt could not authenticate: the saved token had expired and could not refresh. The existing Cloudflare GitHub integration subsequently built source commit `aad5e21` successfully and returned this Worker version preview:
 
-Coordinator: authenticate with the existing Cloudflare account (`npx wrangler login`), then run `npm ci && npm run check && npm test` and `npx wrangler versions upload`. Record the returned version preview URL on the PR. Review and merge into `cursor/agentic-systems-studio-7fff`; use the existing Worker deployment flow when ready. Keep current resources and DNS unchanged.
+https://be08383d-agentic-systems-studio.rtvision7.workers.dev/
+
+The preview was opened in Chrome and verified: approved hero copy, ten constellation links, primary `/products` action, and functioning motion control. The subsequent commit only updates these handoff notes. The Cloudflare Pages check also passed; the Worker URL above is the Studio review target.
+
+Coordinator: review the preview and PR, merge into `cursor/agentic-systems-studio-7fff`, and use the existing Worker deployment flow when ready. Keep current resources and DNS unchanged. No additional preview setup is needed. For future manual Wrangler commands, refresh the existing account login with `npx wrangler login`.
 
 The locked dependency install reported five existing audit findings (one low, three high, one critical). No dependency upgrades are included in this UI change.
