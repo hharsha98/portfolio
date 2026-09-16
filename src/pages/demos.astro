@@ -18,10 +18,11 @@ const rows = publicSurfaces().map((product) => ({ product, links: demoLinks(prod
     </p>
 
     <div class="mt-12 space-y-4">
-      {rows.map(({ product, links }) => (
+      {rows.map(({ product, links }, i) => (
         <article
           class="demo-row has-accent panel p-5 sm:p-6"
-          style={`--accent:${/^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7cff'}`}
+          style={`--accent:${/^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7cff'};--reveal-delay:${i % 3 * 70}ms`}
+          data-reveal
         >
           <div class="flex flex-wrap items-center justify-between gap-3">
             <h2 class="display text-2xl text-paper">

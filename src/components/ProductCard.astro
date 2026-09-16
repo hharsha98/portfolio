@@ -23,7 +23,8 @@ const accent = /^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7
     compact && 'constellation-card',
     className,
   ]}
-  style={`--accent:${accent}`}
+  style={`--accent:${accent};--reveal-delay:${(Number(product.index) - 1) % 3 * 70}ms`}
+  data-reveal
 >
   {featured && !compact && (
     <span class="star-index" aria-hidden="true">{product.index}</span>
