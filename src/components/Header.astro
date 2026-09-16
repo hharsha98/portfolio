@@ -1,12 +1,13 @@
 ---
 import { site, nav } from '../data/site'
+import StudioMark from './StudioMark.astro'
 const path = Astro.url.pathname.replace(/\/$/, '') || '/'
 ---
 
 <header class:list={['site-header', path === '/' && 'site-header-home']}>
   <div class="mx-auto flex max-w-[88rem] items-center justify-between gap-4 px-4 py-3 sm:px-6">
-    <a href="/" class="group flex min-h-11 items-center gap-3">
-      <span class="logo-mark" aria-hidden="true">A·S</span>
+    <a href="/" class="brand-link group flex min-h-11 items-center gap-3">
+      <StudioMark />
       <span class="leading-tight">
         <span class="block text-sm tracking-wide text-paper">{site.studio}</span>
         <span class="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-mute sm:block">Product studio</span>
@@ -20,6 +21,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/'
         return (
           <a
             href={item.href}
+            aria-current={active ? 'page' : undefined}
             class:list={[
               contact
                 ? 'nav-cta'
@@ -52,7 +54,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/'
     <details class="nav-menu relative md:hidden">
       <summary class="flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg border border-line text-paper">
         <span class="sr-only">Menu</span>
-        <span aria-hidden="true" class="font-mono text-xs">☰</span>
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h14M3 10h14M3 14h14" /></svg>
       </summary>
       <div class="absolute right-0 mt-2 w-56 rounded-2xl border border-line bg-panel p-2 shadow-xl">
         {nav.map((item) => (

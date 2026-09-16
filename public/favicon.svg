@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Agentic Systems Studio">
-  <rect width="32" height="32" fill="#0a0b0d"/>
-  <rect x="3" y="3" width="26" height="26" fill="none" stroke="#c9a24a" stroke-width="1"/>
-  <path d="M6 6h3M6 6v3M26 6h-3M26 6v3M6 26h3M6 26v-3M26 26h-3M26 26v-3" stroke="#c9a24a" stroke-width="1.2" fill="none"/>
-  <path d="M11 22V10h4.2c2.6 0 4.3 1.6 4.3 4.1 0 2.5-1.7 4.1-4.3 4.1H13.4" fill="none" stroke="#e7e2d6" stroke-width="1.6"/>
-  <path d="M16 22l5-12" stroke="#c9a24a" stroke-width="1.6"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="12" fill="#090b10"/>
+  <path d="M10 6h22l10 10v8h-8v-5l-5-5H14v17l6 6h6v8H16L6 35V10l4-4Z" fill="#f5f8fc"/>
+  <path d="M54 58H32L22 48v-8h8v5l5 5h15V33l-6-6h-6v-8h10l10 10v25l-4 4Z" fill="#f5f8fc"/>
 </svg>

@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro'
 import { site } from '../data/site'
 import { publicSurfaces, demoLinks, statusLabel } from '../data/products'
 
-const rows = publicSurfaces().map((product) => ({ product, links: demoLinks(product) }))
+const rows = publicSurfaces().sort((a, b) => Number(b.status === 'live') - Number(a.status === 'live')).map((product) => ({ product, links: demoLinks(product) }))
 ---
 
 <Base
@@ -12,16 +12,17 @@ const rows = publicSurfaces().map((product) => ({ product, links: demoLinks(prod
 >
   <section class="section">
     <p class="kicker">Demos</p>
-    <h1 class="page-title mt-4">Surfaces that work today</h1>
+    <h1 class="page-title mt-4">Open it. Try it. Inspect it.</h1>
     <p class="mt-5 max-w-2xl text-lg leading-relaxed text-mute">
-      Live labs (including Agent Fleet on Contabo/sslip), a download, and an early gallery. Scaffolds stay GitHub-only — they do not get Live buttons. Studio hostnames such as fleet.agentic-systems-studio.com are planned names, not live URLs.
+      Start with a live product, download a local tool, or explore an early gallery. Each surface is clearly labelled so you know what to expect.
     </p>
 
     <div class="mt-12 space-y-4">
-      {rows.map(({ product, links }) => (
+      {rows.map(({ product, links }, i) => (
         <article
-          class="demo-row has-accent panel p-5 sm:p-6"
-          style={`--accent:${/^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7cff'}`}
+          class="demo-row catalog-card has-accent panel p-5 sm:p-8"
+          style={`--accent:${/^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7cff'};--reveal-delay:${i % 3 * 70}ms`}
+          data-reveal
         >
           <div class="flex flex-wrap items-center justify-between gap-3">
             <h2 class="display text-2xl text-paper">
@@ -33,7 +34,7 @@ const rows = publicSurfaces().map((product) => ({ product, links: demoLinks(prod
           <div class="mt-5 flex flex-wrap gap-2">
             {links.map((link) => (
               <a
-                class:list={['btn', link.kind === 'live' || link.kind === 'download' ? 'btn-primary' : 'btn-ghost']}
+                class:list={['btn', link.kind === 'live' || link.kind === 'download' ? 'btn-light' : 'btn-ghost']}
                 href={link.href}
                 rel="noreferrer"
                 target="_blank"
