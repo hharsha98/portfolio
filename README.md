@@ -35,10 +35,10 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 | `/products/retrievallab` | Live — [retrievallab.pages.dev](https://retrievallab.pages.dev) |
 | `/products/rag-trustworthiness` | Live — [sslip demo](https://ragtrust.169.58.185.43.sslip.io/) · [walkthrough](https://hharsha98.github.io/rag-trustworthiness-industrial/) |
 | `/products/careeragent` | Live — [careeragent-ceq.pages.dev](https://careeragent-ceq.pages.dev) |
-| `/products/mara-open` | Building — [GitHub](https://github.com/hharsha98/mara-open) (no Live CTA) |
-| `/products/agentgrid` | Building — GitHub only |
-| `/products/agentops-studio` | Building — GitHub only |
-| `/products/revenue-ops` | Building — Phase 0 scaffold |
+| `/products/mara-open` | Live — [public demo](https://mara-open.169.58.185.43.sslip.io/) · [GitHub](https://github.com/hharsha98/mara-open) |
+| `/products/agentgrid` | Download / local — [clone](https://github.com/hharsha98/agentgrid) (127.0.0.1 or SSH tunnel; no public URL) |
+| `/products/agentops-studio` | Live — [public demo](https://agentops.169.58.185.43.sslip.io/) · [GitHub](https://github.com/hharsha98/agentops-studio) |
+| `/products/revenue-ops` | Live — [public demo](https://revenueops.169.58.185.43.sslip.io/) · [GitHub](https://github.com/hharsha98/06-revenue-ops-agent-control-tower) |
 | `/demos` | Live / gallery / download surfaces only |
 | `/research` | DVS EBL 2026 paper (DOI) |
 | `/about` | Founder pointer to [harsha-vardhan.pages.dev](https://harsha-vardhan.pages.dev) |
@@ -46,7 +46,7 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 
 Copy is taken from public GitHub descriptions/READMEs. No invented star counts or eval headlines. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — never github.com/agentic-systems-studio. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Studio contact: `contact@agentic-systems-studio.com`. Do not put a personal Gmail address on public studio pages. Turnstile-protected form at `/contact` stores submissions in free D1 + KV — no Email Sending / Workers Paid.
 
-Do **not** link third-party Vercel or Pages hosts for Agent Fleet. The owned live demo is the Contabo/sslip host. Do **not** attach `fleet.agentic-systems-studio.com` or `os.agentic-systems-studio.com` in this repo. Agent OS Live points at `https://agentos.169.58.185.43.sslip.io/` (public demo, sandboxed). Do **not** present remaining scaffolds (Grid, Tower, MARA, AgentOps) as live SaaS. MARA Open has no Live button (GitHub only until migrated).
+Do **not** link third-party Vercel or Pages hosts for Agent Fleet. The owned live demo is the Contabo/sslip host. Do **not** attach `fleet.agentic-systems-studio.com` or `os.agentic-systems-studio.com` in this repo. Agent OS Live points at `https://agentos.169.58.185.43.sslip.io/` (public demo, sandboxed). AgentOps Studio, Revenue Ops, and MARA Open are Live on their verified Contabo/sslip hosts (`agentops`, `revenueops`, and `mara-open` on `169.58.185.43.sslip.io`). Agent Grid stays Download / local: the PTY API is `127.0.0.1` only (SSH tunnel for a private remote). Do **not** give Agent Grid a public sslip URL.
 
 ## Local
 

@@ -3,7 +3,8 @@ import { products, statusLabel, type Product } from '../data/products'
 
 /**
  * Two-ring celestial chart — not a Fleet/Useful Agents radar.
- * Outer ring: systems you can run. Inner ring: still being built.
+ * Ring radius is a fixed layout slot. Status is the node shape
+ * (square Live, rounded Download/gallery, circle Building).
  * Labels live on the limb so names never sit on the nodes.
  */
 const layout: Record<string, { a: number; r: number }> = {
