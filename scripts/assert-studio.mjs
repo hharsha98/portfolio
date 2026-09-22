@@ -103,6 +103,7 @@ for (const url of [
   'https://github.com/hharsha98/agentfleet',
   'https://agentfleet.169.58.185.43.sslip.io/',
   'https://github.com/hharsha98/agent-os',
+  'https://agentos.169.58.185.43.sslip.io/',
   'https://hharsha98.github.io/agent-os/',
   'https://github.com/hharsha98/Vibespace',
   'https://github.com/hharsha98/Vibespace/releases/latest',
@@ -117,6 +118,34 @@ for (const url of [
   'https://github.com/hharsha98/agentops-studio',
 ]) {
   if (!products.includes(url)) fail(`product catalog missing required URL: ${url}`)
+}
+
+function productBlock(slug, nextSlug) {
+  const start = products.indexOf(`slug: '${slug}'`)
+  const end = nextSlug ? products.indexOf(`slug: '${nextSlug}'`) : products.length
+  if (start < 0 || end < 0 || end <= start) fail(`could not slice product block for ${slug}`)
+  return products.slice(start, end)
+}
+
+const agentOs = productBlock('agent-os', 'vibespace')
+if (!agentOs.includes("status: 'live'")) fail('Agent OS must be Live')
+if (!agentOs.includes("label: 'Public demo'")) fail('Agent OS CTA must be labeled Public demo')
+if (agentOs.includes('os.agentic-systems-studio.com') && /href:\s*'https?:\/\/os\.agentic-systems-studio\.com/.test(agentOs)) {
+  fail('do not use os.agentic-systems-studio.com as an Agent OS product URL')
+}
+if (/href:\s*'https?:\/\/[^']*os\.agentic-systems-studio\.com/.test(products)) {
+  fail('do not link os.agentic-systems-studio.com')
+}
+
+for (const [slug, next] of [
+  ['agentgrid', 'revenue-ops'],
+  ['revenue-ops', 'agentops-studio'],
+  ['agentops-studio', null],
+]) {
+  const block = productBlock(slug, next)
+  if (!block.includes("status: 'building'")) fail(`${slug} must stay Building until it has a verified public URL`)
+  if (block.includes("status: 'live'")) fail(`${slug} must not be marked Live`)
+  if (block.includes('sslip.io')) fail(`${slug} must not invent a Contabo/sslip URL`)
 }
 
 if ((products.match(/accent: '#[0-9a-fA-F]{6}'/g) || []).length < 10) {
@@ -156,7 +185,20 @@ if (!indexHtml.includes('Vibespace')) fail('built home must feature Vibespace')
 if (!indexHtml.includes('retrievallab.pages.dev')) fail('built home must use RetrievalLab live URL')
 if (!indexHtml.includes('careeragent-ceq.pages.dev')) fail('built home must include CareerAgent live URL')
 if (!indexHtml.includes('ragtrust.169.58.185.43.sslip.io')) fail('built home must include RAG Trust live URL')
-if (!indexHtml.includes('hharsha98.github.io/agent-os')) fail('built home must use Agent OS gallery URL')
+if (!indexHtml.includes('hharsha98.github.io/agent-os')) fail('built home must keep the Agent OS static gallery as a secondary link')
+if (!indexHtml.includes('agentos.169.58.185.43.sslip.io')) {
+  fail('built home must link the owned Agent OS Contabo/sslip public demo')
+}
+if (!indexHtml.includes('02 Agent OS — Live')) fail('built home constellation must mark Agent OS Live')
+if (indexHtml.includes('02 Agent OS — Gallery')) fail('Agent OS must not stay Gallery / early')
+if (!indexHtml.includes('08 Agent Grid — Building / coming soon')) fail('Agent Grid must stay Building')
+if (!indexHtml.includes('09 Revenue Ops Control Tower — Building / coming soon')) {
+  fail('Revenue Ops Control Tower must stay Building')
+}
+if (!indexHtml.includes('10 AgentOps Studio — Building / coming soon')) fail('AgentOps Studio must stay Building')
+if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(indexHtml)) {
+  fail('built home must not link os.agentic-systems-studio.com')
+}
 if (!indexHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
   fail('built home must link the owned Agent Fleet Contabo/sslip live demo')
 }
@@ -199,7 +241,7 @@ if (indexHtml.includes('Sign in') || indexHtml.includes('Launch app') || indexHt
 if (!indexHtml.includes('Building / coming soon')) {
   fail('built home must mark coming-soon products')
 }
-if (!indexHtml.includes('Gallery / early')) fail('built home must mark Agent OS as gallery / early')
+if (!indexHtml.includes('Gallery / early')) fail('built home must keep the gallery census label')
 if (!indexHtml.includes('Download / local')) fail('built home must mark Vibespace as download / local')
 if (/href=["'][^"']*chatgpt\.site/.test(indexHtml)) {
   fail('built home must not link MARA chatgpt.site as Live')
@@ -219,6 +261,13 @@ if (!productsHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
 if (!productsHtml.includes('Live demo / Contabo')) {
   fail('products catalog must label the Fleet demo as Live demo / Contabo')
 }
+if (!productsHtml.includes('agentos.169.58.185.43.sslip.io')) {
+  fail('products catalog must link the Agent OS Contabo/sslip public demo')
+}
+if (!productsHtml.includes('Public demo')) fail('products catalog must label the Agent OS demo as Public demo')
+if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(productsHtml)) {
+  fail('products catalog must not link os.agentic-systems-studio.com')
+}
 if (/href=["'][^"']*chatgpt\.site/.test(productsHtml)) {
   fail('products catalog must not link MARA chatgpt.site as Live')
 }
@@ -229,6 +278,12 @@ if (!demosHtml.includes('retrievallab.pages.dev')) fail('demos page must include
 if (!demosHtml.includes('careeragent-ceq.pages.dev')) fail('demos page must include CareerAgent live URL')
 if (!demosHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
   fail('demos page must include the Agent Fleet Contabo/sslip live demo')
+}
+if (!demosHtml.includes('agentos.169.58.185.43.sslip.io')) {
+  fail('demos page must include the Agent OS Contabo/sslip public demo')
+}
+if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(demosHtml)) {
+  fail('demos page must not link os.agentic-systems-studio.com')
 }
 if (demosHtml.includes('Self-host docs')) fail('Fleet self-host docs belong on the product page, not the demos list')
 
@@ -248,6 +303,32 @@ if (fleetHtml.includes('agentfleet.pages.dev') || fleetHtml.includes('agentfleet
   fail('do not link third-party Agent Fleet Pages or Vercel hosts')
 }
 if (fleetHtml.includes('01 · Building')) fail('Agent Fleet must not remain Building / coming soon')
+
+const osHtml = read(join(root, 'dist', 'products', 'agent-os.html'))
+if (!osHtml.includes('02 · Live')) fail('Agent OS product page must be Live')
+if (!osHtml.includes('Public demo')) fail('Agent OS product page must label the public demo')
+if (!osHtml.includes('https://agentos.169.58.185.43.sslip.io/')) {
+  fail('Agent OS product page must link the owned sslip demo')
+}
+if (!osHtml.includes('github.com/hharsha98/agent-os')) fail('Agent OS product page must keep GitHub')
+if (!osHtml.includes('hharsha98.github.io/agent-os')) fail('Agent OS product page must keep the static gallery')
+if (osHtml.includes('02 · Gallery')) fail('Agent OS must not remain Gallery / early')
+if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(osHtml)) {
+  fail('Agent OS product page must not link os.agentic-systems-studio.com')
+}
+if (!osHtml.includes('os.agentic-systems-studio.com')) {
+  fail('Agent OS product page must keep the planned hostname as copy, not a URL')
+}
+
+for (const [file, marker, name] of [
+  ['agentgrid.html', '08 · Building / coming soon', 'Agent Grid'],
+  ['revenue-ops.html', '09 · Building / coming soon', 'Revenue Ops Control Tower'],
+  ['agentops-studio.html', '10 · Building / coming soon', 'AgentOps Studio'],
+]) {
+  const html = read(join(root, 'dist', 'products', file))
+  if (!html.includes(marker)) fail(`${name} must stay Building / coming soon`)
+  if (html.includes(' · Live<')) fail(`${name} must not be marked Live`)
+}
 
 if (wrangler.includes('fleet.agentic-systems-studio.com')) {
   fail('do not attach future product hosts in wrangler routes / DNS')

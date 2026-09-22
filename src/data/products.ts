@@ -103,11 +103,11 @@ export const products: Product[] = [
     tagline:
       'Local-first Agent OS dashboard for Cursor, Claude, Codex, and Hermes — dry-run by default, sandboxed workspace, gated machine control.',
     description:
-      'Early gallery of a local-first command center. Not production SaaS — dry-run until you turn execution on.',
+      'Public Contabo/sslip demo — sandboxed, dry-run by default. The DEMO_PUBLIC walkthrough works on that host.',
     body: [
       'Agent OS is a local-first operations dashboard for Cursor Agent, Claude Code, Codex, and Hermes. It reports real CLI presence instead of painting fake “connected” cards.',
       'Safety is a product decision: unified chat is labeled dry-run, the workspace sandbox is jailed to a dedicated folder, and machine-control stays gated. Execution, installs, and public mode are off unless you flip explicit flags.',
-      'This is a local app (React + Express), not hosted SaaS. The public github.io gallery is a click-through of the product surfaces — an early look, not a production cloud. A studio hostname (os.agentic-systems-studio.com) is planned only; it is not live.',
+      'A public sandboxed demo runs on a Contabo VPS at agentos.169.58.185.43.sslip.io — sslip, with a Public demo badge. The DEMO_PUBLIC walkthrough works there. The app is still local-first (React + Express). The github.io page remains a static gallery. A studio hostname (os.agentic-systems-studio.com) is planned only — it is not live, not attached, and is not a product URL.',
     ],
     features: [
       'Mission Control with live local version checks',
@@ -118,11 +118,16 @@ export const products: Product[] = [
     ],
     stack: ['React', 'TypeScript', 'Vite', 'Express', 'Node'],
     accent: '#c9a24a',
-    status: 'gallery',
+    status: 'live',
     featured: true,
     github: 'https://github.com/hharsha98/agent-os',
     futureHost: hostFor('Agent OS'),
     links: [
+      {
+        kind: 'live',
+        label: 'Public demo',
+        href: 'https://agentos.169.58.185.43.sslip.io/',
+      },
       { kind: 'gallery', label: 'Gallery', href: 'https://hharsha98.github.io/agent-os/' },
       { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agent-os' },
     ],
