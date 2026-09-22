@@ -113,9 +113,13 @@ for (const url of [
   'https://hharsha98.github.io/rag-trustworthiness-industrial/',
   'https://careeragent-ceq.pages.dev',
   'https://github.com/hharsha98/mara-open',
+  'https://mara-open.169.58.185.43.sslip.io/',
   'https://github.com/hharsha98/agentgrid',
+  'https://github.com/hharsha98/agentgrid/blob/main/docs/HOSTING.md',
   'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
+  'https://revenueops.169.58.185.43.sslip.io/',
   'https://github.com/hharsha98/agentops-studio',
+  'https://agentops.169.58.185.43.sslip.io/',
 ]) {
   if (!products.includes(url)) fail(`product catalog missing required URL: ${url}`)
 }
@@ -137,15 +141,41 @@ if (/href:\s*'https?:\/\/[^']*os\.agentic-systems-studio\.com/.test(products)) {
   fail('do not link os.agentic-systems-studio.com')
 }
 
-for (const [slug, next] of [
-  ['agentgrid', 'revenue-ops'],
-  ['revenue-ops', 'agentops-studio'],
-  ['agentops-studio', null],
+const allowedSslip = new Set([
+  'agentfleet.169.58.185.43.sslip.io',
+  'agentos.169.58.185.43.sslip.io',
+  'ragtrust.169.58.185.43.sslip.io',
+  'agentops.169.58.185.43.sslip.io',
+  'revenueops.169.58.185.43.sslip.io',
+  'mara-open.169.58.185.43.sslip.io',
+])
+for (const host of products.match(/[a-z0-9.-]+\.sslip\.io/g) || []) {
+  if (!allowedSslip.has(host)) fail(`unexpected sslip host in catalog: ${host}`)
+}
+if (/href:\s*'https?:\/\/[^']*agentic-systems-studio\.com/.test(products)) {
+  fail('do not use a studio apex hostname as a product URL')
+}
+
+const mara = productBlock('mara-open', 'agentgrid')
+if (!mara.includes("status: 'live'")) fail('MARA Open must be Live')
+if (!mara.includes("label: 'Public demo'")) fail('MARA Open CTA must be labeled Public demo')
+if (!mara.includes('https://mara-open.169.58.185.43.sslip.io/')) fail('MARA Open must link its Contabo/sslip demo')
+
+const agentGrid = productBlock('agentgrid', 'revenue-ops')
+if (!agentGrid.includes("status: 'download'")) fail('Agent Grid must be Download / local')
+if (agentGrid.includes("status: 'live'")) fail('Agent Grid must not be marked Live')
+if (agentGrid.includes('sslip.io')) fail('Agent Grid must not link a public sslip URL')
+if (!agentGrid.includes("kind: 'download'")) fail('Agent Grid must use the download link kind')
+if (!agentGrid.includes('https://github.com/hharsha98/agentgrid')) fail('Agent Grid clone path must be the GitHub repo')
+
+for (const [slug, next, url] of [
+  ['revenue-ops', 'agentops-studio', 'https://revenueops.169.58.185.43.sslip.io/'],
+  ['agentops-studio', null, 'https://agentops.169.58.185.43.sslip.io/'],
 ]) {
   const block = productBlock(slug, next)
-  if (!block.includes("status: 'building'")) fail(`${slug} must stay Building until it has a verified public URL`)
-  if (block.includes("status: 'live'")) fail(`${slug} must not be marked Live`)
-  if (block.includes('sslip.io')) fail(`${slug} must not invent a Contabo/sslip URL`)
+  if (!block.includes("status: 'live'")) fail(`${slug} must be Live`)
+  if (!block.includes("label: 'Public demo'")) fail(`${slug} CTA must be labeled Public demo`)
+  if (!block.includes(url)) fail(`${slug} must link its verified Contabo/sslip demo`)
 }
 
 if ((products.match(/accent: '#[0-9a-fA-F]{6}'/g) || []).length < 10) {
@@ -191,11 +221,23 @@ if (!indexHtml.includes('agentos.169.58.185.43.sslip.io')) {
 }
 if (!indexHtml.includes('02 Agent OS — Live')) fail('built home constellation must mark Agent OS Live')
 if (indexHtml.includes('02 Agent OS — Gallery')) fail('Agent OS must not stay Gallery / early')
-if (!indexHtml.includes('08 Agent Grid — Building / coming soon')) fail('Agent Grid must stay Building')
-if (!indexHtml.includes('09 Revenue Ops Control Tower — Building / coming soon')) {
-  fail('Revenue Ops Control Tower must stay Building')
+if (!indexHtml.includes('07 MARA Open — Live')) fail('built home constellation must mark MARA Open Live')
+if (!indexHtml.includes('08 Agent Grid — Download / local')) fail('Agent Grid must be Download / local')
+if (indexHtml.includes('08 Agent Grid — Live')) fail('Agent Grid must not be marked Live')
+if (!indexHtml.includes('09 Revenue Ops Control Tower — Live')) {
+  fail('built home constellation must mark Revenue Ops Live')
 }
-if (!indexHtml.includes('10 AgentOps Studio — Building / coming soon')) fail('AgentOps Studio must stay Building')
+if (!indexHtml.includes('10 AgentOps Studio — Live')) fail('built home constellation must mark AgentOps Studio Live')
+if (!indexHtml.includes('agentops.169.58.185.43.sslip.io')) {
+  fail('built home must link the AgentOps Studio Contabo/sslip public demo')
+}
+if (!indexHtml.includes('revenueops.169.58.185.43.sslip.io')) {
+  fail('built home must link the Revenue Ops Contabo/sslip public demo')
+}
+if (!indexHtml.includes('mara-open.169.58.185.43.sslip.io')) {
+  fail('built home must link the MARA Open Contabo/sslip public demo')
+}
+if (/agentgrid\.[^"'\s]*sslip\.io/.test(indexHtml)) fail('built home must not give Agent Grid a public sslip URL')
 if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(indexHtml)) {
   fail('built home must not link os.agentic-systems-studio.com')
 }
@@ -282,6 +324,16 @@ if (!demosHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
 if (!demosHtml.includes('agentos.169.58.185.43.sslip.io')) {
   fail('demos page must include the Agent OS Contabo/sslip public demo')
 }
+if (!demosHtml.includes('agentops.169.58.185.43.sslip.io')) {
+  fail('demos page must include the AgentOps Studio Contabo/sslip public demo')
+}
+if (!demosHtml.includes('revenueops.169.58.185.43.sslip.io')) {
+  fail('demos page must include the Revenue Ops Contabo/sslip public demo')
+}
+if (!demosHtml.includes('mara-open.169.58.185.43.sslip.io')) {
+  fail('demos page must include the MARA Open Contabo/sslip public demo')
+}
+if (/agentgrid\.[^"'\s]*sslip\.io/.test(demosHtml)) fail('demos page must not give Agent Grid a public sslip URL')
 if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(demosHtml)) {
   fail('demos page must not link os.agentic-systems-studio.com')
 }
@@ -289,6 +341,11 @@ if (demosHtml.includes('Self-host docs')) fail('Fleet self-host docs belong on t
 
 const maraHtml = read(join(root, 'dist', 'products', 'mara-open.html'))
 if (/href=["'][^"']*chatgpt\.site/.test(maraHtml)) fail('MARA product page must not link chatgpt.site')
+if (!maraHtml.includes('07 · Live')) fail('MARA Open product page must be Live')
+if (!maraHtml.includes('Public demo')) fail('MARA Open product page must label the public demo')
+if (!maraHtml.includes('https://mara-open.169.58.185.43.sslip.io/')) {
+  fail('MARA Open product page must link the owned sslip demo')
+}
 if (!maraHtml.includes('github.com/hharsha98/mara-open')) fail('MARA product page must link GitHub')
 
 const fleetHtml = read(join(root, 'dist', 'products', 'agentfleet.html'))
@@ -320,14 +377,21 @@ if (!osHtml.includes('os.agentic-systems-studio.com')) {
   fail('Agent OS product page must keep the planned hostname as copy, not a URL')
 }
 
-for (const [file, marker, name] of [
-  ['agentgrid.html', '08 · Building / coming soon', 'Agent Grid'],
-  ['revenue-ops.html', '09 · Building / coming soon', 'Revenue Ops Control Tower'],
-  ['agentops-studio.html', '10 · Building / coming soon', 'AgentOps Studio'],
+const gridHtml = read(join(root, 'dist', 'products', 'agentgrid.html'))
+if (!gridHtml.includes('08 · Download / local')) fail('Agent Grid product page must be Download / local')
+if (gridHtml.includes('08 · Live')) fail('Agent Grid product page must not be Live')
+if (/sslip\.io/.test(gridHtml)) fail('Agent Grid product page must not link a public sslip URL')
+if (!gridHtml.includes('https://github.com/hharsha98/agentgrid')) fail('Agent Grid product page must link the GitHub clone path')
+if (!gridHtml.includes('docs/HOSTING.md')) fail('Agent Grid product page must link HOSTING.md')
+
+for (const [file, marker, name, url] of [
+  ['revenue-ops.html', '09 · Live', 'Revenue Ops Control Tower', 'https://revenueops.169.58.185.43.sslip.io/'],
+  ['agentops-studio.html', '10 · Live', 'AgentOps Studio', 'https://agentops.169.58.185.43.sslip.io/'],
 ]) {
   const html = read(join(root, 'dist', 'products', file))
-  if (!html.includes(marker)) fail(`${name} must stay Building / coming soon`)
-  if (html.includes(' · Live<')) fail(`${name} must not be marked Live`)
+  if (!html.includes(marker)) fail(`${name} product page must be Live`)
+  if (!html.includes('Public demo')) fail(`${name} product page must label the public demo`)
+  if (!html.includes(url)) fail(`${name} product page must link its Contabo/sslip demo`)
 }
 
 if (wrangler.includes('fleet.agentic-systems-studio.com')) {

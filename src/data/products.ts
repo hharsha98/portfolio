@@ -281,11 +281,11 @@ export const products: Product[] = [
     tagline:
       'From an SMT error code to an evidence-linked corrective plan — one incident, multiple sources, a decision you can inspect.',
     description:
-      'Building. Evidence-grounded investigation workspace on GitHub — not offered as a live product here.',
+      'Public Contabo/sslip demo of the evidence workspace. Fictional plant data. GitHub remains.',
     body: [
       'MARA Open is an evidence-grounded multi-agent maintenance workflow. Public Opulo documentation supplies the technical references; every plant, machine, incident, and repair outcome is fictional. The project is not affiliated with Opulo.',
       'You can compare the same error with different causes, inspect retrieved sources, follow specialist steps (plan, retrieve, hypothesize, evaluate), and record a human decision. Reference-rule execution needs no model key.',
-      'This is not a studio Live product. A previous chatgpt.site preview was fragile and is not linked from this hub. GitHub is the source of truth until the project is migrated to an owned host. The README is explicit that reference-fixture scores test software behavior, not open-ended diagnostic generalization, and must not be quoted as LLM or thesis performance.',
+      'A public demo runs on a Contabo VPS at mara-open.169.58.185.43.sslip.io — sslip, with a Public demo badge. /health identifies the service as mara-open. Plant data is fictional, and the live model on that host is early and not configured, so the demo is the reference workspace. A previous chatgpt.site preview is not linked from this hub. GitHub remains the source repo. The README is explicit that reference-fixture scores test software behavior, not open-ended diagnostic generalization, and must not be quoted as LLM or thesis performance.',
     ],
     features: [
       'Visible specialist path: plan → evidence → hypotheses → evaluation → human review',
@@ -296,10 +296,17 @@ export const products: Product[] = [
     ],
     stack: ['Python', 'LangGraph', 'FastAPI', 'React', 'Chroma', 'SQLite'],
     accent: '#f97316',
-    status: 'building',
+    status: 'live',
     featured: false,
     github: 'https://github.com/hharsha98/mara-open',
-    links: [{ kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/mara-open' }],
+    links: [
+      {
+        kind: 'live',
+        label: 'Public demo',
+        href: 'https://mara-open.169.58.185.43.sslip.io/',
+      },
+      { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/mara-open' },
+    ],
     category: 'industrial',
   },
   {
@@ -309,11 +316,12 @@ export const products: Product[] = [
     tagline:
       'BridgeSpace-inspired multi-agent terminal grid (Claude Code, cursor-agent, Codex, Gemini CLI, shell). Local ADE — marketing page only, no hosted demo.',
     description:
-      'Building. Local ADE — GitHub and run-it-yourself only. Not a hosted IDE.',
+      'Download / local. Clone and run on 127.0.0.1. The PTY API stays on loopback; a private remote uses an SSH tunnel.',
     body: [
       'Agent Grid is a BridgeSpace-inspired ADE: mission control for several AI coding agents in one browser window. It is intentionally separate from Vibespace. The two repos are not merged.',
       'A local Fastify server spawns real PTY sessions. The UI is React + xterm.js. You can launch Claude Code, cursor-agent, Codex, Gemini CLI, or a shell, in presets from 1 to 16 panes. Layout, cwd, and agent preference persist; workspace templates live on disk.',
-      'On top of the grid: Warp-style command blocks, a kanban board that dispatches into a pane, Monaco file editing, shared memory notes, an MCP server, swarm roles with file-ownership claims, a small skills library, and an optional Tauri desktop shell. There is no public hosted instance — GitHub and local install only.',
+      'On top of the grid: Warp-style command blocks, a kanban board that dispatches into a pane, Monaco file editing, shared memory notes, an MCP server, swarm roles with file-ownership claims, a small skills library, and an optional Tauri desktop shell.',
+      'HOSTING.md keeps the shell API on 127.0.0.1:4318 and the UI on 127.0.0.1:5318. Clone the repo and run it on your machine. A single operator can reach a private Contabo process with an SSH tunnel to 127.0.0.1:5318. There is no public demo and no GitHub Release binary.',
     ],
     features: [
       'node-pty sessions that survive a browser refresh',
@@ -324,10 +332,22 @@ export const products: Product[] = [
     ],
     stack: ['TypeScript', 'React', 'Fastify', 'xterm.js', 'Monaco', 'Tauri', 'MCP'],
     accent: '#60a5fa',
-    status: 'building',
+    status: 'download',
     featured: false,
     github: 'https://github.com/hharsha98/agentgrid',
-    links: [{ kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentgrid' }],
+    links: [
+      {
+        kind: 'download',
+        label: 'Clone',
+        href: 'https://github.com/hharsha98/agentgrid',
+      },
+      { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentgrid' },
+      {
+        kind: 'docs',
+        label: 'Hosting notes',
+        href: 'https://github.com/hharsha98/agentgrid/blob/main/docs/HOSTING.md',
+      },
+    ],
     category: 'environment',
   },
   {
@@ -337,11 +357,11 @@ export const products: Product[] = [
     tagline:
       'Enterprise-style RevenueOps multi-agent control tower — a supervisor coordinates sales, support, outreach, engineering handoff, risk checks, evals, and audit trails.',
     description:
-      'Phase 0 scaffold: API contracts, sandbox-first autonomy, Docker/K8s/Terraform skeletons. Not a live product.',
+      'Public Contabo/sslip demo of the RevenueOps control tower. Sandbox autonomy. GitHub remains.',
     body: [
       'Revenue Ops Control Tower is a multi-agent control tower: one supervisor coordinates specialists for sales, support, customer communication, engineering handoff, risk checks, evals, and audit trails.',
-      'The README is explicit about current status: Phase 0 scaffold. FastAPI contracts, supervisor routing, safety and allowlist checks, a tool registry (Gmail, Slack, GitHub, RAG, lead scoring, ticket triage), a React dashboard with a workflow canvas, and Docker / Kubernetes / Terraform / CI skeletons.',
-      'Autonomy defaults to sandbox. Real-account mode is meant to require explicit configuration and allowlists — power with control, not reckless live actions. This is not a hosted demo.',
+      'FastAPI contracts, supervisor routing, safety and allowlist checks, a tool registry (Gmail, Slack, GitHub, RAG, lead scoring, ticket triage), a React dashboard with a workflow canvas, and Docker / Kubernetes / Terraform / CI skeletons.',
+      'A public demo runs on a Contabo VPS at revenueops.169.58.185.43.sslip.io — sslip, with a Public demo badge. /health reports the service ok and autonomy mode sandbox. Real-account mode still requires explicit configuration and allowlists. GitHub remains.',
     ],
     features: [
       'Supervisor / specialist agent graph',
@@ -352,10 +372,15 @@ export const products: Product[] = [
     ],
     stack: ['FastAPI', 'React', 'Postgres', 'Redis', 'Docker', 'Kubernetes', 'Terraform'],
     accent: '#f472b6',
-    status: 'building',
+    status: 'live',
     featured: false,
     github: 'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
     links: [
+      {
+        kind: 'live',
+        label: 'Public demo',
+        href: 'https://revenueops.169.58.185.43.sslip.io/',
+      },
       {
         kind: 'github',
         label: 'GitHub',
@@ -371,11 +396,11 @@ export const products: Product[] = [
     tagline:
       'Multi-agent AI operations platform with agent orchestration, RAG, MCP tools, observability, Docker, Kubernetes, and Terraform scaffolding.',
     description:
-      'Product and deploy scaffolding for a multi-agent ops command center — Docker, local Kubernetes, Terraform placeholders. Related to Agent Fleet, which is the public platform repo.',
+      'Public Contabo/sslip demo of the multi-agent ops command center. Related to Agent Fleet. GitHub remains.',
     body: [
-      'AgentOps Studio is the public product/ops scaffolding: a command-center surface and deploy foundation (Docker Compose, local Kubernetes structure, Terraform placeholders) for running AI workforces with operational visibility.',
+      'AgentOps Studio is a command-center surface and deploy foundation (Docker Compose, local Kubernetes structure, Terraform placeholders) for running AI workforces with operational visibility.',
       'The full self-hostable platform source is Agent Fleet. This repo is the product shell and portable-infra trail — not a second claim that the fleet is private.',
-      'Named on the product: streaming multi-agent chat, visual workflows, document intelligence with citations, MCP registry, Langfuse observability, cost and token tracking.',
+      'A public demo runs on a Contabo VPS at agentops.169.58.185.43.sslip.io — sslip, with a Public demo badge. /api/health reports demo_public. Named on the product: streaming multi-agent chat, visual workflows, document intelligence with citations, MCP registry, Langfuse observability, cost and token tracking. GitHub remains.',
     ],
     features: [
       'Orchestration + RAG + MCP as the product spine',
@@ -386,11 +411,16 @@ export const products: Product[] = [
     ],
     stack: ['TypeScript', 'Python', 'FastAPI', 'Docker', 'Kubernetes', 'Terraform', 'MCP'],
     accent: '#a78bfa',
-    status: 'building',
+    status: 'live',
     featured: false,
     github: 'https://github.com/hharsha98/agentops-studio',
     featuresHeading: 'On the product',
     links: [
+      {
+        kind: 'live',
+        label: 'Public demo',
+        href: 'https://agentops.169.58.185.43.sslip.io/',
+      },
       { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentops-studio' },
       { kind: 'github', label: 'Agent Fleet', href: 'https://github.com/hharsha98/agentfleet' },
     ],
