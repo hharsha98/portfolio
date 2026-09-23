@@ -15,7 +15,7 @@ Future product hosts (copy/config only — **planned names, not live URLs**. Do 
 | Host | Product | Primary CTA today |
 |---|---|---|
 | `fleet.agentic-systems-studio.com` | Agent Fleet | [Live demo / Contabo](https://agentfleet.169.58.185.43.sslip.io/) — studio hostname is planned only, not attached |
-| `os.agentic-systems-studio.com` | Agent OS | [Public demo / Contabo](https://agentos.169.58.185.43.sslip.io/) — studio hostname is planned only, not attached |
+| `os.agentic-systems-studio.com` | Agent OS | [Clone / run locally](https://github.com/hharsha98/agent-os) on `127.0.0.1:8090` — studio hostname is planned only, not attached. No public Contabo demo. |
 | `vibespace.agentic-systems-studio.com` | Vibespace | [Download](https://github.com/hharsha98/Vibespace/releases/latest) |
 | `rag.agentic-systems-studio.com` | RetrievalLab | [Live lab](https://retrievallab.pages.dev) |
 
@@ -30,7 +30,7 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 | `/` | Product studio home: pitch, featured products, catalog, coming hosts |
 | `/products` | Full product catalog with Live / Download / local / Gallery / early / Building badges |
 | `/products/agentfleet` | Live — [Contabo/sslip demo](https://agentfleet.169.58.185.43.sslip.io/) · [GitHub](https://github.com/hharsha98/agentfleet) · [self-host docs](https://github.com/hharsha98/agentfleet/blob/main/docs/DEPLOY.md) |
-| `/products/agent-os` | Live — [public demo / Contabo](https://agentos.169.58.185.43.sslip.io/) · [static gallery](https://hharsha98.github.io/agent-os/) · [GitHub](https://github.com/hharsha98/agent-os) |
+| `/products/agent-os` | Download / local — [clone](https://github.com/hharsha98/agent-os) (`127.0.0.1:8090`) · [static gallery](https://hharsha98.github.io/agent-os/) · [GitHub](https://github.com/hharsha98/agent-os) |
 | `/products/vibespace` | Download / local — [GitHub Releases](https://github.com/hharsha98/Vibespace/releases/latest) |
 | `/products/retrievallab` | Live — [retrievallab.pages.dev](https://retrievallab.pages.dev) |
 | `/products/rag-trustworthiness` | Live — [sslip demo](https://ragtrust.169.58.185.43.sslip.io/) · [walkthrough](https://hharsha98.github.io/rag-trustworthiness-industrial/) |
@@ -46,7 +46,7 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 
 Copy is taken from public GitHub descriptions/READMEs. No invented star counts or eval headlines. GitHub is [github.com/hharsha98](https://github.com/hharsha98) only — never github.com/agentic-systems-studio. Hugging Face is [huggingface.co/hharsha](https://huggingface.co/hharsha). Studio contact: `contact@agentic-systems-studio.com`. Do not put a personal Gmail address on public studio pages. Turnstile-protected form at `/contact` stores submissions in free D1 + KV — no Email Sending / Workers Paid.
 
-Do **not** link third-party Vercel or Pages hosts for Agent Fleet. The owned live demo is the Contabo/sslip host. Do **not** attach `fleet.agentic-systems-studio.com` or `os.agentic-systems-studio.com` in this repo. Agent OS Live points at `https://agentos.169.58.185.43.sslip.io/` (public demo, sandboxed). AgentOps Studio, Revenue Ops, and MARA Open are Live on their verified Contabo/sslip hosts (`agentops`, `revenueops`, and `mara-open` on `169.58.185.43.sslip.io`). Agent Grid stays Download / local: the PTY API is `127.0.0.1` only (SSH tunnel for a private remote). Do **not** give Agent Grid a public sslip URL.
+Do **not** link third-party Vercel or Pages hosts for Agent Fleet. The owned live demo is the Contabo/sslip host. Do **not** attach `fleet.agentic-systems-studio.com` or `os.agentic-systems-studio.com` in this repo. Agent OS is Download / local, like Agent Grid: clone and run on `127.0.0.1:8090`. Optional private self-host for the owner. Not a hosted multi-tenant SaaS. No public Contabo demo. The github.io page is a static gallery only. Do not re-add a public sslip URL for Agent OS. See `docs/AGENT-OS-LOCAL.md`. AgentOps Studio, Revenue Ops, and MARA Open are Live on their verified Contabo/sslip hosts (`agentops`, `revenueops`, and `mara-open` on `169.58.185.43.sslip.io`). Agent Grid stays Download / local: the PTY API is `127.0.0.1` only (SSH tunnel for a private remote). Do **not** give Agent Grid a public sslip URL.
 
 ## Local
 

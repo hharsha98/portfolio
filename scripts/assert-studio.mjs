@@ -86,6 +86,9 @@ for (const needle of ['evehicleshop', 'rtvision7@gmail.com', 'EmailMessage', 'ma
 }
 if (blob.includes('rtvision7@gmail.com')) fail('rtvision7@gmail.com still present')
 if (blob.toLowerCase().includes('mechaharsh@')) fail('personal mechaharsh@ email must not appear on studio pages')
+if (blob.includes('agentos.169.58.185.43.sslip.io')) {
+  fail('do not link the retired Agent OS Contabo public demo')
+}
 if (blob.includes('agentfleet.vercel.app')) fail('do not link third-party Agent Fleet vercel.app')
 if (blob.includes('agentfleet.pages.dev')) fail('do not link third-party agentfleet.pages.dev')
 if (!existsSync(join(root, 'public', 'media', 'agentfleet-landing.png'))) {
@@ -103,7 +106,6 @@ for (const url of [
   'https://github.com/hharsha98/agentfleet',
   'https://agentfleet.169.58.185.43.sslip.io/',
   'https://github.com/hharsha98/agent-os',
-  'https://agentos.169.58.185.43.sslip.io/',
   'https://hharsha98.github.io/agent-os/',
   'https://github.com/hharsha98/Vibespace',
   'https://github.com/hharsha98/Vibespace/releases/latest',
@@ -132,8 +134,15 @@ function productBlock(slug, nextSlug) {
 }
 
 const agentOs = productBlock('agent-os', 'vibespace')
-if (!agentOs.includes("status: 'live'")) fail('Agent OS must be Live')
-if (!agentOs.includes("label: 'Public demo'")) fail('Agent OS CTA must be labeled Public demo')
+if (!agentOs.includes("status: 'download'")) fail('Agent OS must be Download / local')
+if (agentOs.includes("status: 'live'")) fail('Agent OS must not be marked Live')
+if (agentOs.includes('sslip.io')) fail('Agent OS must not link a public sslip URL')
+if (!agentOs.includes("kind: 'download'")) fail('Agent OS must use the download link kind')
+if (!agentOs.includes("label: 'Clone / run locally'")) fail('Agent OS primary CTA must be Clone / run locally')
+if (!agentOs.includes('https://github.com/hharsha98/agent-os')) fail('Agent OS clone path must be the GitHub repo')
+if (!agentOs.includes("kind: 'gallery'")) fail('Agent OS must keep the static gallery link')
+if (!agentOs.includes('https://hharsha98.github.io/agent-os/')) fail('Agent OS gallery must stay on github.io')
+if (!agentOs.includes('127.0.0.1:8090')) fail('Agent OS copy must say to run on 127.0.0.1:8090')
 if (agentOs.includes('os.agentic-systems-studio.com') && /href:\s*'https?:\/\/os\.agentic-systems-studio\.com/.test(agentOs)) {
   fail('do not use os.agentic-systems-studio.com as an Agent OS product URL')
 }
@@ -143,7 +152,6 @@ if (/href:\s*'https?:\/\/[^']*os\.agentic-systems-studio\.com/.test(products)) {
 
 const allowedSslip = new Set([
   'agentfleet.169.58.185.43.sslip.io',
-  'agentos.169.58.185.43.sslip.io',
   'ragtrust.169.58.185.43.sslip.io',
   'agentops.169.58.185.43.sslip.io',
   'revenueops.169.58.185.43.sslip.io',
@@ -216,10 +224,11 @@ if (!indexHtml.includes('retrievallab.pages.dev')) fail('built home must use Ret
 if (!indexHtml.includes('careeragent-ceq.pages.dev')) fail('built home must include CareerAgent live URL')
 if (!indexHtml.includes('ragtrust.169.58.185.43.sslip.io')) fail('built home must include RAG Trust live URL')
 if (!indexHtml.includes('hharsha98.github.io/agent-os')) fail('built home must keep the Agent OS static gallery as a secondary link')
-if (!indexHtml.includes('agentos.169.58.185.43.sslip.io')) {
-  fail('built home must link the owned Agent OS Contabo/sslip public demo')
+if (indexHtml.includes('agentos.169.58.185.43.sslip.io')) {
+  fail('built home must not link the retired Agent OS Contabo public demo')
 }
-if (!indexHtml.includes('02 Agent OS — Live')) fail('built home constellation must mark Agent OS Live')
+if (!indexHtml.includes('02 Agent OS — Download / local')) fail('built home constellation must mark Agent OS Download / local')
+if (indexHtml.includes('02 Agent OS — Live')) fail('built home must not mark Agent OS Live')
 if (indexHtml.includes('02 Agent OS — Gallery')) fail('Agent OS must not stay Gallery / early')
 if (!indexHtml.includes('07 MARA Open — Live')) fail('built home constellation must mark MARA Open Live')
 if (!indexHtml.includes('08 Agent Grid — Download / local')) fail('Agent Grid must be Download / local')
@@ -303,10 +312,11 @@ if (!productsHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
 if (!productsHtml.includes('Live demo / Contabo')) {
   fail('products catalog must label the Fleet demo as Live demo / Contabo')
 }
-if (!productsHtml.includes('agentos.169.58.185.43.sslip.io')) {
-  fail('products catalog must link the Agent OS Contabo/sslip public demo')
+if (productsHtml.includes('agentos.169.58.185.43.sslip.io')) {
+  fail('products catalog must not link the retired Agent OS Contabo public demo')
 }
-if (!productsHtml.includes('Public demo')) fail('products catalog must label the Agent OS demo as Public demo')
+if (!productsHtml.includes('Clone / run locally')) fail('products catalog must offer Clone / run locally for Agent OS')
+if (!productsHtml.includes('Public demo')) fail('products catalog must still label the remaining Contabo public demos')
 if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(productsHtml)) {
   fail('products catalog must not link os.agentic-systems-studio.com')
 }
@@ -321,8 +331,12 @@ if (!demosHtml.includes('careeragent-ceq.pages.dev')) fail('demos page must incl
 if (!demosHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
   fail('demos page must include the Agent Fleet Contabo/sslip live demo')
 }
-if (!demosHtml.includes('agentos.169.58.185.43.sslip.io')) {
-  fail('demos page must include the Agent OS Contabo/sslip public demo')
+if (demosHtml.includes('agentos.169.58.185.43.sslip.io')) {
+  fail('demos page must not include the retired Agent OS Contabo public demo')
+}
+if (!demosHtml.includes('127.0.0.1:8090')) fail('demos page must say Agent OS runs on 127.0.0.1:8090')
+if (!demosHtml.includes('https://github.com/hharsha98/agent-os')) {
+  fail('demos page must link the Agent OS clone path')
 }
 if (!demosHtml.includes('agentops.169.58.185.43.sslip.io')) {
   fail('demos page must include the AgentOps Studio Contabo/sslip public demo')
@@ -362,11 +376,14 @@ if (fleetHtml.includes('agentfleet.pages.dev') || fleetHtml.includes('agentfleet
 if (fleetHtml.includes('01 · Building')) fail('Agent Fleet must not remain Building / coming soon')
 
 const osHtml = read(join(root, 'dist', 'products', 'agent-os.html'))
-if (!osHtml.includes('02 · Live')) fail('Agent OS product page must be Live')
-if (!osHtml.includes('Public demo')) fail('Agent OS product page must label the public demo')
-if (!osHtml.includes('https://agentos.169.58.185.43.sslip.io/')) {
-  fail('Agent OS product page must link the owned sslip demo')
+if (!osHtml.includes('02 · Download / local')) fail('Agent OS product page must be Download / local')
+if (osHtml.includes('02 · Live')) fail('Agent OS product page must not be Live')
+if (osHtml.includes('Public demo')) fail('Agent OS product page must not label a public demo')
+if (osHtml.includes('agentos.169.58.185.43.sslip.io') || /sslip\.io/.test(osHtml)) {
+  fail('Agent OS product page must not link a public sslip URL')
 }
+if (!osHtml.includes('Clone / run locally')) fail('Agent OS product page must offer Clone / run locally')
+if (!osHtml.includes('127.0.0.1:8090')) fail('Agent OS product page must say to run on 127.0.0.1:8090')
 if (!osHtml.includes('github.com/hharsha98/agent-os')) fail('Agent OS product page must keep GitHub')
 if (!osHtml.includes('hharsha98.github.io/agent-os')) fail('Agent OS product page must keep the static gallery')
 if (osHtml.includes('02 · Gallery')) fail('Agent OS must not remain Gallery / early')
@@ -399,6 +416,21 @@ if (wrangler.includes('fleet.agentic-systems-studio.com')) {
 }
 if (wrangler.includes('os.agentic-systems-studio.com') || wrangler.includes('vibespace.agentic-systems-studio.com') || wrangler.includes('rag.agentic-systems-studio.com')) {
   fail('do not attach future product hosts in wrangler routes / DNS')
+}
+
+function walkBuilt(dir, acc = []) {
+  if (!existsSync(dir)) return acc
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const path = join(dir, entry.name)
+    if (entry.isDirectory()) walkBuilt(path, acc)
+    else if (/\.(html|xml|txt|json)$/.test(entry.name)) acc.push(path)
+  }
+  return acc
+}
+for (const file of walkBuilt(join(root, 'dist'))) {
+  if (read(file).includes('agentos.169.58.185.43.sslip.io')) {
+    fail(`retired Agent OS public demo still linked in ${file}`)
+  }
 }
 
 console.log('assert-studio: ok')
