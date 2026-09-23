@@ -1,0 +1,205 @@
+---
+import { products, statusLabel, type Product } from '../data/products'
+
+/**
+ * Two-ring celestial chart — not a Fleet/Useful Agents radar.
+ * Ring radius is a fixed layout slot. Status is the node shape
+ * (square Live, rounded Download/gallery, circle Building).
+ * Labels live on the limb so names never sit on the nodes.
+ */
+const layout: Record<string, { a: number; r: number }> = {
+  agentfleet: { a: -90, r: 33 },
+  'agentops-studio': { a: -54, r: 20.5 },
+  'agent-os': { a: -18, r: 33 },
+  agentgrid: { a: 18, r: 20.5 },
+  vibespace: { a: 54, r: 33 },
+  'mara-open': { a: 90, r: 20.5 },
+  retrievallab: { a: 126, r: 33 },
+  'revenue-ops': { a: 162, r: 20.5 },
+  'rag-trustworthiness': { a: 198, r: 33 },
+  careeragent: { a: 234, r: 33 },
+}
+
+const LABEL_R = 41.8
+const LIMB_R = 47.15
+
+const orbitStatus = {
+  live: 'Live',
+  download: 'Download',
+  gallery: 'Gallery',
+  building: 'Building',
+} as const
+
+function orbitName(product: Product) {
+  if (product.slug === 'rag-trustworthiness') return 'RAG Trust'
+  if (product.slug === 'revenue-ops') return 'Revenue Ops'
+  if (product.slug === 'agentops-studio') return 'AgentOps'
+  return product.name
+}
+
+function accentOf(product: Product) {
+  return /^#[0-9a-fA-F]{6}$/.test(product.accent) ? product.accent : '#8b7cff'
+}
+
+function xy(a: number, r: number) {
+  const rad = (a * Math.PI) / 180
+  return {
+    x: 50 + Math.cos(rad) * r,
+    y: 50 + Math.sin(rad) * r,
+  }
+}
+
+const nodes = products.map((product) => {
+  const pos = layout[product.slug]
+  if (!pos) throw new Error(`constellation layout missing: ${product.slug}`)
+  return {
+    product,
+    ...pos,
+    accent: accentOf(product),
+    short: orbitName(product),
+    node: xy(pos.a, pos.r),
+    label: xy(pos.a, LABEL_R),
+  }
+})
+
+const bySlug = Object.fromEntries(nodes.map((node) => [node.product.slug, node]))
+
+const strokes: [string, string][] = [
+  ['agentfleet', 'agentops-studio'],
+  ['agentops-studio', 'revenue-ops'],
+  ['revenue-ops', 'careeragent'],
+  ['agent-os', 'agentgrid'],
+  ['agentgrid', 'vibespace'],
+  ['retrievallab', 'rag-trustworthiness'],
+]
+
+const constellationPaths = strokes.map(([from, to]) => {
+  const a = bySlug[from]
+  const b = bySlug[to]
+  if (!a || !b) throw new Error(`constellation stroke missing node: ${from}–${to}`)
+  return {
+    d: `M ${a.node.x.toFixed(2)} ${a.node.y.toFixed(2)} L ${b.node.x.toFixed(2)} ${b.node.y.toFixed(2)}`,
+    color: a.accent,
+  }
+})
+
+const ticks = Array.from({ length: 72 }, (_, i) => {
+  const a = i * 5
+  const major = a % 30 === 0
+  const inner = xy(a, major ? 45.15 : 46.05)
+  const outer = xy(a, LIMB_R)
+  return { major, ...inner, x2: outer.x, y2: outer.y }
+})
+
+const stars = [
+  { a: 6, r: 38.8, s: 0.32 },
+  { a: 14, r: 44.2, s: 0.18 },
+  { a: 24, r: 10.5, s: 0.2 },
+  { a: 38, r: 39.4, s: 0.28 },
+  { a: 52, r: 44.6, s: 0.16 },
+  { a: 64, r: 12.2, s: 0.22 },
+  { a: 78, r: 37.6, s: 0.24 },
+  { a: 102, r: 39.1, s: 0.3 },
+  { a: 112, r: 44.0, s: 0.18 },
+  { a: 128, r: 11.4, s: 0.2 },
+  { a: 142, r: 38.2, s: 0.26 },
+  { a: 162, r: 43.8, s: 0.16 },
+  { a: 174, r: 13.6, s: 0.22 },
+  { a: 192, r: 38.6, s: 0.28 },
+  { a: 204, r: 44.4, s: 0.18 },
+  { a: 218, r: 10.8, s: 0.2 },
+  { a: 238, r: 39.0, s: 0.24 },
+  { a: 252, r: 43.5, s: 0.16 },
+  { a: 268, r: 12.8, s: 0.22 },
+  { a: 282, r: 37.4, s: 0.3 },
+  { a: 298, r: 44.1, s: 0.18 },
+  { a: 312, r: 11.8, s: 0.2 },
+  { a: 328, r: 38.4, s: 0.26 },
+  { a: 344, r: 43.2, s: 0.16 },
+  { a: 356, r: 14.2, s: 0.22 },
+  { a: 18, r: 16.4, s: 0.14 },
+  { a: 96, r: 15.8, s: 0.14 },
+  { a: 186, r: 16.1, s: 0.14 },
+  { a: 276, r: 15.2, s: 0.14 },
+] as const
+---
+
+<figure class="studio-orbit-wrap">
+  <div class="orbit-stage">
+    <div class="studio-orbit">
+      <svg class="orbit-plate" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+        <defs>
+          <radialGradient id="orbit-nebula" cx="46%" cy="42%" r="58%">
+            <stop offset="0%" stop-color="#8b7cff" stop-opacity="0.34"></stop>
+            <stop offset="38%" stop-color="#6ee7f0" stop-opacity="0.08"></stop>
+            <stop offset="62%" stop-color="#c9a24a" stop-opacity="0.06"></stop>
+            <stop offset="100%" stop-color="#07080c" stop-opacity="0"></stop>
+          </radialGradient>
+        </defs>
+        <circle class="orbit-plate-disc" cx="50" cy="50" r="48.2"></circle>
+        <circle class="orbit-nebula" cx="50" cy="50" r="36" fill="url(#orbit-nebula)"></circle>
+        <g class="orbit-limb">
+          {ticks.map((tick) => (
+            <line
+              class:list={['orbit-tick', tick.major && 'is-major']}
+              x1={tick.x.toFixed(2)}
+              y1={tick.y.toFixed(2)}
+              x2={tick.x2.toFixed(2)}
+              y2={tick.y2.toFixed(2)}
+            ></line>
+          ))}
+          <circle class="orbit-limb-ring" cx="50" cy="50" r={LIMB_R}></circle>
+        </g>
+        <circle class="orbit-guide" cx="50" cy="50" r="33"></circle>
+        <circle class="orbit-guide is-inner" cx="50" cy="50" r="20.5"></circle>
+        {stars.map((star) => {
+          const p = xy(star.a, star.r)
+          return <circle class="orbit-star" cx={p.x.toFixed(2)} cy={p.y.toFixed(2)} r={star.s}></circle>
+        })}
+        {nodes.map((node) => (
+          <line
+            class="orbit-callout"
+            x1={node.node.x.toFixed(2)}
+            y1={node.node.y.toFixed(2)}
+            x2={node.label.x.toFixed(2)}
+            y2={node.label.y.toFixed(2)}
+          ></line>
+        ))}
+        {constellationPaths.map((path) => (
+          <path class="orbit-constellation" d={path.d} stroke={path.color}></path>
+        ))}
+      </svg>
+
+      <a class="orbit-core" href="/products" aria-label="Open the studio catalog">
+        <span class="orbit-core-ring" aria-hidden="true"></span>
+        <span class="orbit-core-mark">A·S</span>
+        <span class="orbit-core-sub">Studio</span>
+      </a>
+
+      {nodes.map((node) => (
+        <a
+          class:list={['orbit-body', `is-${node.product.status}`]}
+          href={`/products/${node.product.slug}`}
+          style={`--a:${node.a}deg;--r:${node.r};--lr:${LABEL_R};--c:${node.accent}`}
+          aria-label={`${node.product.index} ${node.product.name} — ${statusLabel(node.product.status)}`}
+        >
+          <span class="orbit-node">
+            <span class="orbit-mark">{node.product.index}</span>
+          </span>
+          <span class="orbit-label">
+            <span class="orbit-label-name">{node.short}</span>
+            <span class="orbit-label-status">{orbitStatus[node.product.status]}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+  <figcaption class="orbit-caption">
+    Studio constellation — {products.length} products around one core.
+    <span class="orbit-legend">
+      <span>Live · square</span>
+      <span>Download / gallery · rounded</span>
+      <span>Building · circle</span>
+    </span>
+  </figcaption>
+</figure>

@@ -1,0 +1,150 @@
+---
+import Base from '../layouts/Base.astro'
+import StudioOrbit from '../components/StudioOrbit.astro'
+import ProductCard from '../components/ProductCard.astro'
+import ComingHosts from '../components/ComingHosts.astro'
+import StudioWorkflow from '../components/StudioWorkflow.astro'
+import TechPills from '../components/TechPills.astro'
+import CloseBand from '../components/CloseBand.astro'
+import { site, paper } from '../data/site'
+import { featuredProducts, catalogProducts, catalogStats, featuredBentoClass } from '../data/products'
+
+const featured = featuredProducts()
+const rest = catalogProducts()
+const stats = catalogStats()
+---
+
+<Base home>
+  <section class="hero">
+    <div class="hero-atmosphere" aria-hidden="true">
+      <div class="hero-glow"></div>
+      <div class="hero-glow hero-glow-warm"></div>
+      <div class="hero-grain"></div>
+      <div class="hero-vignette"></div>
+    </div>
+    <p class="hero-spine" aria-hidden="true"><span>A·S · Nuremberg · Ten systems · 2026</span></p>
+    <div class="hero-inner relative mx-auto grid max-w-[88rem] items-center gap-8 px-4 pl-4 xl:pl-14 lg:grid-cols-12 lg:gap-8">
+      <div class="hero-copy lg:col-span-5">
+        <span class="hero-watermark" aria-hidden="true">10</span>
+        <div class="flex flex-wrap gap-2">
+          <span class="pill"><span class="pill-dot"></span> {stats.live} live</span>
+          <span class="pill">Open source</span>
+          <span class="pill">Self-hostable</span>
+        </div>
+        <h1 class="title-xl mt-7">
+          A constellation
+          <span class="gradient-phrase block">of products you can run.</span>
+        </h1>
+        <p class="lede mt-5">
+          {site.positioning} Open a live lab, download a desktop app, or follow a repo that is still being built — no fake Live buttons on scaffolds.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <a class="btn btn-light" href="/products">Enter the catalog →</a>
+          <a class="btn-text" href="/demos">See demos</a>
+          <a class="btn-text" href={site.github} rel="noreferrer" target="_blank">GitHub ↗</a>
+        </div>
+      </div>
+      <div class="lg:col-span-7">
+        <StudioOrbit />
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <dl class="mx-auto grid max-w-[88rem] grid-cols-2 sm:grid-cols-4">
+        {[
+          [String(stats.live), 'Live', 'live'],
+          [String(stats.download), 'Download / local', 'download'],
+          [String(stats.gallery), 'Gallery / early', 'gallery'],
+          [String(stats.building), 'Building', 'building'],
+        ].map(([value, label, kind]) => (
+          <div class:list={['stat-cell', `is-${kind}`]}>
+            <dt class="font-mono text-[11px] uppercase tracking-[0.18em]">{label}</dt>
+            <dd class="display stat-value">{value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="section pt-16 sm:pt-20">
+    <p class="kicker">Core lines</p>
+    <h2 class="display mt-3 max-w-3xl text-4xl leading-tight text-paper sm:text-6xl">
+      Three lines. A whole catalog in orbit.
+    </h2>
+    <div class="mt-12 grid gap-4 lg:grid-cols-3">
+      {[
+        ['01', 'Multi-agent ops', 'Agent Fleet, AgentOps Studio, and Revenue Ops are live Contabo sslip demos. Self-host from GitHub.'],
+        ['02', 'Agent environments', 'Vibespace is a desktop download. Agent OS is Download / local, like Agent Grid: clone and run the operator dashboard on 127.0.0.1:8090. Optional private self-host for the owner — not a hosted multi-tenant SaaS, and no public Contabo demo. Agent Grid stays on loopback, or an SSH tunnel, with no public URL.'],
+        ['03', 'Evaluated retrieval', 'RetrievalLab and RAG Trustworthiness are live labs you can open. Cite a source, or refuse.'],
+      ].map(([index, label, copy]) => (
+        <div class="panel core-panel px-5 py-7 sm:px-7 sm:py-8">
+          <p class="kicker">{index}</p>
+          <h3 class="display mt-4 text-2xl text-paper">{label}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-mute">{copy}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="products" class="section pt-0 sm:pt-0">
+    <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="kicker">Shipping over time</p>
+        <h2 class="display mt-2 text-4xl text-paper sm:text-6xl">Product constellation</h2>
+        <p class="mt-3 max-w-xl text-sm text-mute">
+          Status on every card: Live, Download / local, Gallery / early, or Building / coming soon. Working links only — no invented eval numbers.
+        </p>
+      </div>
+      <a class="btn-text" href="/products">All products →</a>
+    </div>
+
+    <div class="bento">
+      {featured.map((p) => (
+        <ProductCard product={p} featured class={featuredBentoClass(p)} />
+      ))}
+    </div>
+
+    <div class="mt-24 mb-8">
+      <p class="kicker">Catalog</p>
+      <h2 class="display mt-2 text-4xl text-paper sm:text-6xl">More systems</h2>
+    </div>
+    <div class="constellation-grid">
+      {rest.map((p) => <ProductCard product={p} compact />)}
+    </div>
+  </section>
+
+  <StudioWorkflow />
+
+  <TechPills />
+
+  <section class="section">
+    <ComingHosts />
+  </section>
+
+  <section class="section pt-0 sm:pt-0">
+    <article class="panel p-6 sm:p-10">
+      <p class="kicker">Research</p>
+      <h2 class="display mt-3 max-w-3xl text-2xl leading-snug text-paper sm:text-4xl">
+        {paper.title}
+      </h2>
+      <p class="mt-4 max-w-2xl text-sm leading-relaxed text-mute">{paper.summary}</p>
+      <p class="mt-2 font-mono text-[11px] text-mute">{paper.venue} · doi:{paper.doi}</p>
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a class="btn btn-light" href="/research">Research note</a>
+        <a class="btn btn-ghost" href={paper.doiUrl} rel="noreferrer" target="_blank">DOI ↗</a>
+        <a class="btn btn-ghost" href="/products/rag-trustworthiness">Related product</a>
+      </div>
+    </article>
+  </section>
+
+  <section class="border-t border-white/8">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-10 sm:px-6">
+      <p class="text-sm text-mute">
+        Founded by {site.shortName}. Personal site is separate from this studio.
+      </p>
+      <a class="btn btn-ghost" href={site.profile} rel="noreferrer" target="_blank">About Harsha ↗</a>
+    </div>
+  </section>
+
+  <CloseBand />
+</Base>

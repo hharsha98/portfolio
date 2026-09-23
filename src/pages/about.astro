@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro'
+import { site } from '../data/site'
+---
+
+<Base
+  title={`Founder — ${site.studio}`}
+  description={`${site.shortName} founded ${site.studio}. The personal site is separate from this product studio.`}
+>
+  <article class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
+    <p class="kicker">Founder</p>
+    <h1 class="page-title mt-4">About Harsha</h1>
+    <p class="mt-5 text-lg leading-relaxed text-mute">
+      {site.name} founded {site.studio}. This domain is the product hub — Agent Fleet, Agent OS, Vibespace, RetrievalLab, and the rest of the catalog.
+    </p>
+    <p class="mt-4 text-[15px] leading-relaxed text-paper/85">
+      The personal site lives at
+      <a class="text-brass underline-offset-2 hover:underline" href={site.profile} rel="noreferrer" target="_blank">harsha-vardhan.pages.dev</a>.
+      It is not this studio. For the products, stay here.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a class="btn btn-light" href={site.profile} rel="noreferrer" target="_blank">Personal site ↗</a>
+      <a class="btn btn-ghost" href="/products">Products</a>
+      <a class="btn btn-ghost" href="/contact">Contact the studio</a>
+    </div>
+  </article>
+</Base>
