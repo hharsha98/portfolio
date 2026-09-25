@@ -47,9 +47,13 @@ for (const host of [
 }
 
 const header = read(join(root, 'src', 'components', 'Header.astro'))
-for (const label of ["label: 'Products'", "label: 'Demos'", "label: 'Research'", "label: 'Contact'"]) {
+for (const label of ["label: 'Products'", "label: 'Demos'", "label: 'Contact'"]) {
   if (!site.includes(label)) fail(`nav must include ${label}`)
 }
+if (site.includes("href: '/research'") || site.includes("label: 'Research'")) {
+  fail('research nav must stay removed')
+}
+if (existsSync(join(root, 'src', 'pages', 'research.astro'))) fail('research page must stay deleted')
 if (!header.includes('Founder')) fail('nav must include Founder')
 if (header.includes('Profile')) fail('header Profile link must be Founder')
 if (header.includes('Browse products')) fail('header must stay a studio nav, not a SaaS launch CTA')
@@ -111,11 +115,7 @@ for (const url of [
   'https://github.com/hharsha98/Vibespace/releases/latest',
   'https://github.com/hharsha98/retrievallab',
   'https://retrievallab.pages.dev',
-  'https://ragtrust.169.58.185.43.sslip.io/',
-  'https://hharsha98.github.io/rag-trustworthiness-industrial/',
   'https://careeragent-ceq.pages.dev',
-  'https://github.com/hharsha98/mara-open',
-  'https://mara-open.169.58.185.43.sslip.io/',
   'https://github.com/hharsha98/agentgrid',
   'https://github.com/hharsha98/agentgrid/blob/main/docs/HOSTING.md',
   'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
@@ -152,10 +152,8 @@ if (/href:\s*'https?:\/\/[^']*os\.agentic-systems-studio\.com/.test(products)) {
 
 const allowedSslip = new Set([
   'agentfleet.169.58.185.43.sslip.io',
-  'ragtrust.169.58.185.43.sslip.io',
   'agentops.169.58.185.43.sslip.io',
   'revenueops.169.58.185.43.sslip.io',
-  'mara-open.169.58.185.43.sslip.io',
 ])
 for (const host of products.match(/[a-z0-9.-]+\.sslip\.io/g) || []) {
   if (!allowedSslip.has(host)) fail(`unexpected sslip host in catalog: ${host}`)
@@ -163,11 +161,6 @@ for (const host of products.match(/[a-z0-9.-]+\.sslip\.io/g) || []) {
 if (/href:\s*'https?:\/\/[^']*agentic-systems-studio\.com/.test(products)) {
   fail('do not use a studio apex hostname as a product URL')
 }
-
-const mara = productBlock('mara-open', 'agentgrid')
-if (!mara.includes("status: 'live'")) fail('MARA Open must be Live')
-if (!mara.includes("label: 'Public demo'")) fail('MARA Open CTA must be labeled Public demo')
-if (!mara.includes('https://mara-open.169.58.185.43.sslip.io/')) fail('MARA Open must link its Contabo/sslip demo')
 
 const agentGrid = productBlock('agentgrid', 'revenue-ops')
 if (!agentGrid.includes("status: 'download'")) fail('Agent Grid must be Download / local')
@@ -186,8 +179,8 @@ for (const [slug, next, url] of [
   if (!block.includes(url)) fail(`${slug} must link its verified Contabo/sslip demo`)
 }
 
-if ((products.match(/accent: '#[0-9a-fA-F]{6}'/g) || []).length < 10) {
-  fail('each catalog product must declare a hex accent')
+if ((products.match(/accent: '#[0-9a-fA-F]{6}'/g) || []).length !== 8) {
+  fail('catalog must list eight products, each with a hex accent')
 }
 
 const tests = spawnSync(process.execPath, ['--experimental-strip-types', '--test', 'worker/contact.test.ts'], {
@@ -222,7 +215,6 @@ if (!indexHtml.includes('harsha-vardhan.pages.dev')) fail('built home must link 
 if (!indexHtml.includes('Vibespace')) fail('built home must feature Vibespace')
 if (!indexHtml.includes('retrievallab.pages.dev')) fail('built home must use RetrievalLab live URL')
 if (!indexHtml.includes('careeragent-ceq.pages.dev')) fail('built home must include CareerAgent live URL')
-if (!indexHtml.includes('ragtrust.169.58.185.43.sslip.io')) fail('built home must include RAG Trust live URL')
 if (!indexHtml.includes('hharsha98.github.io/agent-os')) fail('built home must keep the Agent OS static gallery as a secondary link')
 if (indexHtml.includes('agentos.169.58.185.43.sslip.io')) {
   fail('built home must not link the retired Agent OS Contabo public demo')
@@ -230,21 +222,17 @@ if (indexHtml.includes('agentos.169.58.185.43.sslip.io')) {
 if (!indexHtml.includes('02 Agent OS — Download / local')) fail('built home constellation must mark Agent OS Download / local')
 if (indexHtml.includes('02 Agent OS — Live')) fail('built home must not mark Agent OS Live')
 if (indexHtml.includes('02 Agent OS — Gallery')) fail('Agent OS must not stay Gallery / early')
-if (!indexHtml.includes('07 MARA Open — Live')) fail('built home constellation must mark MARA Open Live')
-if (!indexHtml.includes('08 Agent Grid — Download / local')) fail('Agent Grid must be Download / local')
-if (indexHtml.includes('08 Agent Grid — Live')) fail('Agent Grid must not be marked Live')
-if (!indexHtml.includes('09 Revenue Ops Control Tower — Live')) {
+if (!indexHtml.includes('06 Agent Grid — Download / local')) fail('Agent Grid must be Download / local')
+if (indexHtml.includes('06 Agent Grid — Live')) fail('Agent Grid must not be marked Live')
+if (!indexHtml.includes('07 Revenue Ops Control Tower — Live')) {
   fail('built home constellation must mark Revenue Ops Live')
 }
-if (!indexHtml.includes('10 AgentOps Studio — Live')) fail('built home constellation must mark AgentOps Studio Live')
+if (!indexHtml.includes('08 AgentOps Studio — Live')) fail('built home constellation must mark AgentOps Studio Live')
 if (!indexHtml.includes('agentops.169.58.185.43.sslip.io')) {
   fail('built home must link the AgentOps Studio Contabo/sslip public demo')
 }
 if (!indexHtml.includes('revenueops.169.58.185.43.sslip.io')) {
   fail('built home must link the Revenue Ops Contabo/sslip public demo')
-}
-if (!indexHtml.includes('mara-open.169.58.185.43.sslip.io')) {
-  fail('built home must link the MARA Open Contabo/sslip public demo')
 }
 if (/agentgrid\.[^"'\s]*sslip\.io/.test(indexHtml)) fail('built home must not give Agent Grid a public sslip URL')
 if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(indexHtml)) {
@@ -265,6 +253,15 @@ if (!indexHtml.includes('/media/agentfleet-landing.png')) {
 if (indexHtml.includes('94ms') || /17 built-in/i.test(indexHtml)) {
   fail('do not copy Agent Fleet marketing metrics onto the studio hub')
 }
+function census(html, kind) {
+  const match = html.match(new RegExp(`is-${kind}[\\s\\S]{0,500}?stat-value">(\\d+)`))
+  if (!match) fail(`built home missing ${kind} census`)
+  return match[1]
+}
+if (census(indexHtml, 'live') !== '5') fail(`live census must be 5 after delist, got ${census(indexHtml, 'live')}`)
+if (census(indexHtml, 'download') !== '3') fail(`download census must be 3, got ${census(indexHtml, 'download')}`)
+if (census(indexHtml, 'gallery') !== '0') fail(`gallery census must be 0, got ${census(indexHtml, 'gallery')}`)
+if (census(indexHtml, 'building') !== '0') fail(`building census must be 0, got ${census(indexHtml, 'building')}`)
 if (!indexHtml.includes('Studio constellation')) {
   fail('built home must include the studio constellation graphic')
 }
@@ -295,7 +292,7 @@ if (!indexHtml.includes('Building / coming soon')) {
 if (!indexHtml.includes('Gallery / early')) fail('built home must keep the gallery census label')
 if (!indexHtml.includes('Download / local')) fail('built home must mark Vibespace as download / local')
 if (/href=["'][^"']*chatgpt\.site/.test(indexHtml)) {
-  fail('built home must not link MARA chatgpt.site as Live')
+  fail('built home must not link chatgpt.site')
 }
 if (!existsSync(join(root, 'dist', 'products.html'))) fail('built products page missing')
 if (!existsSync(join(root, 'dist', 'demos.html'))) fail('built demos page missing')
@@ -321,11 +318,11 @@ if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(productsHtml)) {
   fail('products catalog must not link os.agentic-systems-studio.com')
 }
 if (/href=["'][^"']*chatgpt\.site/.test(productsHtml)) {
-  fail('products catalog must not link MARA chatgpt.site as Live')
+  fail('products catalog must not link chatgpt.site')
 }
 
 const demosHtml = read(join(root, 'dist', 'demos.html'))
-if (/href=["'][^"']*chatgpt\.site/.test(demosHtml)) fail('demos page must not link MARA chatgpt.site')
+if (/href=["'][^"']*chatgpt\.site/.test(demosHtml)) fail('demos page must not link chatgpt.site')
 if (!demosHtml.includes('retrievallab.pages.dev')) fail('demos page must include RetrievalLab live URL')
 if (!demosHtml.includes('careeragent-ceq.pages.dev')) fail('demos page must include CareerAgent live URL')
 if (!demosHtml.includes('agentfleet.169.58.185.43.sslip.io')) {
@@ -344,23 +341,11 @@ if (!demosHtml.includes('agentops.169.58.185.43.sslip.io')) {
 if (!demosHtml.includes('revenueops.169.58.185.43.sslip.io')) {
   fail('demos page must include the Revenue Ops Contabo/sslip public demo')
 }
-if (!demosHtml.includes('mara-open.169.58.185.43.sslip.io')) {
-  fail('demos page must include the MARA Open Contabo/sslip public demo')
-}
 if (/agentgrid\.[^"'\s]*sslip\.io/.test(demosHtml)) fail('demos page must not give Agent Grid a public sslip URL')
 if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(demosHtml)) {
   fail('demos page must not link os.agentic-systems-studio.com')
 }
 if (demosHtml.includes('Self-host docs')) fail('Fleet self-host docs belong on the product page, not the demos list')
-
-const maraHtml = read(join(root, 'dist', 'products', 'mara-open.html'))
-if (/href=["'][^"']*chatgpt\.site/.test(maraHtml)) fail('MARA product page must not link chatgpt.site')
-if (!maraHtml.includes('07 · Live')) fail('MARA Open product page must be Live')
-if (!maraHtml.includes('Public demo')) fail('MARA Open product page must label the public demo')
-if (!maraHtml.includes('https://mara-open.169.58.185.43.sslip.io/')) {
-  fail('MARA Open product page must link the owned sslip demo')
-}
-if (!maraHtml.includes('github.com/hharsha98/mara-open')) fail('MARA product page must link GitHub')
 
 const fleetHtml = read(join(root, 'dist', 'products', 'agentfleet.html'))
 if (!fleetHtml.includes('01 · Live')) fail('Agent Fleet product page must be Live')
@@ -395,15 +380,15 @@ if (!osHtml.includes('os.agentic-systems-studio.com')) {
 }
 
 const gridHtml = read(join(root, 'dist', 'products', 'agentgrid.html'))
-if (!gridHtml.includes('08 · Download / local')) fail('Agent Grid product page must be Download / local')
-if (gridHtml.includes('08 · Live')) fail('Agent Grid product page must not be Live')
+if (!gridHtml.includes('06 · Download / local')) fail('Agent Grid product page must be Download / local')
+if (gridHtml.includes('06 · Live')) fail('Agent Grid product page must not be Live')
 if (/sslip\.io/.test(gridHtml)) fail('Agent Grid product page must not link a public sslip URL')
 if (!gridHtml.includes('https://github.com/hharsha98/agentgrid')) fail('Agent Grid product page must link the GitHub clone path')
 if (!gridHtml.includes('docs/HOSTING.md')) fail('Agent Grid product page must link HOSTING.md')
 
 for (const [file, marker, name, url] of [
-  ['revenue-ops.html', '09 · Live', 'Revenue Ops Control Tower', 'https://revenueops.169.58.185.43.sslip.io/'],
-  ['agentops-studio.html', '10 · Live', 'AgentOps Studio', 'https://agentops.169.58.185.43.sslip.io/'],
+  ['revenue-ops.html', '07 · Live', 'Revenue Ops Control Tower', 'https://revenueops.169.58.185.43.sslip.io/'],
+  ['agentops-studio.html', '08 · Live', 'AgentOps Studio', 'https://agentops.169.58.185.43.sslip.io/'],
 ]) {
   const html = read(join(root, 'dist', 'products', file))
   if (!html.includes(marker)) fail(`${name} product page must be Live`)
@@ -427,10 +412,61 @@ function walkBuilt(dir, acc = []) {
   }
   return acc
 }
+const delistedNeedles = [
+  [/mara-open/i, 'mara-open'],
+  [/\bMARA\b/, 'MARA'],
+  [/siemens/i, 'Siemens'],
+  [/\bFAPS\b/, 'FAPS'],
+  [/\bEBL\b/, 'EBL'],
+  [/10\.53192/, 'EBL DOI'],
+  [/RAG Trustworthiness/i, 'RAG Trustworthiness'],
+  [/rag-trustworthiness/i, 'rag-trustworthiness'],
+  [/ragtrust/i, 'ragtrust'],
+  [/Pflichtpraktikum/i, 'Pflichtpraktikum'],
+  [/\bthesis\b/i, 'thesis'],
+  [/\bNDA\b/, 'NDA'],
+  [/researchgate\.net/i, 'ResearchGate paper'],
+  [/\/research(?![a-z])/i, '/research'],
+]
+
+function assertDelisted(label, text) {
+  for (const [re, name] of delistedNeedles) {
+    if (re.test(text)) fail(`${label} still contains delisted copy: ${name}`)
+  }
+}
+
+const publicSource = []
+function walkPublic(dir) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name === 'node_modules' || entry.name === 'dist' || entry.name === '.git') continue
+    const path = join(dir, entry.name)
+    if (entry.isDirectory()) walkPublic(path)
+    else if (/\.(astro|ts|css|mjs|md|txt|svg)$/.test(entry.name) && !entry.name.endsWith('.d.ts')) {
+      publicSource.push(path)
+    }
+  }
+}
+walkPublic(join(root, 'src'))
+walkPublic(join(root, 'public'))
+publicSource.push(join(root, 'README.md'))
+for (const file of publicSource) assertDelisted(file, read(file))
+
+for (const gone of [
+  'research.html',
+  join('products', 'mara-open.html'),
+  join('products', 'rag-trustworthiness.html'),
+  join('projects', 'mara-open.html'),
+  join('projects', 'rag-trustworthiness.html'),
+]) {
+  if (existsSync(join(root, 'dist', gone))) fail(`delisted page still built: ${gone}`)
+}
+
 for (const file of walkBuilt(join(root, 'dist'))) {
-  if (read(file).includes('agentos.169.58.185.43.sslip.io')) {
+  const built = read(file)
+  if (built.includes('agentos.169.58.185.43.sslip.io')) {
     fail(`retired Agent OS public demo still linked in ${file}`)
   }
+  assertDelisted(file, built)
 }
 
 console.log('assert-studio: ok')
