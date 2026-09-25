@@ -79,6 +79,14 @@ const forbidden = [
   '€0 infra',
   'The person, not the studio',
   'This page is the person.',
+  'Siemens',
+  'thesis',
+  'FAPS',
+  'EBL 2026',
+  'Pflichtpraktikum',
+  '10.53192',
+  'MARA',
+  'RAG Trustworthiness',
 ]
 for (const needle of forbidden) {
   if (bundled.toLowerCase().includes(needle.toLowerCase())) {
@@ -109,10 +117,8 @@ const required = [
   'github.com/hharsha98/agentgrid',
   '"@type": "Person"',
   '/portrait.jpg',
-  'Pflichtpraktikum',
   'German',
   'Intermediate',
-  '10.53192/EBL20260344',
   'What I do',
   'Project write-ups',
 ]

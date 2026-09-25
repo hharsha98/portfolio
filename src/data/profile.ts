@@ -15,7 +15,6 @@ export const profile = {
     'AI Engineer',
     'AI Architect',
     'AI Cloud Deployment',
-    'Pflichtpraktikum',
   ],
   links: {
     linkedin: 'https://www.linkedin.com/in/hanumanthu1',
@@ -29,43 +28,16 @@ export const site = {
   origin: 'https://harsha-vardhan.pages.dev',
   title: 'Hanumanthu Harsha Vardhan — AI Engineer',
   description:
-    'AI Engineer in Nürnberg. Agentic systems and cloud deployment. M.Sc. Electromobility (ACES) at FAU. Open to AI Engineer, AI Architect, AI Cloud Deployment, and Pflichtpraktikum.',
+    'AI Engineer in Nürnberg. Agentic systems and cloud deployment. M.Sc. Electromobility (ACES) at FAU. Open to AI Engineer, AI Architect, and AI Cloud Deployment.',
 } as const
 
 export const about = [
   'I build agentic systems and retrieval pipelines that have to hold up outside a demo — local models, cited answers, and evaluation instead of vibes.',
-  'I came to AI from mechanical engineering, then Electromobility (ACES) at FAU Erlangen-Nürnberg. The problems that stuck were industrial: making language models reliable enough for a plant, not a slide.',
-  'Right now I am writing my master thesis at Siemens AG in Amberg on multi-agent root-cause analysis. Public code lives only at github.com/hharsha98.',
+  'I came to AI from mechanical engineering, then Electromobility (ACES) at FAU Erlangen-Nürnberg.',
+  'Public code lives only at github.com/hharsha98.',
 ]
 
 export const experience = [
-  {
-    dates: 'Aug 2025 – Present',
-    org: 'Siemens AG, Amberg',
-    title: 'Master thesis — multi-agent root-cause analysis',
-    points: [
-      'Multi-agent system for automated root-cause analysis in industrial production.',
-      'Agents for perception, reasoning, retrieval, and decision support, with local models and reliability metrics.',
-      'Code is confidential. Architecture and evaluation approach are fair game in conversation.',
-    ],
-  },
-  {
-    dates: 'Jan 2025 – Mar 2025',
-    org: 'Siemens AG',
-    title: 'Computer vision intern',
-    points: [
-      'Computer-vision internship on vision-based inspection and image processing.',
-    ],
-  },
-  {
-    dates: 'Aug 2024 – Apr 2025',
-    org: 'Institute FAPS, FAU Erlangen',
-    title: 'Research assistant',
-    points: [
-      'Local RAG for industrial knowledge retrieval, with trustworthiness and verification metrics.',
-      'This work is the basis of the EBL 2026 publication listed below.',
-    ],
-  },
   {
     dates: 'Sep 2021 – May 2022',
     org: 'IndiaMART InterMESH Ltd.',
@@ -96,18 +68,6 @@ export const education = [
     note: null,
   },
 ] as const
-
-export const publication = {
-  authors: 'Mahr, F.; Vardhan, H. H.; Franke, J.; Ockel, M.',
-  year: '2026',
-  title:
-    'Development and Evaluation of a RAG System for Local Knowledge Retrieval with Integrated Trustworthiness Metrics in Industrial Environments',
-  venue: 'EBL 2026',
-  series: 'DVS-Berichte, vol. 404',
-  pages: 'pp. 344–354',
-  doi: '10.53192/EBL20260344',
-  doiUrl: 'https://doi.org/10.53192/EBL20260344',
-} as const
 
 export const featured = [
   {
@@ -180,7 +140,7 @@ export const skills = [
   },
   {
     group: 'Retrieval',
-    items: ['RAG pipelines', 'Hybrid search', 'Reranking', 'Citations', 'Trustworthiness metrics'],
+    items: ['RAG pipelines', 'Hybrid search', 'Reranking', 'Citations'],
   },
   {
     group: 'Engineering',
