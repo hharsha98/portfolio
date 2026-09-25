@@ -42,7 +42,7 @@ export type Product = {
   links: ProductLink[]
   futureHost?: string
   featuresHeading?: string
-  category: 'ops' | 'environment' | 'retrieval' | 'industrial'
+  category: 'ops' | 'environment' | 'retrieval'
   visual?: { src: string; alt: string }
 }
 
@@ -204,48 +204,8 @@ export const products: Product[] = [
     category: 'retrieval',
   },
   {
-    slug: 'rag-trustworthiness',
-    index: '05',
-    name: 'RAG Trustworthiness Industrial',
-    tagline:
-      'A RAG system that cannot return an answer without the evidence and a measurement of how well that evidence supports it — or it declines to answer.',
-    description:
-      'Local / open-weight retrieval with citations, claim-level entailment, and five trust metrics. Live demo plus a walkthrough.',
-    body: [
-      'Most RAG systems return a fluent answer and leave you to trust it. This one returns the retrieved passages, decomposes the answer into claims scored for entailment, reports five trust metrics plus two aggregate scores — or refuses, with a reason.',
-      'Everything can run locally against open-weight models via Ollama, or against a hosted inference endpoint. Answering is deterministic by default (greedy decoding, fixed seed) so the same question against the same corpus returns the same answer and the same trust score.',
-      'The live instance is a small VPS running open-weight models; answers take a few seconds. Uploads are rate-limited and deleted after 24 hours. Metric definitions, third-party validation notes, and retrieval ablations live in the repo and the walkthrough — the studio site does not reprint those tables as marketing numbers.',
-    ],
-    features: [
-      'Cited answers, or a refusal when the corpus does not support one',
-      'Five trust metrics: faithfulness, attribution, relevance, conciseness, contradiction',
-      'Non-compensatory aggregation (arithmetic and geometric)',
-      'Two-stage abstention: retrieval gate before generation, grounding gate after',
-      'Hybrid retrieval implemented; rerank available, off by default for latency',
-    ],
-    stack: ['Python', 'Ollama', 'FAISS', 'BM25', 'NLI', 'Gradio', 'Docker'],
-    accent: '#22d3ee',
-    status: 'live',
-    featured: false,
-    github: 'https://github.com/hharsha98/rag-trustworthiness-industrial',
-    links: [
-      { kind: 'live', label: 'Live', href: 'https://ragtrust.169.58.185.43.sslip.io/' },
-      {
-        kind: 'walkthrough',
-        label: 'Walkthrough',
-        href: 'https://hharsha98.github.io/rag-trustworthiness-industrial/',
-      },
-      {
-        kind: 'github',
-        label: 'GitHub',
-        href: 'https://github.com/hharsha98/rag-trustworthiness-industrial',
-      },
-    ],
-    category: 'retrieval',
-  },
-  {
     slug: 'careeragent',
-    index: '06',
+    index: '05',
     name: 'CareerAgent',
     tagline:
       'AI agents for the job hunt — RAG chat over a CV with citations, live company research, evidence-anchored CV tailoring, Kanban tracker.',
@@ -275,43 +235,8 @@ export const products: Product[] = [
     category: 'ops',
   },
   {
-    slug: 'mara-open',
-    index: '07',
-    name: 'MARA Open',
-    tagline:
-      'From an SMT error code to an evidence-linked corrective plan — one incident, multiple sources, a decision you can inspect.',
-    description:
-      'Public Contabo/sslip demo of the evidence workspace. Fictional plant data. GitHub remains.',
-    body: [
-      'MARA Open is an evidence-grounded multi-agent maintenance workflow. Public Opulo documentation supplies the technical references; every plant, machine, incident, and repair outcome is fictional. The project is not affiliated with Opulo.',
-      'You can compare the same error with different causes, inspect retrieved sources, follow specialist steps (plan, retrieve, hypothesize, evaluate), and record a human decision. Reference-rule execution needs no model key.',
-      'A public demo runs on a Contabo VPS at mara-open.169.58.185.43.sslip.io — sslip, with a Public demo badge. /health identifies the service as mara-open. Plant data is fictional, and the live model on that host is early and not configured, so the demo is the reference workspace. A previous chatgpt.site preview is not linked from this hub. GitHub remains the source repo. The README is explicit that reference-fixture scores test software behavior, not open-ended diagnostic generalization, and must not be quoted as LLM or thesis performance.',
-    ],
-    features: [
-      'Visible specialist path: plan → evidence → hypotheses → evaluation → human review',
-      'Same error, different cause — comparable fictional PICK-001 cases',
-      'Evidence board with source links and machine/line boundaries',
-      'Reference mode without a model key; optional live AI behind the API',
-      'Durable pause/resume of human review on the local backend',
-    ],
-    stack: ['Python', 'LangGraph', 'FastAPI', 'React', 'Chroma', 'SQLite'],
-    accent: '#f97316',
-    status: 'live',
-    featured: false,
-    github: 'https://github.com/hharsha98/mara-open',
-    links: [
-      {
-        kind: 'live',
-        label: 'Public demo',
-        href: 'https://mara-open.169.58.185.43.sslip.io/',
-      },
-      { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/mara-open' },
-    ],
-    category: 'industrial',
-  },
-  {
     slug: 'agentgrid',
-    index: '08',
+    index: '06',
     name: 'Agent Grid',
     tagline:
       'BridgeSpace-inspired multi-agent terminal grid (Claude Code, cursor-agent, Codex, Gemini CLI, shell). Local ADE — marketing page only, no hosted demo.',
@@ -352,7 +277,7 @@ export const products: Product[] = [
   },
   {
     slug: 'revenue-ops',
-    index: '09',
+    index: '07',
     name: 'Revenue Ops Control Tower',
     tagline:
       'Enterprise-style RevenueOps multi-agent control tower — a supervisor coordinates sales, support, outreach, engineering handoff, risk checks, evals, and audit trails.',
@@ -391,7 +316,7 @@ export const products: Product[] = [
   },
   {
     slug: 'agentops-studio',
-    index: '10',
+    index: '08',
     name: 'AgentOps Studio',
     tagline:
       'Multi-agent AI operations platform with agent orchestration, RAG, MCP tools, observability, Docker, Kubernetes, and Terraform scaffolding.',
@@ -517,6 +442,5 @@ export const credibilityStack = [
   'Tauri',
   'MCP',
   'Docker',
-  'Gradio',
   'Cloudflare Workers',
 ] as const

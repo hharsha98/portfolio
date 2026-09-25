@@ -9,15 +9,13 @@ import { products, statusLabel, type Product } from '../data/products'
  */
 const layout: Record<string, { a: number; r: number }> = {
   agentfleet: { a: -90, r: 33 },
-  'agentops-studio': { a: -54, r: 20.5 },
-  'agent-os': { a: -18, r: 33 },
-  agentgrid: { a: 18, r: 20.5 },
-  vibespace: { a: 54, r: 33 },
-  'mara-open': { a: 90, r: 20.5 },
-  retrievallab: { a: 126, r: 33 },
-  'revenue-ops': { a: 162, r: 20.5 },
-  'rag-trustworthiness': { a: 198, r: 33 },
-  careeragent: { a: 234, r: 33 },
+  'agentops-studio': { a: -45, r: 20.5 },
+  'agent-os': { a: 0, r: 33 },
+  agentgrid: { a: 45, r: 20.5 },
+  vibespace: { a: 90, r: 33 },
+  'revenue-ops': { a: 135, r: 20.5 },
+  retrievallab: { a: 180, r: 33 },
+  careeragent: { a: 225, r: 20.5 },
 }
 
 const LABEL_R = 41.8
@@ -31,7 +29,6 @@ const orbitStatus = {
 } as const
 
 function orbitName(product: Product) {
-  if (product.slug === 'rag-trustworthiness') return 'RAG Trust'
   if (product.slug === 'revenue-ops') return 'Revenue Ops'
   if (product.slug === 'agentops-studio') return 'AgentOps'
   return product.name
@@ -70,7 +67,6 @@ const strokes: [string, string][] = [
   ['revenue-ops', 'careeragent'],
   ['agent-os', 'agentgrid'],
   ['agentgrid', 'vibespace'],
-  ['retrievallab', 'rag-trustworthiness'],
 ]
 
 const constellationPaths = strokes.map(([from, to]) => {

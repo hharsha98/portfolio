@@ -6,8 +6,8 @@ import ComingHosts from '../components/ComingHosts.astro'
 import StudioWorkflow from '../components/StudioWorkflow.astro'
 import TechPills from '../components/TechPills.astro'
 import CloseBand from '../components/CloseBand.astro'
-import { site, paper } from '../data/site'
-import { featuredProducts, catalogProducts, catalogStats, featuredBentoClass } from '../data/products'
+import { site } from '../data/site'
+import { products, featuredProducts, catalogProducts, catalogStats, featuredBentoClass } from '../data/products'
 
 const featured = featuredProducts()
 const rest = catalogProducts()
@@ -22,10 +22,10 @@ const stats = catalogStats()
       <div class="hero-grain"></div>
       <div class="hero-vignette"></div>
     </div>
-    <p class="hero-spine" aria-hidden="true"><span>A·S · Nuremberg · Ten systems · 2026</span></p>
+    <p class="hero-spine" aria-hidden="true"><span>A·S · Nuremberg · {products.length} systems · 2026</span></p>
     <div class="hero-inner relative mx-auto grid max-w-[88rem] items-center gap-8 px-4 pl-4 xl:pl-14 lg:grid-cols-12 lg:gap-8">
       <div class="hero-copy lg:col-span-5">
-        <span class="hero-watermark" aria-hidden="true">10</span>
+        <span class="hero-watermark" aria-hidden="true">{products.length}</span>
         <div class="flex flex-wrap gap-2">
           <span class="pill"><span class="pill-dot"></span> {stats.live} live</span>
           <span class="pill">Open source</span>
@@ -75,7 +75,7 @@ const stats = catalogStats()
       {[
         ['01', 'Multi-agent ops', 'Agent Fleet, AgentOps Studio, and Revenue Ops are live Contabo sslip demos. Self-host from GitHub.'],
         ['02', 'Agent environments', 'Vibespace is a desktop download. Agent OS is Download / local, like Agent Grid: clone and run the operator dashboard on 127.0.0.1:8090. Optional private self-host for the owner — not a hosted multi-tenant SaaS, and no public Contabo demo. Agent Grid stays on loopback, or an SSH tunnel, with no public URL.'],
-        ['03', 'Evaluated retrieval', 'RetrievalLab and RAG Trustworthiness are live labs you can open. Cite a source, or refuse.'],
+        ['03', 'Evaluated retrieval', 'RetrievalLab is a live lab you can open. Cite a source, or refuse.'],
       ].map(([index, label, copy]) => (
         <div class="panel core-panel px-5 py-7 sm:px-7 sm:py-8">
           <p class="kicker">{index}</p>
@@ -119,22 +119,6 @@ const stats = catalogStats()
 
   <section class="section">
     <ComingHosts />
-  </section>
-
-  <section class="section pt-0 sm:pt-0">
-    <article class="panel p-6 sm:p-10">
-      <p class="kicker">Research</p>
-      <h2 class="display mt-3 max-w-3xl text-2xl leading-snug text-paper sm:text-4xl">
-        {paper.title}
-      </h2>
-      <p class="mt-4 max-w-2xl text-sm leading-relaxed text-mute">{paper.summary}</p>
-      <p class="mt-2 font-mono text-[11px] text-mute">{paper.venue} · doi:{paper.doi}</p>
-      <div class="mt-7 flex flex-wrap gap-3">
-        <a class="btn btn-light" href="/research">Research note</a>
-        <a class="btn btn-ghost" href={paper.doiUrl} rel="noreferrer" target="_blank">DOI ↗</a>
-        <a class="btn btn-ghost" href="/products/rag-trustworthiness">Related product</a>
-      </div>
-    </article>
   </section>
 
   <section class="border-t border-white/8">
