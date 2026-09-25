@@ -25,14 +25,11 @@ Those routes are no longer generated. Cloudflare `not_found_handling: "404-page"
 - `README.md` — route table and hosting note no longer advertise the delisted pages.
 - `scripts/assert-studio.mjs` — guards expect absence on `src/`, `public/`, `README.md`, and built `dist/` (this log is excluded).
 
-## Public profile and GitHub default branch
+## Default-branch README
 
-The studio pages on this branch did not contain the profile sentence. The same wording was still public in two other trees of this repo:
+This branch's `README.md` and `docs/AGENT-OS-LOCAL.md` do not contain the delisted featured-project row. `README.md` here is the studio setup guide, not the older portfolio README, so there is no matching line to delete in this pull request.
 
-- Recruiter profile (`cursor/harsha-profile-pages-4f23`, deployed as harsha-vardhan.pages.dev): about blurb, experience entries, publication block, nav item, and the meta description that named a Pflichtpraktikum. Removed from `src/data/profile.ts`, `src/App.tsx`, and `index.html`.
-- Default branch `main` (the README GitHub shows for this repo, plus the older portfolio meta): the featured-project row, the about paragraph, the project card, the status line, and the description that ended in “Siemens thesis work.” Removed from `README.md`, `index.html`, `src/pages/Home.tsx`, `src/data/projects.ts`, and `PLAN.md`.
-
-Those edits are not in this studio diff. IndiaMART, RT Vision, the FAU degree, and the unrelated product cards stay.
+`origin/main` `README.md` still has that row (line 33 at the time of this check). The older portfolio files `index.html`, `src/pages/Home.tsx`, and `src/data/projects.ts` are not in this branch either. The removal for `main` is the separate pull request into `main`.
 
 ## Kept
 
