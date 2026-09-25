@@ -25,6 +25,15 @@ Those routes are no longer generated. Cloudflare `not_found_handling: "404-page"
 - `README.md` — route table and hosting note no longer advertise the delisted pages.
 - `scripts/assert-studio.mjs` — guards expect absence on `src/`, `public/`, `README.md`, and built `dist/` (this log is excluded).
 
+## Public profile and GitHub default branch
+
+The studio pages on this branch did not contain the profile sentence. The same wording was still public in two other trees of this repo:
+
+- Recruiter profile (`cursor/harsha-profile-pages-4f23`, deployed as harsha-vardhan.pages.dev): about blurb, experience entries, publication block, nav item, and the meta description that named a Pflichtpraktikum. Removed from `src/data/profile.ts`, `src/App.tsx`, and `index.html`.
+- Default branch `main` (the README GitHub shows for this repo, plus the older portfolio meta): the featured-project row, the about paragraph, the project card, the status line, and the description that ended in “Siemens thesis work.” Removed from `README.md`, `index.html`, `src/pages/Home.tsx`, `src/data/projects.ts`, and `PLAN.md`.
+
+Those edits are not in this studio diff. IndiaMART, RT Vision, the FAU degree, and the unrelated product cards stay.
+
 ## Kept
 
 CareerAgent, Vibespace, Agent Fleet, Agent OS, Agent Grid, AgentOps Studio, Revenue Ops Control Tower, RetrievalLab, About, and Contact. RetrievalLab stays as the generic retrieval lab, including the planned hostname `rag.agentic-systems-studio.com`.
