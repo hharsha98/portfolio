@@ -18,8 +18,7 @@ pure static site, so nothing can go down or cost money. New public repo
    project = adding one object). Each card: screenshot, 2-sentence story with
    *numbers* (6/6 eval, €0 infra, ~100 endpoints analyzed), tech chips,
    **"Try it live →"** primary button, quiet GitHub link.
-   Launch content: CareerAgent (live demo) · ai-rag-project (repo + screenshot) ·
-   master-thesis AI work (short card, no demo).
+   Launch content: CareerAgent (live demo) · ai-rag-project (repo + screenshot).
 3. **About + skills** — Electromobility→AI story (5-6 lines), grouped skill tags
    (LLM/RAG · Backend · Frontend · Infra), languages.
 4. **Writing** — blog index reading markdown files via `import.meta.glob` +
