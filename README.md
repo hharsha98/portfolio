@@ -10,12 +10,6 @@
   <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
 </p>
 
-## 🎬 Demo
-
-<p align="center">
-  <img src="docs/demo.gif" width="90%" alt="Scroll-through of the portfolio: hero, capabilities, and project cards" />
-</p>
-
 ## 🧭 What's inside
 
 Four capability areas, each proven by shipped work:
@@ -30,7 +24,6 @@ Four capability areas, each proven by shipped work:
 | Project | What it is |
 |---|---|
 | **CareerAgent** | Multi-agent platform for the job hunt |
-| **Multi-agent root-cause analysis** | Master thesis @ Siemens (industrial AI) |
 | **RetrievalLab** | Advanced RAG, made visible |
 | **ai-rag-project** | RAG — chat with your documents |
 
