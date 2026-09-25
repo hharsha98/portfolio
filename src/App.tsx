@@ -6,7 +6,6 @@ import {
   featured,
   languages,
   profile,
-  publication,
   skills,
 } from './data/profile'
 
@@ -15,7 +14,6 @@ const nav = [
   { href: '#experience', label: 'Experience' },
   { href: '#work', label: 'Work' },
   { href: '#education', label: 'Education' },
-  { href: '#publication', label: 'Publication' },
   { href: '#skills', label: 'Skills' },
 ] as const
 
@@ -232,7 +230,7 @@ export default function App() {
               <ExternalLink className="font-medium text-navy underline-offset-2 hover:underline" href={profile.links.github}>
                 github.com/hharsha98
               </ExternalLink>
-              . Industrial thesis code is not public.
+              .
             </p>
             <ul className="grid gap-3">
               {featured.map((item) => (
@@ -274,27 +272,6 @@ export default function App() {
                 </li>
               ))}
             </ol>
-          </section>
-
-          <section id="publication" aria-labelledby="publication-heading">
-            <SectionTitle kicker="Publication" title="Peer-reviewed paper" />
-            <h3 id="publication-heading" className="sr-only">
-              Publication
-            </h3>
-            <article className="rounded-xl border border-line bg-card p-5 sm:p-6">
-              <p className="text-sm text-mute">{publication.authors} ({publication.year}).</p>
-              <h3 className="serif mt-2 text-xl font-semibold leading-snug text-navy-ink">
-                {publication.title}
-              </h3>
-              <p className="mt-2 text-sm text-mute">
-                {publication.venue}, {publication.series}, {publication.pages}.
-              </p>
-              <p className="mt-3">
-                <ExternalLink className="text-sm font-medium text-navy underline-offset-2 hover:underline" href={publication.doiUrl}>
-                  doi:{publication.doi}
-                </ExternalLink>
-              </p>
-            </article>
           </section>
 
           <section id="skills" aria-labelledby="skills-heading">
