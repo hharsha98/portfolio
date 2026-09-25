@@ -30,7 +30,6 @@ Four capability areas, each proven by shipped work:
 | Project | What it is |
 |---|---|
 | **CareerAgent** | Multi-agent platform for the job hunt |
-| **Multi-agent root-cause analysis** | Master thesis @ Siemens (industrial AI) |
 | **RetrievalLab** | Advanced RAG, made visible |
 | **ai-rag-project** | RAG — chat with your documents |
 

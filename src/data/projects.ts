@@ -7,7 +7,6 @@ export type Category = { id: string; label: string; accent: Accent }
 
 export const categories: Category[] = [
   { id: 'platforms', label: 'AI Platforms', accent: 'emerald' },
-  { id: 'industrial', label: 'Industrial AI', accent: 'amber' },
   { id: 'rag', label: 'RAG & LLM Systems', accent: 'cyan' },
 ]
 
@@ -36,18 +35,6 @@ export const projects: Project[] = [
     demo: 'https://careeragent-ceq.pages.dev',
     repo: 'https://github.com/hharsha98/careeragent',
     badge: 'eval 6/6 · €0/mo infra',
-  },
-  {
-    name: 'Multi-agent root-cause analysis',
-    category: 'industrial',
-    tagline: 'Master thesis @ Siemens',
-    story:
-      'Implementing a multi-agent system for automated root-cause analysis in ' +
-      'production environments — agents that investigate failures, correlate ' +
-      'evidence, and propose causes in an industrial setting. (Code confidential; ' +
-      'happy to discuss architecture and evaluation approach in conversation.)',
-    tech: ['Multi-agent systems', 'LLMs', 'Automation', 'Industrial AI'],
-    badge: 'in progress · Siemens',
   },
   {
     name: 'RetrievalLab',
@@ -99,7 +86,7 @@ export const capabilities: Capability[] = [
     accent: 'indigo',
     glyph: '⧉',
     blurb: 'Tool loops, structured output with validation, provider fallback — hand-rolled, no framework, every line explainable.',
-    provenance: 'Siemens thesis · CareerAgent',
+    provenance: 'CareerAgent',
   },
   {
     title: 'Evaluation & Metering',
@@ -129,7 +116,7 @@ export const contact = {
   shortName: 'Harsha',
   headline: 'AI Engineer — RAG · multi-agent systems · evals',
   location: 'Nuremberg region, Germany',
-  status: 'Master thesis @ Siemens · open to AI Engineer roles',
+  status: 'Open to AI Engineer roles',
   email: 'rtvision134@gmail.com',
   linkedin: 'https://www.linkedin.com/in/hanumanthu1',
   github: 'https://github.com/hharsha98',

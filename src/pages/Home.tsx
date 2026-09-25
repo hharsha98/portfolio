@@ -196,9 +196,7 @@ export default function Home() {
               wanted to solve: making language models <em className="text-zinc-100">reliable</em> enough for real work.
             </p>
             <p>
-              Now I build agentic systems: my master thesis at Siemens applies multi-agent
-              LLMs to automated root-cause analysis in production environments, and my own
-              projects — deployed, evaluated, and metered — are above.
+              Now I build agentic systems. The projects above are deployed, evaluated, and metered.
             </p>
             <p>
               What I care about: answers with citations, eval scores over vibes, security
