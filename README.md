@@ -23,7 +23,9 @@ npm test          # content guards + production build
 npm run deploy    # wrangler pages deploy → project harsha-vardhan
 ```
 
-`npm run deploy` needs `CLOUDFLARE_API_TOKEN` with **Cloudflare Pages** edit on the same account that already has Worker `agentic-systems-studio`.
+`npm run deploy` needs `CLOUDFLARE_API_TOKEN` with **Cloudflare Pages** edit on the same account that already has Worker `agentic-systems-studio`. No paid Cloudflare plan is required. If Wrangler prompts for an account, also set `CLOUDFLARE_ACCOUNT_ID`.
+
+GitHub’s Cloudflare Pages check builds project `harsha-ai` (preview `https://cursor-harsha-profile-pages.harsha-ai.pages.dev`). It does not publish `https://harsha-vardhan.pages.dev`. That host is Pages project `harsha-vardhan` and updates only with direct upload (`npm run deploy`, which runs `wrangler pages deploy dist --project-name harsha-vardhan --commit-dirty=true`).
 
 ### If Git integration still needs a dashboard click
 
