@@ -258,22 +258,27 @@ if (census(indexHtml, 'live') !== '3') fail(`live census must be 3, got ${census
 if (census(indexHtml, 'download') !== '3') fail(`download census must be 3, got ${census(indexHtml, 'download')}`)
 if (census(indexHtml, 'gallery') !== '0') fail(`gallery census must be 0, got ${census(indexHtml, 'gallery')}`)
 if (census(indexHtml, 'building') !== '2') fail(`building census must be 2, got ${census(indexHtml, 'building')}`)
-if (!indexHtml.includes('data-system-index')) fail('built home must open on the system index')
-const indexRows = (indexHtml.match(/class="index-row"/g) || []).length
-if (indexRows !== catalogSlugs.length) {
-  fail(`system index must list every catalog product (${catalogSlugs.length}), found ${indexRows}`)
+// Every catalog product is on the home page twice: once in the orbital hero
+// and once in the product showcase (a big block or a compact tile).
+const orbitalNodes = (indexHtml.match(/class="orbital-link"/g) || []).length
+if (orbitalNodes !== catalogSlugs.length) {
+  fail(`orbital hero must carry every catalog product (${catalogSlugs.length}), found ${orbitalNodes}`)
 }
-if (!indexHtml.includes('Trace shape shows status')) {
-  fail('system index legend must explain that the trace shape encodes status, not colour alone')
+const showcased = (indexHtml.match(/class="(?:deep-dive|product-tile) /g) || []).length
+if (showcased !== catalogSlugs.length) {
+  fail(`home showcase must present every catalog product (${catalogSlugs.length}), found ${showcased}`)
 }
-for (const shape of ['running', 'stepped', 'dotted']) {
-  if (!indexHtml.includes(`data-trace="${shape}"`)) fail(`system index must draw a ${shape} trace`)
+for (const slug of catalogSlugs) {
+  if (!indexHtml.includes(`href="/products/${slug}"`)) fail(`home must link the ${slug} product page`)
 }
-if (!indexHtml.includes('The status is the contract')) fail('built home must explain the status contract')
+for (const shot of ['agentfleet-missions', 'vibespace', 'agent-os', 'agentgrid-board', 'revenue-ops-tower', 'agentops-traces']) {
+  if (!indexHtml.includes(`/media/${shot}.webp`)) fail(`home must show the ${shot} product screenshot`)
+  if (!existsSync(join(root, 'public', 'media', `${shot}.webp`))) fail(`screenshot missing: public/media/${shot}.webp`)
+}
+if (!indexHtml.includes('How to use a product')) fail('built home must explain how to use each status')
 if (!indexHtml.includes('studio-mark')) fail('header must carry the Relay studio mark')
 if (!read(join(root, 'public', 'favicon.svg')).includes('studio-mark')) fail('favicon must be the Relay studio mark')
 if (indexHtml.includes('A·S')) fail('the old A·S text logo must stay retired')
-if (indexHtml.includes('gradient-phrase')) fail('home headlines must not use gradient text')
 if (!indexHtml.includes('Write the studio')) fail('built home must close on studio contact, not a SaaS funnel')
 if (!indexHtml.includes('contact@agentic-systems-studio.com')) {
   fail('built home must expose contact@agentic-systems-studio.com')

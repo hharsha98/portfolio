@@ -1,108 +1,172 @@
 ---
 import Base from '../layouts/Base.astro'
-import SystemIndex from '../components/SystemIndex.astro'
-import Trace from '../components/Trace.astro'
+import HeroOrbital from '../components/HeroOrbital.astro'
+import Icon from '../components/Icon.astro'
+import IconTile from '../components/IconTile.astro'
+import ProductDeepDive from '../components/ProductDeepDive.astro'
+import ProductTile from '../components/ProductTile.astro'
+import RetrievalVignette from '../components/RetrievalVignette.astro'
+import CareerVignette from '../components/CareerVignette.astro'
 import CloseBand from '../components/CloseBand.astro'
-import { requireProduct, productStatus, type ProductStatus } from '../data/products'
+import { products, requireProduct, catalogStats, productStatus, type ProductStatus } from '../data/products'
 
+const stats = catalogStats()
 const fleet = requireProduct('agentfleet')
-const fleetDemo = fleet.links.find((link) => link.kind === 'live')
-const fleetMore = fleet.links.filter((link) => link !== fleetDemo)
 
-const contract: { status: ProductStatus; copy: string }[] = [
-  { status: 'live', copy: 'Open it in a browser now. The demo is public and running on a host the studio has checked.' },
-  { status: 'download', copy: 'It runs on your machine. Clone the repository or download a release, then start it locally.' },
-  { status: 'gallery', copy: 'Screens or a static walkthrough. Something to look at, nothing to run yet.' },
-  { status: 'building', copy: 'The source is on GitHub. There is no public link until a host is up and verified.' },
+const deepDives = [
+  { product: fleet, label: 'agentfleet.169.58.185.43.sslip.io' },
+  { product: requireProduct('vibespace'), label: 'Vibespace · desktop app' },
+  { product: requireProduct('agent-os'), label: 'Agent OS · 127.0.0.1:8090' },
+  { product: requireProduct('retrievallab'), label: 'retrievallab.pages.dev' },
 ]
+
+const tiles = ['careeragent', 'agentgrid', 'revenue-ops', 'agentops-studio'].map(requireProduct)
+
+const census: { kind: ProductStatus; note: string }[] = [
+  { kind: 'live', note: 'public demos you can open' },
+  { kind: 'download', note: 'run from a clone or a release' },
+  { kind: 'building', note: 'source on GitHub, no public link yet' },
+  { kind: 'gallery', note: 'nothing is shown that cannot run' },
+]
+
+const flow: { kind: ProductStatus; icon: 'globe' | 'download' | 'git-branch'; hue: 'green' | 'blue' | 'amber'; copy: string }[] = [
+  { kind: 'live', icon: 'globe', hue: 'green', copy: 'Open the public demo in your browser. It runs on a host the studio has checked.' },
+  { kind: 'download', icon: 'download', hue: 'blue', copy: 'Clone the repository or download a release, then run it on your own machine.' },
+  { kind: 'building', icon: 'git-branch', hue: 'amber', copy: 'Read and run the source on GitHub. A public link appears once a host is verified.' },
+]
+
+const stack = ['Python', 'FastAPI', 'LangGraph', 'Next.js', 'React', 'TypeScript', 'Postgres + pgvector', 'MCP', 'Tauri', 'Docker', 'Cloudflare Workers']
 ---
 
 <Base home>
-  <section class="hero" aria-labelledby="hero-heading">
-    <h1 id="hero-heading" class="hero-title">
-      <span class="line" style="--l:0"><span>Agent systems you can</span></span>
-      <span class="line" style="--l:1"><span>open, run, or clone.</span></span>
-    </h1>
-    <div class="hero-sub">
-      <p class="hero-lede">
-        Agentic Systems Studio builds multi-agent operations tools, agent environments, and evaluated retrieval.
-        Every product below carries its real state: a public demo you can open, a download you run yourself, or work still in progress.
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="/products">Open the catalog</a>
-        <a class="btn btn-ghost" href="/demos">Demos and downloads</a>
-      </div>
-    </div>
-
-    <SystemIndex />
-  </section>
-
-  <section class="flagship" aria-labelledby="flagship-heading">
-    {fleet.visual && (
-      <figure class="flagship-shot">
-        <span class="crop" aria-hidden="true"></span>
-        <img
-          src={fleet.visual.src}
-          alt={fleet.visual.alt}
-          width="1200"
-          height="1168"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-    )}
-    <div class="flagship-copy">
-      <h2 id="flagship-heading" class="section-title">Agent Fleet</h2>
-      <p class="flagship-lede">
-        A self-hostable platform for a fleet of tool-using agents. Chat with them, or hand the orchestrator a goal
-        and watch it split into a task graph with human approval gates.
-      </p>
-      <dl class="spec">
-        <div>
-          <dt>Status</dt>
-          <dd>Live. The public demo runs on the studio's Contabo server.</dd>
+  <section class="hero" aria-labelledby="hero-heading" data-motion>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="hero-pills">
+          <span class="pill">OPEN SOURCE · ON GITHUB</span>
+          <span class="pill"><span class="pill-dot"></span>{stats.live} live demos · {products.length} products</span>
         </div>
-        <div>
-          <dt>Inside</dt>
-          <dd>Orchestrator, document RAG with citations, MCP in both directions, evals and cost budgets.</dd>
-        </div>
-        <div>
-          <dt>Stack</dt>
-          <dd>{fleet.stack.join(', ')}</dd>
-        </div>
-      </dl>
-      <div class="flagship-actions">
-        {fleetDemo && (
-          <a class="btn btn-primary" href={fleetDemo.href} rel="noreferrer" target="_blank">
-            {fleetDemo.label} <span aria-hidden="true">↗</span>
+        <h1 id="hero-heading" class="hero-title">
+          <span class="hero-line">Agent systems you can</span>
+          <span class="hero-line hero-gradient">open, run, or clone.</span>
+        </h1>
+        <p class="hero-lede">
+          One studio, {products.length} products: multi-agent operations, agent environments, and evaluated retrieval.
+          Every one shows its real status, and the source is on GitHub.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="#products">
+            Explore the products
+            <Icon name="arrow-right" class="btn-icon" />
           </a>
-        )}
-        {fleetMore.map((link) => (
-          <a class="btn btn-ghost" href={link.href} rel="noreferrer" target="_blank">
-            {link.label} <span aria-hidden="true">↗</span>
-          </a>
-        ))}
+          <a class="text-link" href="/demos">See the live demos</a>
+        </div>
       </div>
+      <HeroOrbital />
     </div>
   </section>
 
-  <section class="contract" aria-labelledby="contract-heading">
-    <div class="contract-head">
-      <h2 id="contract-heading" class="section-title">The status is the contract.</h2>
-      <p>
-        A product gets a Live link only when its demo is public and verified. Everything else says what you can
-        actually do with it today, and the trace on the index says the same thing.
-      </p>
-    </div>
-    <dl class="contract-list">
-      {contract.map((item) => (
-        <div class="contract-item">
-          <Trace status={item.status} seed={`contract-${item.status}`} class="contract-trace" />
-          <dt>{productStatus[item.status]}</dt>
-          <dd>{item.copy}</dd>
+  <section class="stats-strip" aria-label="Catalog status" data-reveal>
+    <dl class="stats-inner">
+      <div class="stat-cell is-total">
+        <dt>products in the studio</dt>
+        <dd class="stat-value">{products.length}</dd>
+      </div>
+      {census.map((item) => (
+        <div class:list={['stat-cell', `is-${item.kind}`]}>
+          <dt><span class="stat-status" data-status={item.kind}>{productStatus[item.kind]}</span> {item.note}</dt>
+          <dd class="stat-value">{stats[item.kind]}</dd>
         </div>
       ))}
     </dl>
+  </section>
+
+  <section id="products" class="section-wrap" aria-labelledby="products-heading" data-motion>
+    <header class="section-header" data-reveal>
+      <span class="eyebrow hue-accent"><Icon name="sparkle" class="eyebrow-icon" />The products</span>
+      <h2 id="products-heading" class="section-title">{products.length} systems, each one you can actually use</h2>
+      <p class="section-tagline">
+        Live demos, desktop downloads, and local tools, with real screenshots from each product's own repository.
+      </p>
+    </header>
+
+    <div class="deep-dives">
+      {deepDives.map(({ product, label }, i) => (
+        <ProductDeepDive product={product} frameLabel={label} flip={i % 2 === 1}>
+          {product.slug === 'agentfleet' && fleet.visual && (
+            <img
+              slot="behind"
+              class="deep-behind"
+              src={fleet.visual.src}
+              alt=""
+              width={fleet.visual.width}
+              height={fleet.visual.height}
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+          {product.slug === 'retrievallab' && <RetrievalVignette />}
+        </ProductDeepDive>
+      ))}
+    </div>
+
+    <header class="section-header is-sub" data-reveal>
+      <span class="eyebrow hue-violet"><Icon name="layout-grid" class="eyebrow-icon" />More from the studio</span>
+      <h2 class="section-title is-small">Agents for the job hunt, the terminal, and the ops floor</h2>
+    </header>
+    <div class="tile-grid">
+      {tiles.map((product) => (
+        <ProductTile product={product}>
+          {product.slug === 'careeragent' && <CareerVignette />}
+        </ProductTile>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-wrap" aria-labelledby="flow-heading" data-motion>
+    <header class="section-header" data-reveal>
+      <span class="eyebrow hue-green"><Icon name="list-checks" class="eyebrow-icon" />How to use a product</span>
+      <h2 id="flow-heading" class="section-title">Every product says what you can do with it</h2>
+      <p class="section-tagline">
+        A Live badge means a public demo is running. Everything else tells you how to run it yourself.
+      </p>
+    </header>
+    <div class="flow" data-reveal>
+      <svg class="flow-wire" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 1H100" pathLength="100"></path>
+      </svg>
+      {flow.map((step, i) => {
+        const members = products.filter((p) => p.status === step.kind)
+        return (
+          <article class:list={['flow-step', `hue-${step.hue}`]} style={`--n:${i}`}>
+            <div class="flow-head">
+              <IconTile icon={step.icon} hue={step.hue} lit />
+              <span class="flow-index">0{i + 1}</span>
+            </div>
+            <h3>{productStatus[step.kind]}</h3>
+            <p>{step.copy}</p>
+            <ul class="flow-members">
+              {members.map((p) => (
+                <li><a href={`/products/${p.slug}`}>{p.name}</a></li>
+              ))}
+            </ul>
+          </article>
+        )
+      })}
+    </div>
+    <p class="flow-note" data-reveal>
+      Gallery / early: none right now. Agent OS also keeps a
+      <a href="https://hharsha98.github.io/agent-os/" rel="noreferrer" target="_blank">static gallery</a>
+      next to its local download.
+    </p>
+  </section>
+
+  <section class="stack-row" aria-label="Stack" data-reveal>
+    <span class="stack-label">STACK</span>
+    <ul>
+      {stack.map((item) => <li>{item}</li>)}
+    </ul>
   </section>
 
   <CloseBand />

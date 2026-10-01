@@ -1,0 +1,138 @@
+---
+import IconTile from './IconTile.astro'
+import { products, statusLabel, type Product } from '../data/products'
+
+/**
+ * The studio's version of Agent Fleet's orbital hero: the Relay mark at the
+ * core and every product riding one of three spinning rings. Ring nodes
+ * counter-rotate at their ring's rate so tiles and labels stay upright.
+ * Pointer tilt follows Fleet's damped rAF pattern and is skipped for touch
+ * pointers and reduced motion.
+ */
+type Ring = { key: string; size: number; seconds: number; reverse: boolean; nodes: [string, number][] }
+
+// Angles are degrees clockwise from 12 o'clock.
+const rings: Ring[] = [
+  { key: 'outer', size: 100, seconds: 110, reverse: false, nodes: [['agentfleet', 20], ['vibespace', 140], ['retrievallab', 260]] },
+  { key: 'middle', size: 72, seconds: 80, reverse: true, nodes: [['agent-os', 70], ['careeragent', 190], ['agentgrid', 310]] },
+  { key: 'inner', size: 44, seconds: 56, reverse: false, nodes: [['revenue-ops', 110], ['agentops-studio', 290]] },
+]
+
+const bySlug = Object.fromEntries(products.map((p) => [p.slug, p])) as Record<string, Product>
+for (const ring of rings) {
+  for (const [slug] of ring.nodes) {
+    if (!bySlug[slug]) throw new Error(`orbital is missing product ${slug}`)
+  }
+}
+if (rings.reduce((n, ring) => n + ring.nodes.length, 0) !== products.length) {
+  throw new Error('orbital must carry every catalog product')
+}
+
+function point(angle: number) {
+  const rad = (angle * Math.PI) / 180
+  return { left: 50 + 50 * Math.sin(rad), top: 50 - 50 * Math.cos(rad) }
+}
+
+function shortName(product: Product) {
+  if (product.slug === 'revenue-ops') return 'Revenue Ops'
+  return product.name
+}
+
+// Fixed, not random, so every build renders the same sky.
+const stars = [
+  [8, 12, 1.5, 0.3], [15, 42, 1, 0.2], [22, 78, 2, 0.35], [30, 5, 1, 0.18], [35, 60, 1.5, 0.28],
+  [40, 88, 1, 0.22], [45, 25, 2, 0.4], [50, 50, 1, 0.15], [55, 15, 1.5, 0.3], [60, 72, 1, 0.2],
+  [65, 35, 2, 0.38], [70, 92, 1, 0.18], [75, 8, 1.5, 0.32], [78, 55, 1, 0.22], [82, 28, 2, 0.36],
+  [85, 80, 1, 0.2], [88, 45, 1.5, 0.28], [92, 18, 1, 0.16], [95, 65, 2, 0.34], [10, 90, 1, 0.2],
+  [18, 25, 1.5, 0.26], [28, 48, 1, 0.18], [58, 5, 1.5, 0.3], [90, 95, 1, 0.2],
+] as const
+---
+
+<div class="orbital" data-orbital>
+  <div class="orbital-scene" data-orbital-scene>
+    <div class="orbital-stars" aria-hidden="true">
+      {stars.map(([top, left, size, opacity], i) => (
+        <span
+          class:list={['orbital-star', i % 4 === 2 && 'is-pulsing']}
+          style={`top:${top}%;left:${left}%;width:${size}px;height:${size}px;opacity:${opacity}`}
+        ></span>
+      ))}
+    </div>
+
+    {rings.map((ring) => (
+      <div
+        class:list={['orbital-ring', `ring-${ring.key}`, ring.reverse && 'is-reverse']}
+        style={`--size:${ring.size}%;--spin:${ring.seconds}s`}
+      >
+        {ring.nodes.map(([slug, angle]) => {
+          const product = bySlug[slug]
+          const at = point(angle)
+          return (
+            <div class="orbital-node" style={`left:${at.left.toFixed(2)}%;top:${at.top.toFixed(2)}%`}>
+              <div class="orbital-upright">
+                <a
+                  class="orbital-link"
+                  href={`/products/${product.slug}`}
+                  aria-label={`${product.index} ${product.name} — ${statusLabel(product.status)}`}
+                  data-status={product.status}
+                >
+                  <IconTile icon={product.icon} hue={product.hue} size="md" lit />
+                  <span class="orbital-dot" aria-hidden="true"></span>
+                  <span class="orbital-label" aria-hidden="true">{shortName(product)}</span>
+                </a>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    ))}
+
+    <a class="orbital-core" href="/products" aria-label="Open the product catalog">
+      <span class="orbital-core-glow" aria-hidden="true"></span>
+      <span class="orbital-ping" aria-hidden="true"></span>
+      <span class="orbital-ping is-late" aria-hidden="true"></span>
+      <span class="orbital-core-face">
+        <svg class="studio-mark" viewBox="0 0 32 32" width="34" height="34" aria-hidden="true" focusable="false">
+          <circle class="mark-pad" cx="24.6" cy="7" r="2.5"></circle>
+          <path class="mark-trace" pathLength="1" d="M22.1 7H11L8 10V13L11 16H21L24 19V22L21 25H12"></path>
+          <rect class="mark-lamp" x="5.5" y="21.5" width="7" height="7" rx="0.8"></rect>
+        </svg>
+      </span>
+    </a>
+  </div>
+</div>
+
+<script>
+  // Damped pointer tilt, as in Agent Fleet's hero: fine pointers only, never under reduced motion.
+  const root = document.querySelector<HTMLElement>('[data-orbital]')
+  const scene = root?.querySelector<HTMLElement>('[data-orbital-scene]')
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const coarse = window.matchMedia('(pointer: coarse)').matches
+  if (root && scene && !reduce && !coarse) {
+    const maxTilt = 8
+    const target = { x: 0, y: 0 }
+    const current = { x: 0, y: 0 }
+    let frame = 0
+    const tick = () => {
+      current.x += (target.x - current.x) * 0.08
+      current.y += (target.y - current.y) * 0.08
+      scene.style.transform = `rotateX(${current.x.toFixed(2)}deg) rotateY(${current.y.toFixed(2)}deg)`
+      const settled = Math.abs(target.x - current.x) < 0.01 && Math.abs(target.y - current.y) < 0.01
+      frame = settled ? 0 : requestAnimationFrame(tick)
+    }
+    const wake = () => {
+      if (!frame) frame = requestAnimationFrame(tick)
+    }
+    root.addEventListener('pointermove', (event) => {
+      const rect = root.getBoundingClientRect()
+      target.x = (0.5 - (event.clientY - rect.top) / rect.height) * 2 * maxTilt
+      target.y = ((event.clientX - rect.left) / rect.width - 0.5) * 2 * maxTilt
+      wake()
+    })
+    root.addEventListener('pointerleave', () => {
+      target.x = 0
+      target.y = 0
+      wake()
+    })
+  }
+</script>

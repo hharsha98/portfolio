@@ -1,4 +1,5 @@
 import { futureHosts } from './site'
+import type { Hue, IconName } from '../lib/icons'
 
 function hostFor(productName: string) {
   return futureHosts.find((item) => item.product === productName)?.host
@@ -38,15 +39,23 @@ export type Product = {
   stack: string[]
   status: ProductStatus
   featured: boolean
-  /** Muted index tick colour for catalog cards and product pages. */
+  /** Glow hue and icon for the product's tile (Agent Fleet's icon-tile system). */
+  hue: Hue
+  icon: IconName
+  /** The hue's hex, for inline accents on catalog cards and product pages. */
   accent: string
   github?: string
   links: ProductLink[]
   futureHost?: string
   featuresHeading?: string
   category: 'ops' | 'environment' | 'retrieval'
-  visual?: { src: string; alt: string }
+  /** Artwork for catalog cards and the product page. */
+  visual?: Shot
+  /** A real screenshot from the product's own repository, for the home showcase. */
+  shot?: Shot
 }
+
+export type Shot = { src: string; alt: string; width: number; height: number }
 
 export const legacySlugs = {
   vibedeck: 'vibespace',
@@ -75,7 +84,10 @@ export const products: Product[] = [
       'Eval Center, cost budgets, guardrails, versioned rollback',
     ],
     stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'pgvector', 'MCP', 'Docker'],
-    accent: '#f5b041',
+    hue: 'accent',
+    icon: 'workflow',
+    accent: '#5e6ad2',
+    shot: { src: '/media/agentfleet-missions.webp', alt: 'Agent Fleet missions board: a goal split into tasks, with one task waiting for approval', width: 1600, height: 1000 },
     status: 'live',
     featured: true,
     github: 'https://github.com/hharsha98/agentfleet',
@@ -83,6 +95,8 @@ export const products: Product[] = [
     visual: {
       src: '/media/agentfleet-landing.png',
       alt: 'Owned Agent Fleet orbital diagram on a dark grid — product visual from the public repo',
+      width: 1200,
+      height: 1168,
     },
     links: [
       {
@@ -107,7 +121,7 @@ export const products: Product[] = [
     tagline:
       'Local-first operator dashboard for Cursor, Claude, Codex, and Hermes — dry-run by default, sandboxed workspace, gated machine control.',
     description:
-      'Download / local. Clone and run the operator dashboard on 127.0.0.1:8090. Optional private self-host for the owner — not a hosted multi-tenant SaaS, and no public Contabo demo.',
+      'Clone and run the operator dashboard on 127.0.0.1:8090. Optional private self-host for the owner — not a hosted multi-tenant SaaS, and no public Contabo demo.',
     body: [
       'Agent OS is a local-first operator dashboard for one machine. Hermes and OpenClaw seats, skills, memory on disk, the scheduler, and optional shell or exec only make sense when the process and the files sit together. It reports real CLI presence for Cursor Agent, Claude Code, Codex, and Hermes instead of painting fake connected cards.',
       'Safety is a product decision: unified chat is labeled dry-run, the workspace sandbox is jailed to a dedicated folder, and machine control stays gated. Execution and installs stay off unless the owner flips explicit flags.',
@@ -121,7 +135,10 @@ export const products: Product[] = [
       'Sandboxed workspace; machine control stays off until enabled',
     ],
     stack: ['React', 'TypeScript', 'Vite', 'Express', 'Node'],
-    accent: '#d9a76a',
+    hue: 'blue',
+    icon: 'server',
+    accent: '#5b8def',
+    shot: { src: '/media/agent-os.webp', alt: 'Agent OS home screen on one machine: five local agents ready and two background services running', width: 1440, height: 900 },
     status: 'download',
     featured: true,
     github: 'https://github.com/hharsha98/agent-os',
@@ -160,7 +177,10 @@ export const products: Product[] = [
       'Tauri desktop shell · Node 22+ required',
     ],
     stack: ['TypeScript', 'React', 'Tauri', 'Fastify', 'node-pty', 'MCP'],
-    accent: '#8cc7b8',
+    hue: 'cyan',
+    icon: 'terminal',
+    accent: '#4dc9c9',
+    shot: { src: '/media/vibespace.webp', alt: 'Vibespace desktop app: a real shell running git log beside a browser pane, with the file tree on the left', width: 1600, height: 1040 },
     status: 'download',
     featured: true,
     github: 'https://github.com/hharsha98/Vibespace',
@@ -198,7 +218,9 @@ export const products: Product[] = [
       'Retrieval eval: recall@k and MRR',
     ],
     stack: ['FastAPI', 'React', 'pgvector', 'FlashRank', 'BM25', 'HyDE', 'Supabase'],
-    accent: '#b9cf8a',
+    hue: 'green',
+    icon: 'search',
+    accent: '#4dbb87',
     status: 'live',
     featured: true,
     github: 'https://github.com/hharsha98/retrievallab',
@@ -231,7 +253,9 @@ export const products: Product[] = [
       'LLM-as-judge evals, including a trap question',
     ],
     stack: ['FastAPI', 'React', 'pgvector', 'SSE', 'Docker', 'Kubernetes', 'Supabase'],
-    accent: '#e39a6f',
+    hue: 'amber',
+    icon: 'briefcase',
+    accent: '#e2a94d',
     status: 'live',
     featured: false,
     github: 'https://github.com/hharsha98/careeragent',
@@ -249,7 +273,7 @@ export const products: Product[] = [
     tagline:
       'BridgeSpace-inspired multi-agent terminal grid (Claude Code, cursor-agent, Codex, Gemini CLI, shell). Local ADE — marketing page only, no hosted demo.',
     description:
-      'Download / local. Clone and run on 127.0.0.1. The PTY API stays on loopback; a private remote uses an SSH tunnel.',
+      'Clone and run on 127.0.0.1. The PTY API stays on loopback; a private remote uses an SSH tunnel.',
     body: [
       'Agent Grid is a BridgeSpace-inspired ADE: mission control for several AI coding agents in one browser window. It is intentionally separate from Vibespace. The two repos are not merged.',
       'A local Fastify server spawns real PTY sessions. The UI is React + xterm.js. You can launch Claude Code, cursor-agent, Codex, Gemini CLI, or a shell, in presets from 1 to 16 panes. Layout, cwd, and agent preference persist; workspace templates live on disk.',
@@ -264,7 +288,10 @@ export const products: Product[] = [
       'Optional Tauri desktop wrapper',
     ],
     stack: ['TypeScript', 'React', 'Fastify', 'xterm.js', 'Monaco', 'Tauri', 'MCP'],
-    accent: '#9fb8d6',
+    hue: 'violet',
+    icon: 'layout-grid',
+    accent: '#8b7ff0',
+    shot: { src: '/media/agentgrid-board.webp', alt: 'Agent Grid running locally: the kanban board with two task cards ready to dispatch into terminal panes', width: 1440, height: 900 },
     status: 'download',
     featured: false,
     github: 'https://github.com/hharsha98/agentgrid',
@@ -305,7 +332,10 @@ export const products: Product[] = [
       'Docker, Kubernetes, Terraform, and CI skeletons',
     ],
     stack: ['FastAPI', 'React', 'Postgres', 'Redis', 'Docker', 'Kubernetes', 'Terraform'],
-    accent: '#d6c08f',
+    hue: 'red',
+    icon: 'gauge',
+    accent: '#e2685e',
+    shot: { src: '/media/revenue-ops-tower.webp', alt: 'Revenue Ops Control Tower running locally in sandbox mode: open alerts, evidence chunks, and the open queue', width: 1405, height: 878 },
     status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
@@ -340,7 +370,10 @@ export const products: Product[] = [
       'Learning log for incidents, fixes, and verification',
     ],
     stack: ['TypeScript', 'Python', 'FastAPI', 'Docker', 'Kubernetes', 'Terraform', 'MCP'],
-    accent: '#a9c2bd',
+    hue: 'blue',
+    icon: 'activity',
+    accent: '#5b8def',
+    shot: { src: '/media/agentops-traces.webp', alt: 'AgentOps Studio running locally: the traces page listing run spans for an orchestrator run', width: 677, height: 623 },
     status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/agentops-studio',

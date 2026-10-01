@@ -1,5 +1,6 @@
 ---
 import Logo from './Logo.astro'
+import Icon from './Icon.astro'
 import { site, nav } from '../data/site'
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/'
@@ -21,29 +22,30 @@ const contact = nav.find((item) => item.href === '/contact')
         </a>
       ))}
       <a class="nav-link" href={site.profile} rel="noreferrer" target="_blank">Founder</a>
-      <a class="nav-link" href={site.github} rel="noreferrer" target="_blank">
-        GitHub <span aria-hidden="true">↗</span>
-      </a>
-      {contact && (
-        <a class="nav-cta" href={contact.href} aria-current={isCurrent(contact.href) ? 'page' : undefined}>
-          {contact.label}
-        </a>
-      )}
+      <a class="nav-link" href={site.github} rel="noreferrer" target="_blank">GitHub</a>
     </nav>
 
-    <details class="nav-menu">
-      <summary aria-label="Menu">
-        <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
-          <path d="M3 7h14M3 13h14"></path>
-        </svg>
-      </summary>
-      <div class="nav-panel">
-        {nav.map((item) => (
-          <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
-        ))}
-        <a href={site.profile} rel="noreferrer" target="_blank">Founder</a>
-        <a href={site.github} rel="noreferrer" target="_blank">GitHub <span aria-hidden="true">↗</span></a>
-      </div>
-    </details>
+    <div class="header-actions">
+      {contact && (
+        <a class="btn btn-primary btn-sm nav-contact" href={contact.href} aria-current={isCurrent(contact.href) ? 'page' : undefined}>
+          {contact.label}
+          <Icon name="arrow-right" class="btn-icon" />
+        </a>
+      )}
+      <details class="nav-menu">
+        <summary aria-label="Menu">
+          <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
+            <path d="M3 7h14M3 13h14"></path>
+          </svg>
+        </summary>
+        <div class="nav-panel">
+          {nav.map((item) => (
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+          ))}
+          <a href={site.profile} rel="noreferrer" target="_blank">Founder</a>
+          <a href={site.github} rel="noreferrer" target="_blank">GitHub</a>
+        </div>
+      </details>
+    </div>
   </div>
 </header>
