@@ -1,133 +1,108 @@
 ---
 import Base from '../layouts/Base.astro'
-import StudioOrbit from '../components/StudioOrbit.astro'
-import ProductCard from '../components/ProductCard.astro'
-import ComingHosts from '../components/ComingHosts.astro'
-import StudioWorkflow from '../components/StudioWorkflow.astro'
-import TechPills from '../components/TechPills.astro'
+import SystemIndex from '../components/SystemIndex.astro'
+import Trace from '../components/Trace.astro'
 import CloseBand from '../components/CloseBand.astro'
-import { site } from '../data/site'
-import { products, featuredProducts, catalogProducts, catalogStats, featuredBentoClass } from '../data/products'
+import { requireProduct, productStatus, type ProductStatus } from '../data/products'
 
-const featured = featuredProducts()
-const rest = catalogProducts()
-const stats = catalogStats()
+const fleet = requireProduct('agentfleet')
+const fleetDemo = fleet.links.find((link) => link.kind === 'live')
+const fleetMore = fleet.links.filter((link) => link !== fleetDemo)
+
+const contract: { status: ProductStatus; copy: string }[] = [
+  { status: 'live', copy: 'Open it in a browser now. The demo is public and running on a host the studio has checked.' },
+  { status: 'download', copy: 'It runs on your machine. Clone the repository or download a release, then start it locally.' },
+  { status: 'gallery', copy: 'Screens or a static walkthrough. Something to look at, nothing to run yet.' },
+  { status: 'building', copy: 'The source is on GitHub. There is no public link until a host is up and verified.' },
+]
 ---
 
 <Base home>
-  <section class="hero">
-    <div class="hero-atmosphere" aria-hidden="true">
-      <div class="hero-glow"></div>
-      <div class="hero-glow hero-glow-warm"></div>
-      <div class="hero-grain"></div>
-      <div class="hero-vignette"></div>
-    </div>
-    <p class="hero-spine" aria-hidden="true"><span>A·S · Nuremberg · {products.length} systems · 2026</span></p>
-    <div class="hero-inner relative mx-auto grid max-w-[88rem] items-center gap-8 px-4 pl-4 xl:pl-14 lg:grid-cols-12 lg:gap-8">
-      <div class="hero-copy lg:col-span-5">
-        <span class="hero-watermark" aria-hidden="true">{products.length}</span>
-        <div class="flex flex-wrap gap-2">
-          <span class="pill"><span class="pill-dot"></span> {stats.live} live</span>
-          <span class="pill">Open source</span>
-          <span class="pill">Self-hostable</span>
-        </div>
-        <h1 class="title-xl mt-7">
-          A constellation
-          <span class="gradient-phrase block">of products you can run.</span>
-        </h1>
-        <p class="lede mt-5">
-          {site.positioning} Open a live lab, download a desktop app, or follow a repo that is still being built — no fake Live buttons on scaffolds.
-        </p>
-        <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
-          <a class="btn btn-light" href="/products">Enter the catalog →</a>
-          <a class="btn-text" href="/demos">See demos</a>
-          <a class="btn-text" href={site.github} rel="noreferrer" target="_blank">GitHub ↗</a>
-        </div>
-      </div>
-      <div class="lg:col-span-7">
-        <StudioOrbit />
-      </div>
-    </div>
-
-    <div class="stats-bar">
-      <dl class="mx-auto grid max-w-[88rem] grid-cols-2 sm:grid-cols-4">
-        {[
-          [String(stats.live), 'Live', 'live'],
-          [String(stats.download), 'Download / local', 'download'],
-          [String(stats.gallery), 'Gallery / early', 'gallery'],
-          [String(stats.building), 'Building', 'building'],
-        ].map(([value, label, kind]) => (
-          <div class:list={['stat-cell', `is-${kind}`]}>
-            <dt class="font-mono text-[11px] uppercase tracking-[0.18em]">{label}</dt>
-            <dd class="display stat-value">{value}</dd>
-          </div>
-        ))}
-      </dl>
-    </div>
-  </section>
-
-  <section class="section pt-16 sm:pt-20">
-    <p class="kicker">Core lines</p>
-    <h2 class="display mt-3 max-w-3xl text-4xl leading-tight text-paper sm:text-6xl">
-      Three lines. A whole catalog in orbit.
-    </h2>
-    <div class="mt-12 grid gap-4 lg:grid-cols-3">
-      {[
-        ['01', 'Multi-agent ops', 'Agent Fleet is a live Contabo sslip demo. AgentOps Studio and Revenue Ops are still being built. Self-host from GitHub.'],
-        ['02', 'Agent environments', 'Vibespace is a desktop download. Agent OS is Download / local, like Agent Grid: clone and run the operator dashboard on 127.0.0.1:8090. Optional private self-host for the owner — not a hosted multi-tenant SaaS, and no public Contabo demo. Agent Grid stays on loopback, or an SSH tunnel, with no public URL.'],
-        ['03', 'Evaluated retrieval', 'RetrievalLab is a live lab you can open. Cite a source, or refuse.'],
-      ].map(([index, label, copy]) => (
-        <div class="panel core-panel px-5 py-7 sm:px-7 sm:py-8">
-          <p class="kicker">{index}</p>
-          <h3 class="display mt-4 text-2xl text-paper">{label}</h3>
-          <p class="mt-3 text-sm leading-relaxed text-mute">{copy}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section id="products" class="section pt-0 sm:pt-0">
-    <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <p class="kicker">Shipping over time</p>
-        <h2 class="display mt-2 text-4xl text-paper sm:text-6xl">Product constellation</h2>
-        <p class="mt-3 max-w-xl text-sm text-mute">
-          Status on every card: Live, Download / local, Gallery / early, or Building / coming soon. Working links only — no invented eval numbers.
-        </p>
-      </div>
-      <a class="btn-text" href="/products">All products →</a>
-    </div>
-
-    <div class="bento">
-      {featured.map((p) => (
-        <ProductCard product={p} featured class={featuredBentoClass(p)} />
-      ))}
-    </div>
-
-    <div class="mt-24 mb-8">
-      <p class="kicker">Catalog</p>
-      <h2 class="display mt-2 text-4xl text-paper sm:text-6xl">More systems</h2>
-    </div>
-    <div class="constellation-grid">
-      {rest.map((p) => <ProductCard product={p} compact />)}
-    </div>
-  </section>
-
-  <StudioWorkflow />
-
-  <TechPills />
-
-  <section class="section">
-    <ComingHosts />
-  </section>
-
-  <section class="border-t border-white/8">
-    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-10 sm:px-6">
-      <p class="text-sm text-mute">
-        Founded by {site.shortName}. Personal site is separate from this studio.
+  <section class="hero" aria-labelledby="hero-heading">
+    <h1 id="hero-heading" class="hero-title">
+      <span class="line" style="--l:0"><span>Agent systems you can</span></span>
+      <span class="line" style="--l:1"><span>open, run, or clone.</span></span>
+    </h1>
+    <div class="hero-sub">
+      <p class="hero-lede">
+        Agentic Systems Studio builds multi-agent operations tools, agent environments, and evaluated retrieval.
+        Every product below carries its real state: a public demo you can open, a download you run yourself, or work still in progress.
       </p>
-      <a class="btn btn-ghost" href={site.profile} rel="noreferrer" target="_blank">About Harsha ↗</a>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/products">Open the catalog</a>
+        <a class="btn btn-ghost" href="/demos">Demos and downloads</a>
+      </div>
     </div>
+
+    <SystemIndex />
+  </section>
+
+  <section class="flagship" aria-labelledby="flagship-heading">
+    {fleet.visual && (
+      <figure class="flagship-shot">
+        <span class="crop" aria-hidden="true"></span>
+        <img
+          src={fleet.visual.src}
+          alt={fleet.visual.alt}
+          width="1200"
+          height="1168"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    )}
+    <div class="flagship-copy">
+      <h2 id="flagship-heading" class="section-title">Agent Fleet</h2>
+      <p class="flagship-lede">
+        A self-hostable platform for a fleet of tool-using agents. Chat with them, or hand the orchestrator a goal
+        and watch it split into a task graph with human approval gates.
+      </p>
+      <dl class="spec">
+        <div>
+          <dt>Status</dt>
+          <dd>Live. The public demo runs on the studio's Contabo server.</dd>
+        </div>
+        <div>
+          <dt>Inside</dt>
+          <dd>Orchestrator, document RAG with citations, MCP in both directions, evals and cost budgets.</dd>
+        </div>
+        <div>
+          <dt>Stack</dt>
+          <dd>{fleet.stack.join(', ')}</dd>
+        </div>
+      </dl>
+      <div class="flagship-actions">
+        {fleetDemo && (
+          <a class="btn btn-primary" href={fleetDemo.href} rel="noreferrer" target="_blank">
+            {fleetDemo.label} <span aria-hidden="true">↗</span>
+          </a>
+        )}
+        {fleetMore.map((link) => (
+          <a class="btn btn-ghost" href={link.href} rel="noreferrer" target="_blank">
+            {link.label} <span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="contract" aria-labelledby="contract-heading">
+    <div class="contract-head">
+      <h2 id="contract-heading" class="section-title">The status is the contract.</h2>
+      <p>
+        A product gets a Live link only when its demo is public and verified. Everything else says what you can
+        actually do with it today, and the trace on the index says the same thing.
+      </p>
+    </div>
+    <dl class="contract-list">
+      {contract.map((item) => (
+        <div class="contract-item">
+          <Trace status={item.status} seed={`contract-${item.status}`} class="contract-trace" />
+          <dt>{productStatus[item.status]}</dt>
+          <dd>{item.copy}</dd>
+        </div>
+      ))}
+    </dl>
   </section>
 
   <CloseBand />

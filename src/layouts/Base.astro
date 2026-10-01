@@ -42,7 +42,7 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#07080c" />
+    <meta name="theme-color" content="#0e2e33" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={site.name} />
@@ -57,6 +57,13 @@ const jsonLd = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline>
+      // Play the power-on sequence once per visit; later pages in the session open settled.
+      try {
+        if (sessionStorage.getItem('studio-booted')) document.documentElement.dataset.booted = ''
+        else sessionStorage.setItem('studio-booted', '1')
+      } catch {}
+    </script>
   </head>
   <body class:list={[home && 'is-home']}>
     <a class="skip" href="#content">Skip to content</a>

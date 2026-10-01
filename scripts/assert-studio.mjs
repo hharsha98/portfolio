@@ -107,6 +107,7 @@ if (!existsSync(join(root, 'src', 'pages', 'contact.astro'))) fail('contact page
 if (!existsSync(join(root, 'migrations', '0001_contact_submissions.sql'))) fail('D1 migration missing')
 
 const products = read(join(root, 'src', 'data', 'products.ts'))
+const catalogSlugs = [...products.matchAll(/slug: '([a-z0-9-]+)'/g)].map((m) => m[1])
 for (const url of [
   'https://github.com/hharsha98/agentfleet',
   'https://agentfleet.169.58.185.43.sslip.io/',
@@ -257,23 +258,22 @@ if (census(indexHtml, 'live') !== '3') fail(`live census must be 3, got ${census
 if (census(indexHtml, 'download') !== '3') fail(`download census must be 3, got ${census(indexHtml, 'download')}`)
 if (census(indexHtml, 'gallery') !== '0') fail(`gallery census must be 0, got ${census(indexHtml, 'gallery')}`)
 if (census(indexHtml, 'building') !== '2') fail(`building census must be 2, got ${census(indexHtml, 'building')}`)
-if (!indexHtml.includes('Studio constellation')) {
-  fail('built home must include the studio constellation graphic')
+if (!indexHtml.includes('data-system-index')) fail('built home must open on the system index')
+const indexRows = (indexHtml.match(/class="index-row"/g) || []).length
+if (indexRows !== catalogSlugs.length) {
+  fail(`system index must list every catalog product (${catalogSlugs.length}), found ${indexRows}`)
 }
-if (!indexHtml.includes('products around one core')) {
-  fail('built home constellation must be the full catalog, not a four-node Fleet clone')
+if (!indexHtml.includes('Trace shape shows status')) {
+  fail('system index legend must explain that the trace shape encodes status, not colour alone')
 }
-if (!indexHtml.includes('Live · square')) {
-  fail('built home constellation must encode honesty in node shape, not clone Fleet tool glyphs')
+for (const shape of ['running', 'stepped', 'dotted']) {
+  if (!indexHtml.includes(`data-trace="${shape}"`)) fail(`system index must draw a ${shape} trace`)
 }
-if (!indexHtml.includes('orbit-plate')) {
-  fail('built home constellation must be a chart plate, not a CSS radar clone')
-}
-if (indexHtml.includes('orbit-spoke')) {
-  fail('built home constellation must not use Fleet-style radial spokes')
-}
-if (!indexHtml.includes('Studio workflow')) fail('built home must include the studio workflow section')
-if (!indexHtml.includes('Tech we actually use')) fail('built home must include tech credibility pills')
+if (!indexHtml.includes('The status is the contract')) fail('built home must explain the status contract')
+if (!indexHtml.includes('studio-mark')) fail('header must carry the Relay studio mark')
+if (!read(join(root, 'public', 'favicon.svg')).includes('studio-mark')) fail('favicon must be the Relay studio mark')
+if (indexHtml.includes('A·S')) fail('the old A·S text logo must stay retired')
+if (indexHtml.includes('gradient-phrase')) fail('home headlines must not use gradient text')
 if (!indexHtml.includes('Write the studio')) fail('built home must close on studio contact, not a SaaS funnel')
 if (!indexHtml.includes('contact@agentic-systems-studio.com')) {
   fail('built home must expose contact@agentic-systems-studio.com')
@@ -450,7 +450,6 @@ for (const file of delistScan) assertDelisted(file, read(file))
 
 // Only catalog products (and legacy redirects) may be built as product pages.
 // Anything removed from the catalog must 404, so no removed slug is listed here.
-const catalogSlugs = [...products.matchAll(/slug: '([a-z0-9-]+)'/g)].map((m) => m[1])
 const legacyBlock = products.match(/legacySlugs = \{([\s\S]*?)\}/)?.[1] ?? ''
 const legacySlugKeys = [...legacyBlock.matchAll(/([a-z0-9-]+):/g)].map((m) => m[1])
 const catalogPages = new Set([...catalogSlugs, ...legacySlugKeys].map((slug) => `${slug}.html`))
