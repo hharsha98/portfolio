@@ -1,0 +1,23 @@
+---
+import type { Hue } from '../lib/icons'
+
+interface Props {
+  hue: Hue
+  /** What the window shows: a host, a port, or "desktop app". */
+  label: string
+  class?: string
+}
+
+const { hue, label, class: className } = Astro.props
+---
+
+<figure class:list={['app-frame', `hue-${hue}`, className]}>
+  <span class="app-frame-glow" aria-hidden="true"></span>
+  <div class="app-frame-chrome" aria-hidden="true">
+    <span class="app-frame-dots"><span></span><span></span><span></span></span>
+    <span class="app-frame-label">{label}</span>
+  </div>
+  <div class="app-frame-body">
+    <slot />
+  </div>
+</figure>

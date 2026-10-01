@@ -1,0 +1,28 @@
+---
+/**
+ * CareerAgent's behaviour from its README, drawn as a short chat: cited
+ * answers, a refusal when the documents cannot support an answer, and
+ * per-request cost logging. Synthetic candidate, no real data.
+ */
+---
+
+<div class="vignette career" aria-hidden="true">
+  <div class="career-tools">
+    <span>search_cv()</span>
+    <span>web_research()</span>
+  </div>
+  <p class="bubble is-user" style="--d:0">Which projects used pgvector?</p>
+  <p class="bubble is-agent" style="--d:1">
+    Two of them, both in the CV.
+    <span class="cite">p.2</span>
+    <span class="cite">p.3</span>
+  </p>
+  <p class="bubble is-user" style="--d:2">What was the team size there?</p>
+  <p class="bubble is-agent is-refusal" style="--d:3">
+    Not in your documents, so no answer.<span class="caret"></span>
+  </p>
+  <div class="career-meter">
+    <span class="meter-dot"></span>
+    tokens and cost logged per request
+  </div>
+</div>

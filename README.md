@@ -27,7 +27,7 @@ Astro static site, Tailwind v4, Cloudflare Workers static assets (`wrangler.json
 
 | Route | Content |
 |---|---|
-| `/` | Product studio home: system index of every product with its status trace, Agent Fleet flagship, the status contract, and studio contact |
+| `/` | Product studio home in the Agent Fleet design system: orbital hero with every product, status census, product showcase with real screenshots from each repo (drawn vignettes for RetrievalLab and CareerAgent), how to use each status, and studio contact |
 | `/products` | Full product catalog with Live / Download / local / Gallery / early / Building badges |
 | `/products/agentfleet` | Live — [Contabo/sslip demo](https://agentfleet.169.58.185.43.sslip.io/) · [GitHub](https://github.com/hharsha98/agentfleet) · [self-host docs](https://github.com/hharsha98/agentfleet/blob/main/docs/DEPLOY.md) |
 | `/products/agent-os` | Download / local — [clone](https://github.com/hharsha98/agent-os) (`127.0.0.1:8090`) · [static gallery](https://hharsha98.github.io/agent-os/) · [GitHub](https://github.com/hharsha98/agent-os) |

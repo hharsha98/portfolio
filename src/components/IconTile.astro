@@ -1,0 +1,19 @@
+---
+import Icon from './Icon.astro'
+import type { Hue, IconName } from '../lib/icons'
+
+interface Props {
+  icon: IconName
+  hue: Hue
+  size?: 'sm' | 'md' | 'lg'
+  /** Lit tiles carry a resting glow; plain tiles only glow on hover. */
+  lit?: boolean
+  class?: string
+}
+
+const { icon, hue, size = 'md', lit = false, class: className } = Astro.props
+---
+
+<span class:list={['icon-tile', `tile-${size}`, `hue-${hue}`, lit && 'is-lit', className]} aria-hidden="true">
+  <Icon name={icon} class="icon-tile-glyph" />
+</span>

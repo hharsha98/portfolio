@@ -1,0 +1,14 @@
+---
+import { statusLabel, type ProductStatus } from '../data/products'
+
+interface Props {
+  status: ProductStatus
+}
+
+const { status } = Astro.props
+---
+
+<span class="status-pill" data-status={status}>
+  <span class="status-dot" aria-hidden="true"></span>
+  {statusLabel(status)}
+</span>

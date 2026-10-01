@@ -1,0 +1,52 @@
+---
+import IconTile from './IconTile.astro'
+import StatusPill from './StatusPill.astro'
+import ProductFrame from './ProductFrame.astro'
+import ProductLinks from './ProductLinks.astro'
+import type { Product } from '../data/products'
+
+interface Props {
+  product: Product
+  /** Visual on the left instead of the right. */
+  flip?: boolean
+  /** What the app window's title bar says. */
+  frameLabel: string
+}
+
+const { product, flip = false, frameLabel } = Astro.props
+const shot = product.shot
+---
+
+<article class:list={['deep-dive', `hue-${product.hue}`, flip && 'is-flipped']} data-reveal>
+  <div class="deep-copy">
+    <div class="deep-eyebrow">
+      <IconTile icon={product.icon} hue={product.hue} lit />
+      <span class="eyebrow">{product.role}</span>
+    </div>
+    <h3 class="deep-title" style={`view-transition-name: product-${product.slug}`}>{product.name}</h3>
+    <StatusPill status={product.status} />
+    <p class="deep-text">{product.tagline}</p>
+    <ul class="chip-row">
+      {product.stack.slice(0, 6).map((item) => <li class="chip">{item}</li>)}
+    </ul>
+    <ProductLinks product={product} />
+  </div>
+
+  <div class="deep-visual">
+    <slot name="behind" />
+    <ProductFrame hue={product.hue} label={frameLabel}>
+      {shot ? (
+        <img
+          src={shot.src}
+          alt={shot.alt}
+          width={shot.width}
+          height={shot.height}
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <slot />
+      )}
+    </ProductFrame>
+  </div>
+</article>

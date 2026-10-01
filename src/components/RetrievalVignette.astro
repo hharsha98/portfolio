@@ -1,0 +1,74 @@
+---
+/**
+ * RetrievalLab's pipeline, drawn rather than screenshotted: the stages
+ * named in its README (HyDE, hybrid vector + BM25 fused with RRF,
+ * cross-encoder rerank, cited answer). No scores or eval numbers.
+ */
+const stages = [
+  { label: 'Query', detail: 'How much does reranking help?' },
+  { label: 'HyDE probe', detail: 'Draft a hypothetical answer to search with' },
+  { label: 'Hybrid retrieve', detail: 'Vector + BM25, fused with RRF' },
+  { label: 'Cross-encoder rerank', detail: 'Promote the chunks that actually answer' },
+] as const
+---
+
+<div class="vignette retrieval" aria-hidden="true">
+  <ol class="retrieval-stages">
+    {stages.map((stage, i) => (
+      <li class="retrieval-stage" style={`--n:${i}`}>
+        <span class="retrieval-node"></span>
+        <span class="retrieval-copy">
+          <span class="retrieval-label">{stage.label}</span>
+          <span class="retrieval-detail">{stage.detail}</span>
+        </span>
+        {i === 2 && (
+          <span class="retrieval-chips">
+            <span>vector</span>
+            <span>BM25</span>
+            <span class="is-fused">RRF</span>
+          </span>
+        )}
+      </li>
+    ))}
+  </ol>
+  <svg class="retrieval-wire" viewBox="0 0 4 100" preserveAspectRatio="none">
+    <path d="M2 4V96" pathLength="100"></path>
+  </svg>
+
+  <div class="retrieval-candidates">
+    <span class="candidates-head"><span>hybrid candidates</span><span>vector</span><span>BM25</span></span>
+    <span class="candidates-row"><span>chunk 2</span><span>1</span><span>4</span></span>
+    <span class="candidates-row"><span>chunk 4</span><span>2</span><span>2</span></span>
+    <span class="candidates-row is-climber"><span>chunk 7</span><span>3</span><span>1</span></span>
+  </div>
+
+  <div class="retrieval-rerank">
+    <span class="rerank-row is-promoted">
+      <span class="rerank-rank">1</span>
+      <span class="rerank-bar"><span style="width:88%"></span></span>
+      <span class="rerank-tag">chunk 7</span>
+    </span>
+    <span class="rerank-row">
+      <span class="rerank-rank">2</span>
+      <span class="rerank-bar"><span style="width:64%"></span></span>
+      <span class="rerank-tag">chunk 2</span>
+    </span>
+    <span class="rerank-row">
+      <span class="rerank-rank">3</span>
+      <span class="rerank-bar"><span style="width:41%"></span></span>
+      <span class="rerank-tag">chunk 4</span>
+    </span>
+  </div>
+
+  <div class="retrieval-answer">
+    <span class="retrieval-answer-text">Reranking helps most on large, messy corpora</span>
+    <span class="cite">[1]</span>
+    <span class="cite">[2]</span>
+    <span class="caret"></span>
+  </div>
+  <div class="retrieval-eval">
+    <span>recall@k</span>
+    <span>MRR</span>
+    <span>naive vs advanced</span>
+  </div>
+</div>

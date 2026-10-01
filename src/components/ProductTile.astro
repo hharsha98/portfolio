@@ -1,0 +1,35 @@
+---
+import IconTile from './IconTile.astro'
+import StatusPill from './StatusPill.astro'
+import ProductLinks from './ProductLinks.astro'
+import type { Product } from '../data/products'
+
+interface Props {
+  product: Product
+}
+
+const { product } = Astro.props
+const shot = product.shot
+---
+
+<article class:list={['product-tile', `hue-${product.hue}`]} data-reveal>
+  <a class="product-tile-visual" href={`/products/${product.slug}`} tabindex="-1" aria-hidden="true">
+    {shot ? (
+      <img src={shot.src} alt="" width={shot.width} height={shot.height} loading="lazy" decoding="async" />
+    ) : (
+      <slot />
+    )}
+  </a>
+  <div class="product-tile-body">
+    <div class="product-tile-head">
+      <IconTile icon={product.icon} hue={product.hue} />
+      <div class="product-tile-name">
+        <h3 style={`view-transition-name: product-${product.slug}`}>{product.name}</h3>
+        <span>{product.role}</span>
+      </div>
+    </div>
+    <StatusPill status={product.status} />
+    <p>{product.description}</p>
+    <ProductLinks product={product} compact />
+  </div>
+</article>

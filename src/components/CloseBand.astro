@@ -1,23 +1,25 @@
 ---
+import Icon from './Icon.astro'
 import { site } from '../data/site'
 ---
 
-<section class="close" aria-labelledby="close-heading">
-  <div class="close-inner">
+<section class="section-wrap close" aria-labelledby="close-heading" data-reveal>
+  <div class="close-panel">
+    <span class="close-glow" aria-hidden="true"></span>
     <h2 id="close-heading" class="close-title">Write the studio.</h2>
     <p class="close-lede">
       Questions, project briefs, and bug reports reach the same inbox, through the form or by email.
     </p>
     <div class="close-actions">
-      <a class="btn btn-primary" href="/contact">Open the contact form</a>
-      <a class="btn btn-ghost" href={`mailto:${site.email}`}>{site.email}</a>
-      <a class="btn btn-ghost" href={site.github} rel="noreferrer" target="_blank">
-        GitHub <span aria-hidden="true">↗</span>
+      <a class="btn btn-primary" href="/contact">
+        Open the contact form
+        <Icon name="arrow-right" class="btn-icon" />
       </a>
+      <a class="text-link" href={`mailto:${site.email}`}>{site.email}</a>
     </div>
-    <p class="close-founder">
-      Founded by {site.shortName} in Nuremberg. Personal site:
-      <a href={site.profile} rel="noreferrer" target="_blank">harsha-vardhan.pages.dev <span aria-hidden="true">↗</span></a>
-    </p>
   </div>
+  <p class="close-founder">
+    Founded by {site.shortName} in Nuremberg. Personal site:
+    <a href={site.profile} rel="noreferrer" target="_blank">harsha-vardhan.pages.dev</a>
+  </p>
 </section>

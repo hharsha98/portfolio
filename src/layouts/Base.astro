@@ -42,7 +42,7 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0e2e33" />
+    <meta name="theme-color" content="#0a0a0a" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={site.name} />
@@ -58,7 +58,9 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script is:inline>
-      // Play the power-on sequence once per visit; later pages in the session open settled.
+      // "js" lets scroll reveals hide content only when the script that shows it can run.
+      // The hero entrance plays once per visit; later pages in the session open settled.
+      document.documentElement.classList.add('js')
       try {
         if (sessionStorage.getItem('studio-booted')) document.documentElement.dataset.booted = ''
         else sessionStorage.setItem('studio-booted', '1')
@@ -66,6 +68,12 @@ const jsonLd = {
     </script>
   </head>
   <body class:list={[home && 'is-home']}>
+    <div class="ambient" aria-hidden="true">
+      <span class="ambient-glow is-accent"></span>
+      <span class="ambient-glow is-violet"></span>
+      <span class="ambient-glow is-cyan"></span>
+      <span class="ambient-dots"></span>
+    </div>
     <a class="skip" href="#content">Skip to content</a>
     <Header />
     <main id="content">
@@ -73,5 +81,33 @@ const jsonLd = {
     </main>
     <Footer />
     <slot name="scripts" />
+    <script>
+      // Fade sections in the first time they scroll into view (Agent Fleet's Reveal).
+      const targets = document.querySelectorAll<HTMLElement>('[data-reveal]')
+      const show = (el: HTMLElement) => el.classList.add('is-visible')
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+        targets.forEach(show)
+      } else {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue
+              show(entry.target as HTMLElement)
+              observer.unobserve(entry.target)
+            }
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+        )
+        targets.forEach((el) => observer.observe(el))
+      }
+
+      // Pause looping animations in sections that are off screen.
+      if ('IntersectionObserver' in window) {
+        const motion = new IntersectionObserver((entries) => {
+          for (const entry of entries) entry.target.toggleAttribute('data-offscreen', !entry.isIntersecting)
+        })
+        document.querySelectorAll('[data-motion]').forEach((el) => motion.observe(el))
+      }
+    </script>
   </body>
 </html>

@@ -1,0 +1,37 @@
+---
+import Icon from './Icon.astro'
+import { demoLinks, type Product, type ProductLink } from '../data/products'
+
+interface Props {
+  product: Product
+  compact?: boolean
+}
+
+const { product, compact = false } = Astro.props
+
+// The first runnable surface leads; everything else follows once (no repeated hrefs).
+const surfaces = demoLinks(product)
+const primary: ProductLink | undefined = surfaces[0]
+const seen = new Set(primary ? [primary.href] : [])
+const rest = product.links.filter((link) => {
+  if (link === primary || seen.has(link.href)) return false
+  seen.add(link.href)
+  return true
+})
+---
+
+<div class:list={['product-links', compact && 'is-compact']}>
+  {primary && (
+    <a class="btn btn-primary" href={primary.href} rel="noreferrer" target="_blank">
+      {primary.label}
+      <Icon name="arrow-up-right" class="btn-icon" />
+    </a>
+  )}
+  {rest.map((link) => (
+    <a class="btn btn-ghost" href={link.href} rel="noreferrer" target="_blank">
+      {link.label}
+      <Icon name="arrow-up-right" class="btn-icon" />
+    </a>
+  ))}
+  <a class="text-link" href={`/products/${product.slug}`}>Product details</a>
+</div>
