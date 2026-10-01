@@ -119,9 +119,7 @@ for (const url of [
   'https://github.com/hharsha98/agentgrid',
   'https://github.com/hharsha98/agentgrid/blob/main/docs/HOSTING.md',
   'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
-  'https://revenueops.169.58.185.43.sslip.io/',
   'https://github.com/hharsha98/agentops-studio',
-  'https://agentops.169.58.185.43.sslip.io/',
 ]) {
   if (!products.includes(url)) fail(`product catalog missing required URL: ${url}`)
 }
@@ -150,11 +148,9 @@ if (/href:\s*'https?:\/\/[^']*os\.agentic-systems-studio\.com/.test(products)) {
   fail('do not link os.agentic-systems-studio.com')
 }
 
-const allowedSslip = new Set([
-  'agentfleet.169.58.185.43.sslip.io',
-  'agentops.169.58.185.43.sslip.io',
-  'revenueops.169.58.185.43.sslip.io',
-])
+// Live needs a verified public host from the owner's list. Only Agent Fleet has one.
+const allowedSslip = new Set(['agentfleet.169.58.185.43.sslip.io'])
+const unverifiedHosts = ['agentops.169.58.185.43.sslip.io', 'revenueops.169.58.185.43.sslip.io']
 for (const host of products.match(/[a-z0-9.-]+\.sslip\.io/g) || []) {
   if (!allowedSslip.has(host)) fail(`unexpected sslip host in catalog: ${host}`)
 }
@@ -169,14 +165,16 @@ if (agentGrid.includes('sslip.io')) fail('Agent Grid must not link a public ssli
 if (!agentGrid.includes("kind: 'download'")) fail('Agent Grid must use the download link kind')
 if (!agentGrid.includes('https://github.com/hharsha98/agentgrid')) fail('Agent Grid clone path must be the GitHub repo')
 
-for (const [slug, next, url] of [
-  ['revenue-ops', 'agentops-studio', 'https://revenueops.169.58.185.43.sslip.io/'],
-  ['agentops-studio', null, 'https://agentops.169.58.185.43.sslip.io/'],
+for (const [slug, next, repo] of [
+  ['revenue-ops', 'agentops-studio', 'https://github.com/hharsha98/06-revenue-ops-agent-control-tower'],
+  ['agentops-studio', null, 'https://github.com/hharsha98/agentops-studio'],
 ]) {
   const block = productBlock(slug, next)
-  if (!block.includes("status: 'live'")) fail(`${slug} must be Live`)
-  if (!block.includes("label: 'Public demo'")) fail(`${slug} CTA must be labeled Public demo`)
-  if (!block.includes(url)) fail(`${slug} must link its verified Contabo/sslip demo`)
+  if (!block.includes("status: 'building'")) fail(`${slug} must be Building / coming soon until a public host is verified`)
+  if (block.includes("status: 'live'")) fail(`${slug} must not be marked Live`)
+  if (block.includes('sslip.io')) fail(`${slug} must not link an unverified sslip host`)
+  if (block.includes("label: 'Public demo'")) fail(`${slug} must not offer a Public demo CTA`)
+  if (!block.includes(repo)) fail(`${slug} must link its GitHub repo`)
 }
 
 if ((products.match(/accent: '#[0-9a-fA-F]{6}'/g) || []).length !== 8) {
@@ -224,15 +222,11 @@ if (indexHtml.includes('02 Agent OS — Live')) fail('built home must not mark A
 if (indexHtml.includes('02 Agent OS — Gallery')) fail('Agent OS must not stay Gallery / early')
 if (!indexHtml.includes('06 Agent Grid — Download / local')) fail('Agent Grid must be Download / local')
 if (indexHtml.includes('06 Agent Grid — Live')) fail('Agent Grid must not be marked Live')
-if (!indexHtml.includes('07 Revenue Ops Control Tower — Live')) {
-  fail('built home constellation must mark Revenue Ops Live')
+if (!indexHtml.includes('07 Revenue Ops Control Tower — Building / coming soon')) {
+  fail('built home must mark Revenue Ops Building / coming soon')
 }
-if (!indexHtml.includes('08 AgentOps Studio — Live')) fail('built home constellation must mark AgentOps Studio Live')
-if (!indexHtml.includes('agentops.169.58.185.43.sslip.io')) {
-  fail('built home must link the AgentOps Studio Contabo/sslip public demo')
-}
-if (!indexHtml.includes('revenueops.169.58.185.43.sslip.io')) {
-  fail('built home must link the Revenue Ops Contabo/sslip public demo')
+if (!indexHtml.includes('08 AgentOps Studio — Building / coming soon')) {
+  fail('built home must mark AgentOps Studio Building / coming soon')
 }
 if (/agentgrid\.[^"'\s]*sslip\.io/.test(indexHtml)) fail('built home must not give Agent Grid a public sslip URL')
 if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(indexHtml)) {
@@ -258,10 +252,10 @@ function census(html, kind) {
   if (!match) fail(`built home missing ${kind} census`)
   return match[1]
 }
-if (census(indexHtml, 'live') !== '5') fail(`live census must be 5 after delist, got ${census(indexHtml, 'live')}`)
+if (census(indexHtml, 'live') !== '3') fail(`live census must be 3, got ${census(indexHtml, 'live')}`)
 if (census(indexHtml, 'download') !== '3') fail(`download census must be 3, got ${census(indexHtml, 'download')}`)
 if (census(indexHtml, 'gallery') !== '0') fail(`gallery census must be 0, got ${census(indexHtml, 'gallery')}`)
-if (census(indexHtml, 'building') !== '0') fail(`building census must be 0, got ${census(indexHtml, 'building')}`)
+if (census(indexHtml, 'building') !== '2') fail(`building census must be 2, got ${census(indexHtml, 'building')}`)
 if (!indexHtml.includes('Studio constellation')) {
   fail('built home must include the studio constellation graphic')
 }
@@ -313,7 +307,6 @@ if (productsHtml.includes('agentos.169.58.185.43.sslip.io')) {
   fail('products catalog must not link the retired Agent OS Contabo public demo')
 }
 if (!productsHtml.includes('Clone / run locally')) fail('products catalog must offer Clone / run locally for Agent OS')
-if (!productsHtml.includes('Public demo')) fail('products catalog must still label the remaining Contabo public demos')
 if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(productsHtml)) {
   fail('products catalog must not link os.agentic-systems-studio.com')
 }
@@ -334,12 +327,6 @@ if (demosHtml.includes('agentos.169.58.185.43.sslip.io')) {
 if (!demosHtml.includes('127.0.0.1:8090')) fail('demos page must say Agent OS runs on 127.0.0.1:8090')
 if (!demosHtml.includes('https://github.com/hharsha98/agent-os')) {
   fail('demos page must link the Agent OS clone path')
-}
-if (!demosHtml.includes('agentops.169.58.185.43.sslip.io')) {
-  fail('demos page must include the AgentOps Studio Contabo/sslip public demo')
-}
-if (!demosHtml.includes('revenueops.169.58.185.43.sslip.io')) {
-  fail('demos page must include the Revenue Ops Contabo/sslip public demo')
 }
 if (/agentgrid\.[^"'\s]*sslip\.io/.test(demosHtml)) fail('demos page must not give Agent Grid a public sslip URL')
 if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(demosHtml)) {
@@ -386,14 +373,15 @@ if (/sslip\.io/.test(gridHtml)) fail('Agent Grid product page must not link a pu
 if (!gridHtml.includes('https://github.com/hharsha98/agentgrid')) fail('Agent Grid product page must link the GitHub clone path')
 if (!gridHtml.includes('docs/HOSTING.md')) fail('Agent Grid product page must link HOSTING.md')
 
-for (const [file, marker, name, url] of [
-  ['revenue-ops.html', '07 · Live', 'Revenue Ops Control Tower', 'https://revenueops.169.58.185.43.sslip.io/'],
-  ['agentops-studio.html', '08 · Live', 'AgentOps Studio', 'https://agentops.169.58.185.43.sslip.io/'],
+for (const [file, marker, name, repo] of [
+  ['revenue-ops.html', '07 · Building / coming soon', 'Revenue Ops Control Tower', 'github.com/hharsha98/06-revenue-ops-agent-control-tower'],
+  ['agentops-studio.html', '08 · Building / coming soon', 'AgentOps Studio', 'github.com/hharsha98/agentops-studio'],
 ]) {
   const html = read(join(root, 'dist', 'products', file))
-  if (!html.includes(marker)) fail(`${name} product page must be Live`)
-  if (!html.includes('Public demo')) fail(`${name} product page must label the public demo`)
-  if (!html.includes(url)) fail(`${name} product page must link its Contabo/sslip demo`)
+  if (!html.includes(marker)) fail(`${name} product page must be Building / coming soon`)
+  if (html.includes('Public demo')) fail(`${name} product page must not label a public demo`)
+  if (/sslip\.io/.test(html)) fail(`${name} product page must not link an sslip host`)
+  if (!html.includes(repo)) fail(`${name} product page must link its GitHub repo`)
 }
 
 if (wrangler.includes('fleet.agentic-systems-studio.com')) {
@@ -463,6 +451,9 @@ for (const gone of [
 
 for (const file of walkBuilt(join(root, 'dist'))) {
   const built = read(file)
+  for (const host of unverifiedHosts) {
+    if (built.includes(host)) fail(`unverified host ${host} still linked in ${file}`)
+  }
   if (built.includes('agentos.169.58.185.43.sslip.io')) {
     fail(`retired Agent OS public demo still linked in ${file}`)
   }

@@ -282,11 +282,11 @@ export const products: Product[] = [
     tagline:
       'Enterprise-style RevenueOps multi-agent control tower — a supervisor coordinates sales, support, outreach, engineering handoff, risk checks, evals, and audit trails.',
     description:
-      'Public Contabo/sslip demo of the RevenueOps control tower. Sandbox autonomy. GitHub remains.',
+      'The operator demo runs from the GitHub repo. A public host is not live yet, so there is no public link.',
     body: [
       'Revenue Ops Control Tower is a multi-agent control tower: one supervisor coordinates specialists for sales, support, customer communication, engineering handoff, risk checks, evals, and audit trails.',
       'FastAPI contracts, supervisor routing, safety and allowlist checks, a tool registry (Gmail, Slack, GitHub, RAG, lead scoring, ticket triage), a React dashboard with a workflow canvas, and Docker / Kubernetes / Terraform / CI skeletons.',
-      'A public demo runs on a Contabo VPS at revenueops.169.58.185.43.sslip.io — sslip, with a Public demo badge. /health reports the service ok and autonomy mode sandbox. Real-account mode still requires explicit configuration and allowlists. GitHub remains.',
+      'The repository says it plainly: the operator demo runs on your machine (one script, port 8060), and a public host is still being built. Gmail, Slack, and GitHub run as sandbox drafts; real mode fails closed without credentials. Until a public host is verified, the studio links GitHub only.',
     ],
     features: [
       'Supervisor / specialist agent graph',
@@ -297,15 +297,10 @@ export const products: Product[] = [
     ],
     stack: ['FastAPI', 'React', 'Postgres', 'Redis', 'Docker', 'Kubernetes', 'Terraform'],
     accent: '#f472b6',
-    status: 'live',
+    status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
     links: [
-      {
-        kind: 'live',
-        label: 'Public demo',
-        href: 'https://revenueops.169.58.185.43.sslip.io/',
-      },
       {
         kind: 'github',
         label: 'GitHub',
@@ -321,11 +316,11 @@ export const products: Product[] = [
     tagline:
       'Multi-agent AI operations platform with agent orchestration, RAG, MCP tools, observability, Docker, Kubernetes, and Terraform scaffolding.',
     description:
-      'Public Contabo/sslip demo of the multi-agent ops command center. Related to Agent Fleet. GitHub remains.',
+      'The multi-agent ops lab runs locally from the GitHub repo. A public host is not verified yet, so there is no public link. Related to Agent Fleet.',
     body: [
       'AgentOps Studio is a command-center surface and deploy foundation (Docker Compose, local Kubernetes structure, Terraform placeholders) for running AI workforces with operational visibility.',
       'The full self-hostable platform source is Agent Fleet. This repo is the product shell and portable-infra trail — not a second claim that the fleet is private.',
-      'A public demo runs on a Contabo VPS at agentops.169.58.185.43.sslip.io — sslip, with a Public demo badge. /api/health reports demo_public. Named on the product: streaming multi-agent chat, visual workflows, document intelligence with citations, MCP registry, Langfuse observability, cost and token tracking. GitHub remains.',
+      'Today it runs natively on your machine (Node plus Python, no Docker required): orchestration with approval gates, RAG with citations over seeded documents, an MCP-style tool registry, and run traces. A public host is planned but not verified, so the studio links GitHub only until it is.',
     ],
     features: [
       'Orchestration + RAG + MCP as the product spine',
@@ -336,16 +331,11 @@ export const products: Product[] = [
     ],
     stack: ['TypeScript', 'Python', 'FastAPI', 'Docker', 'Kubernetes', 'Terraform', 'MCP'],
     accent: '#a78bfa',
-    status: 'live',
+    status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/agentops-studio',
     featuresHeading: 'On the product',
     links: [
-      {
-        kind: 'live',
-        label: 'Public demo',
-        href: 'https://agentops.169.58.185.43.sslip.io/',
-      },
       { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentops-studio' },
       { kind: 'github', label: 'Agent Fleet', href: 'https://github.com/hharsha98/agentfleet' },
     ],
