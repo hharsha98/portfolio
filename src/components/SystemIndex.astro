@@ -1,0 +1,94 @@
+---
+import Trace from './Trace.astro'
+import {
+  products,
+  statusLabel,
+  demoLinks,
+  catalogStats,
+  productStatus,
+  type ProductLink,
+  type ProductStatus,
+} from '../data/products'
+
+const stats = catalogStats()
+const kinds: ProductStatus[] = ['live', 'download', 'gallery', 'building']
+
+// Live, download, and gallery links first. A product with none of those
+// (Building / coming soon) shows its source instead.
+const rows = products.map((product) => {
+  const surfaces = demoLinks(product)
+  const source: ProductLink[] = product.github ? [{ kind: 'github', label: 'GitHub', href: product.github }] : []
+  return { product, actions: surfaces.length ? surfaces : source }
+})
+
+const legend = [
+  { status: 'live', text: 'Live: open the public demo' },
+  { status: 'download', text: 'Download / local: run it yourself' },
+  { status: 'building', text: 'Building: source only, no public link' },
+] as const
+---
+
+<section class="system-index" data-system-index aria-labelledby="index-heading">
+  <span class="index-rail" aria-hidden="true"></span>
+  <div class="index-head">
+    <h2 id="index-heading" class="sr-only">System index</h2>
+    <p class="index-caption">Trace shape shows status</p>
+    <ul class="index-legend">
+      {legend.map((item) => (
+        <li>
+          <Trace status={item.status} seed={`legend-${item.status}`} class="legend-trace" />
+          <span>{item.text}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <ol class="index-rows">
+    {rows.map(({ product, actions }, i) => (
+      <li class="index-row" data-status={product.status} style={`--i:${i}`}>
+        <span class="row-index">{product.index}</span>
+        <a
+          class="row-name"
+          href={`/products/${product.slug}`}
+          aria-label={`${product.index} ${product.name} — ${statusLabel(product.status)}`}
+          style={`view-transition-name: product-${product.slug}`}
+        >
+          {product.name}
+        </a>
+        <span class="row-role">{product.role}</span>
+        <span class="row-status">
+          <span class="lamp" aria-hidden="true"></span>
+          {statusLabel(product.status)}
+        </span>
+        <Trace status={product.status} seed={product.slug} class="row-trace" />
+        <span class="row-actions">
+          {actions.map((link) => (
+            <a class="row-action" href={link.href} rel="noreferrer" target="_blank">
+              {link.label}
+              <span aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </span>
+      </li>
+    ))}
+  </ol>
+
+  <dl class="census">
+    {kinds.map((kind) => (
+      <div class:list={['stat-cell', `is-${kind}`]}>
+        <dt>{productStatus[kind]}</dt>
+        <dd class="stat-value">{stats[kind]}</dd>
+      </div>
+    ))}
+  </dl>
+</section>
+
+<script>
+  // Pause the running traces while the board is off screen.
+  const board = document.querySelector<HTMLElement>('[data-system-index]')
+  if (board && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      board.toggleAttribute('data-offscreen', !entry.isIntersecting)
+    }).observe(board)
+  }
+</script>

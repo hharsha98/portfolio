@@ -2,21 +2,22 @@
 import { site } from '../data/site'
 ---
 
-<section class="close-band" aria-labelledby="close-heading">
-  <div class="close-glow" aria-hidden="true"></div>
-  <div class="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-    <p class="kicker">Contact</p>
-    <h2 id="close-heading" class="display mt-4 max-w-4xl text-5xl leading-[1.02] text-paper sm:text-7xl">
-      Write the studio
-      <span class="gradient-phrase block">or clone the work.</span>
-    </h2>
-    <p class="mt-6 max-w-xl text-base leading-relaxed text-mute">
-      {site.email} and GitHub are the doors. This hub is not a product login wall.
+<section class="close" aria-labelledby="close-heading">
+  <div class="close-inner">
+    <h2 id="close-heading" class="close-title">Write the studio.</h2>
+    <p class="close-lede">
+      Questions, project briefs, and bug reports reach the same inbox, through the form or by email.
     </p>
-    <div class="mt-10 flex flex-wrap items-center gap-3">
-      <a class="btn btn-light" href="/contact">Contact form</a>
+    <div class="close-actions">
+      <a class="btn btn-primary" href="/contact">Open the contact form</a>
       <a class="btn btn-ghost" href={`mailto:${site.email}`}>{site.email}</a>
-      <a class="btn btn-ghost" href={site.github} rel="noreferrer" target="_blank">GitHub ↗</a>
+      <a class="btn btn-ghost" href={site.github} rel="noreferrer" target="_blank">
+        GitHub <span aria-hidden="true">↗</span>
+      </a>
     </div>
+    <p class="close-founder">
+      Founded by {site.shortName} in Nuremberg. Personal site:
+      <a href={site.profile} rel="noreferrer" target="_blank">harsha-vardhan.pages.dev <span aria-hidden="true">↗</span></a>
+    </p>
   </div>
 </section>

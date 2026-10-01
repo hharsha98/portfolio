@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Agentic Systems Studio">
-  <rect width="32" height="32" fill="#0a0b0d"/>
-  <rect x="3" y="3" width="26" height="26" fill="none" stroke="#c9a24a" stroke-width="1"/>
-  <path d="M6 6h3M6 6v3M26 6h-3M26 6v3M6 26h3M6 26v-3M26 26h-3M26 26v-3" stroke="#c9a24a" stroke-width="1.2" fill="none"/>
-  <path d="M11 22V10h4.2c2.6 0 4.3 1.6 4.3 4.1 0 2.5-1.7 4.1-4.3 4.1H13.4" fill="none" stroke="#e7e2d6" stroke-width="1.6"/>
-  <path d="M16 22l5-12" stroke="#c9a24a" stroke-width="1.6"/>
+  <rect width="32" height="32" rx="7" fill="#0e2e33"/>
+  <g class="studio-mark" transform="translate(16 16) scale(0.84) translate(-16.4 -16)">
+    <circle cx="24.6" cy="7" r="2.5" fill="none" stroke="#ede6d3" stroke-width="2.2"/>
+    <path d="M22.1 7H11L8 10V13L11 16H21L24 19V22L21 25H12" fill="none" stroke="#ede6d3" stroke-width="3.2"/>
+    <rect x="5.5" y="21.5" width="7" height="7" rx="0.8" fill="#f5b041"/>
+  </g>
 </svg>

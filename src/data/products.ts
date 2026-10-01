@@ -29,6 +29,8 @@ export type Product = {
   slug: string
   index: string
   name: string
+  /** Two-to-four-word job description for the home system index. */
+  role: string
   tagline: string
   description: string
   body: string[]
@@ -36,7 +38,7 @@ export type Product = {
   stack: string[]
   status: ProductStatus
   featured: boolean
-  /** Saturated accent for orbit, bento, and constellation tiles. */
+  /** Muted index tick colour for catalog cards and product pages. */
   accent: string
   github?: string
   links: ProductLink[]
@@ -55,6 +57,7 @@ export const products: Product[] = [
     slug: 'agentfleet',
     index: '01',
     name: 'Agent Fleet',
+    role: 'Multi-agent operations',
     tagline:
       'A self-hostable multi-agent operations platform — chat with a fleet of tool-using agents, or hand the orchestrator a goal and watch it execute as a live task DAG, with evals, cost governance, and guardrails.',
     description:
@@ -72,7 +75,7 @@ export const products: Product[] = [
       'Eval Center, cost budgets, guardrails, versioned rollback',
     ],
     stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'pgvector', 'MCP', 'Docker'],
-    accent: '#8b7cff',
+    accent: '#f5b041',
     status: 'live',
     featured: true,
     github: 'https://github.com/hharsha98/agentfleet',
@@ -100,6 +103,7 @@ export const products: Product[] = [
     slug: 'agent-os',
     index: '02',
     name: 'Agent OS',
+    role: 'Local operator dashboard',
     tagline:
       'Local-first operator dashboard for Cursor, Claude, Codex, and Hermes — dry-run by default, sandboxed workspace, gated machine control.',
     description:
@@ -117,7 +121,7 @@ export const products: Product[] = [
       'Sandboxed workspace; machine control stays off until enabled',
     ],
     stack: ['React', 'TypeScript', 'Vite', 'Express', 'Node'],
-    accent: '#c9a24a',
+    accent: '#d9a76a',
     status: 'download',
     featured: true,
     github: 'https://github.com/hharsha98/agent-os',
@@ -137,6 +141,7 @@ export const products: Product[] = [
     slug: 'vibespace',
     index: '03',
     name: 'Vibespace',
+    role: 'Agent development environment',
     tagline:
       'An open-source agentic development environment: run Claude Code, cursor-agent, Codex and shells side by side in a terminal grid, with a kanban board that dispatches them, shared agent memory, and multi-agent orchestration.',
     description:
@@ -155,7 +160,7 @@ export const products: Product[] = [
       'Tauri desktop shell · Node 22+ required',
     ],
     stack: ['TypeScript', 'React', 'Tauri', 'Fastify', 'node-pty', 'MCP'],
-    accent: '#6ee7f0',
+    accent: '#8cc7b8',
     status: 'download',
     featured: true,
     github: 'https://github.com/hharsha98/Vibespace',
@@ -174,6 +179,7 @@ export const products: Product[] = [
     slug: 'retrievallab',
     index: '04',
     name: 'RetrievalLab',
+    role: 'Evaluated retrieval lab',
     tagline:
       'Advanced RAG made visible — contextual chunking, hybrid search, cross-encoder reranking, query transformation, and retrieval eval (recall@k, MRR).',
     description:
@@ -192,7 +198,7 @@ export const products: Product[] = [
       'Retrieval eval: recall@k and MRR',
     ],
     stack: ['FastAPI', 'React', 'pgvector', 'FlashRank', 'BM25', 'HyDE', 'Supabase'],
-    accent: '#4caf8a',
+    accent: '#b9cf8a',
     status: 'live',
     featured: true,
     github: 'https://github.com/hharsha98/retrievallab',
@@ -207,6 +213,7 @@ export const products: Product[] = [
     slug: 'careeragent',
     index: '05',
     name: 'CareerAgent',
+    role: 'Job-search agents',
     tagline:
       'AI agents for the job hunt — RAG chat over a CV with citations, live company research, evidence-anchored CV tailoring, Kanban tracker.',
     description:
@@ -224,7 +231,7 @@ export const products: Product[] = [
       'LLM-as-judge evals, including a trap question',
     ],
     stack: ['FastAPI', 'React', 'pgvector', 'SSE', 'Docker', 'Kubernetes', 'Supabase'],
-    accent: '#fb923c',
+    accent: '#e39a6f',
     status: 'live',
     featured: false,
     github: 'https://github.com/hharsha98/careeragent',
@@ -238,6 +245,7 @@ export const products: Product[] = [
     slug: 'agentgrid',
     index: '06',
     name: 'Agent Grid',
+    role: 'Agent terminal grid',
     tagline:
       'BridgeSpace-inspired multi-agent terminal grid (Claude Code, cursor-agent, Codex, Gemini CLI, shell). Local ADE — marketing page only, no hosted demo.',
     description:
@@ -256,7 +264,7 @@ export const products: Product[] = [
       'Optional Tauri desktop wrapper',
     ],
     stack: ['TypeScript', 'React', 'Fastify', 'xterm.js', 'Monaco', 'Tauri', 'MCP'],
-    accent: '#60a5fa',
+    accent: '#9fb8d6',
     status: 'download',
     featured: false,
     github: 'https://github.com/hharsha98/agentgrid',
@@ -279,14 +287,15 @@ export const products: Product[] = [
     slug: 'revenue-ops',
     index: '07',
     name: 'Revenue Ops Control Tower',
+    role: 'RevenueOps control tower',
     tagline:
       'Enterprise-style RevenueOps multi-agent control tower — a supervisor coordinates sales, support, outreach, engineering handoff, risk checks, evals, and audit trails.',
     description:
-      'Public Contabo/sslip demo of the RevenueOps control tower. Sandbox autonomy. GitHub remains.',
+      'The operator demo runs from the GitHub repo. A public host is not live yet, so there is no public link.',
     body: [
       'Revenue Ops Control Tower is a multi-agent control tower: one supervisor coordinates specialists for sales, support, customer communication, engineering handoff, risk checks, evals, and audit trails.',
       'FastAPI contracts, supervisor routing, safety and allowlist checks, a tool registry (Gmail, Slack, GitHub, RAG, lead scoring, ticket triage), a React dashboard with a workflow canvas, and Docker / Kubernetes / Terraform / CI skeletons.',
-      'A public demo runs on a Contabo VPS at revenueops.169.58.185.43.sslip.io — sslip, with a Public demo badge. /health reports the service ok and autonomy mode sandbox. Real-account mode still requires explicit configuration and allowlists. GitHub remains.',
+      'The repository says it plainly: the operator demo runs on your machine (one script, port 8060), and a public host is still being built. Gmail, Slack, and GitHub run as sandbox drafts; real mode fails closed without credentials. Until a public host is verified, the studio links GitHub only.',
     ],
     features: [
       'Supervisor / specialist agent graph',
@@ -296,16 +305,11 @@ export const products: Product[] = [
       'Docker, Kubernetes, Terraform, and CI skeletons',
     ],
     stack: ['FastAPI', 'React', 'Postgres', 'Redis', 'Docker', 'Kubernetes', 'Terraform'],
-    accent: '#f472b6',
-    status: 'live',
+    accent: '#d6c08f',
+    status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
     links: [
-      {
-        kind: 'live',
-        label: 'Public demo',
-        href: 'https://revenueops.169.58.185.43.sslip.io/',
-      },
       {
         kind: 'github',
         label: 'GitHub',
@@ -318,14 +322,15 @@ export const products: Product[] = [
     slug: 'agentops-studio',
     index: '08',
     name: 'AgentOps Studio',
+    role: 'Agent operations lab',
     tagline:
       'Multi-agent AI operations platform with agent orchestration, RAG, MCP tools, observability, Docker, Kubernetes, and Terraform scaffolding.',
     description:
-      'Public Contabo/sslip demo of the multi-agent ops command center. Related to Agent Fleet. GitHub remains.',
+      'The multi-agent ops lab runs locally from the GitHub repo. A public host is not verified yet, so there is no public link. Related to Agent Fleet.',
     body: [
       'AgentOps Studio is a command-center surface and deploy foundation (Docker Compose, local Kubernetes structure, Terraform placeholders) for running AI workforces with operational visibility.',
       'The full self-hostable platform source is Agent Fleet. This repo is the product shell and portable-infra trail — not a second claim that the fleet is private.',
-      'A public demo runs on a Contabo VPS at agentops.169.58.185.43.sslip.io — sslip, with a Public demo badge. /api/health reports demo_public. Named on the product: streaming multi-agent chat, visual workflows, document intelligence with citations, MCP registry, Langfuse observability, cost and token tracking. GitHub remains.',
+      'Today it runs natively on your machine (Node plus Python, no Docker required): orchestration with approval gates, RAG with citations over seeded documents, an MCP-style tool registry, and run traces. A public host is planned but not verified, so the studio links GitHub only until it is.',
     ],
     features: [
       'Orchestration + RAG + MCP as the product spine',
@@ -335,17 +340,12 @@ export const products: Product[] = [
       'Learning log for incidents, fixes, and verification',
     ],
     stack: ['TypeScript', 'Python', 'FastAPI', 'Docker', 'Kubernetes', 'Terraform', 'MCP'],
-    accent: '#a78bfa',
-    status: 'live',
+    accent: '#a9c2bd',
+    status: 'building',
     featured: false,
     github: 'https://github.com/hharsha98/agentops-studio',
     featuresHeading: 'On the product',
     links: [
-      {
-        kind: 'live',
-        label: 'Public demo',
-        href: 'https://agentops.169.58.185.43.sslip.io/',
-      },
       { kind: 'github', label: 'GitHub', href: 'https://github.com/hharsha98/agentops-studio' },
       { kind: 'github', label: 'Agent Fleet', href: 'https://github.com/hharsha98/agentfleet' },
     ],
@@ -429,18 +429,3 @@ export function catalogStats() {
     building: products.filter((p) => p.status === 'building').length,
   }
 }
-
-/** Stack names that appear in the catalog (plus Workers for this hub). */
-export const credibilityStack = [
-  'Python',
-  'FastAPI',
-  'Next.js',
-  'React',
-  'TypeScript',
-  'PostgreSQL',
-  'pgvector',
-  'Tauri',
-  'MCP',
-  'Docker',
-  'Cloudflare Workers',
-] as const

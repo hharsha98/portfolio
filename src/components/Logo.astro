@@ -1,0 +1,21 @@
+---
+/**
+ * Relay: one routed trace drawn as an S. It leaves a hollow input pad
+ * (a brief goes in) and ends at a lit square lamp (a running system).
+ */
+interface Props {
+  size?: number
+  wordmark?: boolean
+}
+
+const { size = 28, wordmark = true } = Astro.props
+---
+
+<span class="studio-logo">
+  <svg class="studio-mark" viewBox="0 0 32 32" width={size} height={size} aria-hidden="true" focusable="false">
+    <circle class="mark-pad" cx="24.6" cy="7" r="2.5"></circle>
+    <path class="mark-trace" pathLength="1" d="M22.1 7H11L8 10V13L11 16H21L24 19V22L21 25H12"></path>
+    <rect class="mark-lamp" x="5.5" y="21.5" width="7" height="7" rx="0.8"></rect>
+  </svg>
+  {wordmark && <span class="studio-wordmark">Agentic Systems Studio</span>}
+</span>

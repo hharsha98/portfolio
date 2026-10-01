@@ -2,6 +2,7 @@
 /** Content and free-plan guards for the studio Worker. */
 import { readFileSync, existsSync, readdirSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -106,6 +107,7 @@ if (!existsSync(join(root, 'src', 'pages', 'contact.astro'))) fail('contact page
 if (!existsSync(join(root, 'migrations', '0001_contact_submissions.sql'))) fail('D1 migration missing')
 
 const products = read(join(root, 'src', 'data', 'products.ts'))
+const catalogSlugs = [...products.matchAll(/slug: '([a-z0-9-]+)'/g)].map((m) => m[1])
 for (const url of [
   'https://github.com/hharsha98/agentfleet',
   'https://agentfleet.169.58.185.43.sslip.io/',
@@ -119,9 +121,7 @@ for (const url of [
   'https://github.com/hharsha98/agentgrid',
   'https://github.com/hharsha98/agentgrid/blob/main/docs/HOSTING.md',
   'https://github.com/hharsha98/06-revenue-ops-agent-control-tower',
-  'https://revenueops.169.58.185.43.sslip.io/',
   'https://github.com/hharsha98/agentops-studio',
-  'https://agentops.169.58.185.43.sslip.io/',
 ]) {
   if (!products.includes(url)) fail(`product catalog missing required URL: ${url}`)
 }
@@ -150,11 +150,9 @@ if (/href:\s*'https?:\/\/[^']*os\.agentic-systems-studio\.com/.test(products)) {
   fail('do not link os.agentic-systems-studio.com')
 }
 
-const allowedSslip = new Set([
-  'agentfleet.169.58.185.43.sslip.io',
-  'agentops.169.58.185.43.sslip.io',
-  'revenueops.169.58.185.43.sslip.io',
-])
+// Live needs a verified public host from the owner's list. Only Agent Fleet has one.
+const allowedSslip = new Set(['agentfleet.169.58.185.43.sslip.io'])
+const unverifiedHosts = ['agentops.169.58.185.43.sslip.io', 'revenueops.169.58.185.43.sslip.io']
 for (const host of products.match(/[a-z0-9.-]+\.sslip\.io/g) || []) {
   if (!allowedSslip.has(host)) fail(`unexpected sslip host in catalog: ${host}`)
 }
@@ -169,14 +167,16 @@ if (agentGrid.includes('sslip.io')) fail('Agent Grid must not link a public ssli
 if (!agentGrid.includes("kind: 'download'")) fail('Agent Grid must use the download link kind')
 if (!agentGrid.includes('https://github.com/hharsha98/agentgrid')) fail('Agent Grid clone path must be the GitHub repo')
 
-for (const [slug, next, url] of [
-  ['revenue-ops', 'agentops-studio', 'https://revenueops.169.58.185.43.sslip.io/'],
-  ['agentops-studio', null, 'https://agentops.169.58.185.43.sslip.io/'],
+for (const [slug, next, repo] of [
+  ['revenue-ops', 'agentops-studio', 'https://github.com/hharsha98/06-revenue-ops-agent-control-tower'],
+  ['agentops-studio', null, 'https://github.com/hharsha98/agentops-studio'],
 ]) {
   const block = productBlock(slug, next)
-  if (!block.includes("status: 'live'")) fail(`${slug} must be Live`)
-  if (!block.includes("label: 'Public demo'")) fail(`${slug} CTA must be labeled Public demo`)
-  if (!block.includes(url)) fail(`${slug} must link its verified Contabo/sslip demo`)
+  if (!block.includes("status: 'building'")) fail(`${slug} must be Building / coming soon until a public host is verified`)
+  if (block.includes("status: 'live'")) fail(`${slug} must not be marked Live`)
+  if (block.includes('sslip.io')) fail(`${slug} must not link an unverified sslip host`)
+  if (block.includes("label: 'Public demo'")) fail(`${slug} must not offer a Public demo CTA`)
+  if (!block.includes(repo)) fail(`${slug} must link its GitHub repo`)
 }
 
 if ((products.match(/accent: '#[0-9a-fA-F]{6}'/g) || []).length !== 8) {
@@ -224,15 +224,11 @@ if (indexHtml.includes('02 Agent OS — Live')) fail('built home must not mark A
 if (indexHtml.includes('02 Agent OS — Gallery')) fail('Agent OS must not stay Gallery / early')
 if (!indexHtml.includes('06 Agent Grid — Download / local')) fail('Agent Grid must be Download / local')
 if (indexHtml.includes('06 Agent Grid — Live')) fail('Agent Grid must not be marked Live')
-if (!indexHtml.includes('07 Revenue Ops Control Tower — Live')) {
-  fail('built home constellation must mark Revenue Ops Live')
+if (!indexHtml.includes('07 Revenue Ops Control Tower — Building / coming soon')) {
+  fail('built home must mark Revenue Ops Building / coming soon')
 }
-if (!indexHtml.includes('08 AgentOps Studio — Live')) fail('built home constellation must mark AgentOps Studio Live')
-if (!indexHtml.includes('agentops.169.58.185.43.sslip.io')) {
-  fail('built home must link the AgentOps Studio Contabo/sslip public demo')
-}
-if (!indexHtml.includes('revenueops.169.58.185.43.sslip.io')) {
-  fail('built home must link the Revenue Ops Contabo/sslip public demo')
+if (!indexHtml.includes('08 AgentOps Studio — Building / coming soon')) {
+  fail('built home must mark AgentOps Studio Building / coming soon')
 }
 if (/agentgrid\.[^"'\s]*sslip\.io/.test(indexHtml)) fail('built home must not give Agent Grid a public sslip URL')
 if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(indexHtml)) {
@@ -258,27 +254,26 @@ function census(html, kind) {
   if (!match) fail(`built home missing ${kind} census`)
   return match[1]
 }
-if (census(indexHtml, 'live') !== '5') fail(`live census must be 5 after delist, got ${census(indexHtml, 'live')}`)
+if (census(indexHtml, 'live') !== '3') fail(`live census must be 3, got ${census(indexHtml, 'live')}`)
 if (census(indexHtml, 'download') !== '3') fail(`download census must be 3, got ${census(indexHtml, 'download')}`)
 if (census(indexHtml, 'gallery') !== '0') fail(`gallery census must be 0, got ${census(indexHtml, 'gallery')}`)
-if (census(indexHtml, 'building') !== '0') fail(`building census must be 0, got ${census(indexHtml, 'building')}`)
-if (!indexHtml.includes('Studio constellation')) {
-  fail('built home must include the studio constellation graphic')
+if (census(indexHtml, 'building') !== '2') fail(`building census must be 2, got ${census(indexHtml, 'building')}`)
+if (!indexHtml.includes('data-system-index')) fail('built home must open on the system index')
+const indexRows = (indexHtml.match(/class="index-row"/g) || []).length
+if (indexRows !== catalogSlugs.length) {
+  fail(`system index must list every catalog product (${catalogSlugs.length}), found ${indexRows}`)
 }
-if (!indexHtml.includes('products around one core')) {
-  fail('built home constellation must be the full catalog, not a four-node Fleet clone')
+if (!indexHtml.includes('Trace shape shows status')) {
+  fail('system index legend must explain that the trace shape encodes status, not colour alone')
 }
-if (!indexHtml.includes('Live · square')) {
-  fail('built home constellation must encode honesty in node shape, not clone Fleet tool glyphs')
+for (const shape of ['running', 'stepped', 'dotted']) {
+  if (!indexHtml.includes(`data-trace="${shape}"`)) fail(`system index must draw a ${shape} trace`)
 }
-if (!indexHtml.includes('orbit-plate')) {
-  fail('built home constellation must be a chart plate, not a CSS radar clone')
-}
-if (indexHtml.includes('orbit-spoke')) {
-  fail('built home constellation must not use Fleet-style radial spokes')
-}
-if (!indexHtml.includes('Studio workflow')) fail('built home must include the studio workflow section')
-if (!indexHtml.includes('Tech we actually use')) fail('built home must include tech credibility pills')
+if (!indexHtml.includes('The status is the contract')) fail('built home must explain the status contract')
+if (!indexHtml.includes('studio-mark')) fail('header must carry the Relay studio mark')
+if (!read(join(root, 'public', 'favicon.svg')).includes('studio-mark')) fail('favicon must be the Relay studio mark')
+if (indexHtml.includes('A·S')) fail('the old A·S text logo must stay retired')
+if (indexHtml.includes('gradient-phrase')) fail('home headlines must not use gradient text')
 if (!indexHtml.includes('Write the studio')) fail('built home must close on studio contact, not a SaaS funnel')
 if (!indexHtml.includes('contact@agentic-systems-studio.com')) {
   fail('built home must expose contact@agentic-systems-studio.com')
@@ -313,7 +308,6 @@ if (productsHtml.includes('agentos.169.58.185.43.sslip.io')) {
   fail('products catalog must not link the retired Agent OS Contabo public demo')
 }
 if (!productsHtml.includes('Clone / run locally')) fail('products catalog must offer Clone / run locally for Agent OS')
-if (!productsHtml.includes('Public demo')) fail('products catalog must still label the remaining Contabo public demos')
 if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(productsHtml)) {
   fail('products catalog must not link os.agentic-systems-studio.com')
 }
@@ -334,12 +328,6 @@ if (demosHtml.includes('agentos.169.58.185.43.sslip.io')) {
 if (!demosHtml.includes('127.0.0.1:8090')) fail('demos page must say Agent OS runs on 127.0.0.1:8090')
 if (!demosHtml.includes('https://github.com/hharsha98/agent-os')) {
   fail('demos page must link the Agent OS clone path')
-}
-if (!demosHtml.includes('agentops.169.58.185.43.sslip.io')) {
-  fail('demos page must include the AgentOps Studio Contabo/sslip public demo')
-}
-if (!demosHtml.includes('revenueops.169.58.185.43.sslip.io')) {
-  fail('demos page must include the Revenue Ops Contabo/sslip public demo')
 }
 if (/agentgrid\.[^"'\s]*sslip\.io/.test(demosHtml)) fail('demos page must not give Agent Grid a public sslip URL')
 if (/href=["'][^"']*os\.agentic-systems-studio\.com/.test(demosHtml)) {
@@ -386,14 +374,15 @@ if (/sslip\.io/.test(gridHtml)) fail('Agent Grid product page must not link a pu
 if (!gridHtml.includes('https://github.com/hharsha98/agentgrid')) fail('Agent Grid product page must link the GitHub clone path')
 if (!gridHtml.includes('docs/HOSTING.md')) fail('Agent Grid product page must link HOSTING.md')
 
-for (const [file, marker, name, url] of [
-  ['revenue-ops.html', '07 · Live', 'Revenue Ops Control Tower', 'https://revenueops.169.58.185.43.sslip.io/'],
-  ['agentops-studio.html', '08 · Live', 'AgentOps Studio', 'https://agentops.169.58.185.43.sslip.io/'],
+for (const [file, marker, name, repo] of [
+  ['revenue-ops.html', '07 · Building / coming soon', 'Revenue Ops Control Tower', 'github.com/hharsha98/06-revenue-ops-agent-control-tower'],
+  ['agentops-studio.html', '08 · Building / coming soon', 'AgentOps Studio', 'github.com/hharsha98/agentops-studio'],
 ]) {
   const html = read(join(root, 'dist', 'products', file))
-  if (!html.includes(marker)) fail(`${name} product page must be Live`)
-  if (!html.includes('Public demo')) fail(`${name} product page must label the public demo`)
-  if (!html.includes(url)) fail(`${name} product page must link its Contabo/sslip demo`)
+  if (!html.includes(marker)) fail(`${name} product page must be Building / coming soon`)
+  if (html.includes('Public demo')) fail(`${name} product page must not label a public demo`)
+  if (/sslip\.io/.test(html)) fail(`${name} product page must not link an sslip host`)
+  if (!html.includes(repo)) fail(`${name} product page must link its GitHub repo`)
 }
 
 if (wrangler.includes('fleet.agentic-systems-studio.com')) {
@@ -412,57 +401,70 @@ function walkBuilt(dir, acc = []) {
   }
   return acc
 }
-const delistedNeedles = [
-  [/mara-open/i, 'mara-open'],
-  [/\bMARA\b/, 'MARA'],
-  [/siemens/i, 'Siemens'],
-  [/\bFAPS\b/, 'FAPS'],
-  [/\bEBL\b/, 'EBL'],
-  [/10\.53192/, 'EBL DOI'],
-  [/RAG Trustworthiness/i, 'RAG Trustworthiness'],
-  [/rag-trustworthiness/i, 'rag-trustworthiness'],
-  [/ragtrust/i, 'ragtrust'],
-  [/Pflichtpraktikum/i, 'Pflichtpraktikum'],
-  [/\bthesis\b/i, 'thesis'],
-  [/\bNDA\b/, 'NDA'],
-  [/researchgate\.net/i, 'ResearchGate paper'],
-  [/\/research(?![a-z])/i, '/research'],
-]
+// Delisted words are stored only as SHA-256 hashes of lowercase word tokens, so this
+// public repo never spells them out. Add a word with: printf '%s' word | sha256sum
+const delistedTokenHashes = new Set([
+  'c8b6c061e8591dfeaabefdbad7cdacc0ece53900f0bb02160860a0e3ef7d2acc',
+  '30e363d3e8c59f2c1319f8d73d48e3ad26db5e087951a4d7ab809c6f5401aea8',
+  '27039e27ac5ea92ad19fa68de550033247c24ebddd056ce6dc2a68f9d50f2d07',
+  '67b10ab41c13cd8753cb591edde5adf4b1ce52d5d026819d1216379026f86479',
+  '379dcb97adca24d680a53a4f9e93baa39784801d0f9c8d740c900afd3d382760',
+  '726f6ee1e259e8007535c937d5dc92ae5ab32aefbbebbbbbfa7028da3c76cf46',
+  '088e9b729ad8f65689447c285fb6d891e0a897d77af389c41238b161401ed9f0',
+  'c1c2d69c9d39051e3b0cdbcea2929653b64479029f7a1065493f247d172bae2b',
+  '2863229379aa76de93620451ec65b270760a0b41971bad0d1c74f340f1cb4786',
+  '37242106bee67850080d4856d160af34233c93468d5f78f59958ca689367b69b',
+  '739f09ec59b6db48683e1374ed1af4db3b2871758f149d93d44cf8b2c153c3f5',
+])
+const tokenHashes = new Map()
+function tokenHash(token) {
+  let hash = tokenHashes.get(token)
+  if (!hash) {
+    hash = createHash('sha256').update(token).digest('hex')
+    tokenHashes.set(token, hash)
+  }
+  return hash
+}
 
 function assertDelisted(label, text) {
-  for (const [re, name] of delistedNeedles) {
-    if (re.test(text)) fail(`${label} still contains delisted copy: ${name}`)
+  if (/\/research(?![a-z])/i.test(text)) fail(`${label} still links the removed /research page`)
+  for (const token of new Set(text.toLowerCase().match(/[a-z0-9]+/g) ?? [])) {
+    const hash = tokenHash(token)
+    // Report the hash prefix, never the word, so test logs stay clean too.
+    if (delistedTokenHashes.has(hash)) fail(`${label} contains a delisted word (sha256 ${hash.slice(0, 12)})`)
   }
 }
 
-const publicSource = []
+const delistScan = new Set(sourceFiles)
 function walkPublic(dir) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     if (entry.name === 'node_modules' || entry.name === 'dist' || entry.name === '.git') continue
     const path = join(dir, entry.name)
     if (entry.isDirectory()) walkPublic(path)
-    else if (/\.(astro|ts|css|mjs|md|txt|svg)$/.test(entry.name) && !entry.name.endsWith('.d.ts')) {
-      publicSource.push(path)
-    }
+    else if (/\.(css|txt|svg)$/.test(entry.name)) delistScan.add(path)
   }
 }
 walkPublic(join(root, 'src'))
 walkPublic(join(root, 'public'))
-publicSource.push(join(root, 'README.md'))
-for (const file of publicSource) assertDelisted(file, read(file))
+for (const file of delistScan) assertDelisted(file, read(file))
 
-for (const gone of [
-  'research.html',
-  join('products', 'mara-open.html'),
-  join('products', 'rag-trustworthiness.html'),
-  join('projects', 'mara-open.html'),
-  join('projects', 'rag-trustworthiness.html'),
-]) {
-  if (existsSync(join(root, 'dist', gone))) fail(`delisted page still built: ${gone}`)
+// Only catalog products (and legacy redirects) may be built as product pages.
+// Anything removed from the catalog must 404, so no removed slug is listed here.
+const legacyBlock = products.match(/legacySlugs = \{([\s\S]*?)\}/)?.[1] ?? ''
+const legacySlugKeys = [...legacyBlock.matchAll(/([a-z0-9-]+):/g)].map((m) => m[1])
+const catalogPages = new Set([...catalogSlugs, ...legacySlugKeys].map((slug) => `${slug}.html`))
+for (const dir of ['products', 'projects']) {
+  for (const page of readdirSync(join(root, 'dist', dir))) {
+    if (!catalogPages.has(page)) fail(`dist/${dir}/${page} is not a catalog product page`)
+  }
 }
+if (existsSync(join(root, 'dist', 'research.html'))) fail('the removed research page must not be built')
 
 for (const file of walkBuilt(join(root, 'dist'))) {
   const built = read(file)
+  for (const host of unverifiedHosts) {
+    if (built.includes(host)) fail(`unverified host ${host} still linked in ${file}`)
+  }
   if (built.includes('agentos.169.58.185.43.sslip.io')) {
     fail(`retired Agent OS public demo still linked in ${file}`)
   }

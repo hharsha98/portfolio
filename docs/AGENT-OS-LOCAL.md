@@ -7,5 +7,5 @@ Agent OS is a single-machine local app, in the same class as Agent Grid and Vibe
 - An optional private self-host for the owner can keep that same loopback port. This is not a hosted multi-tenant SaaS.
 - The public Contabo Live demo is retired. Do not re-add a public sslip URL or a public Caddy route.
 - [hharsha98.github.io/agent-os](https://hharsha98.github.io/agent-os/) remains a static gallery only.
-- AgentOps Studio stays Live. Agent Fleet and the other Contabo labs stay as they are.
+- Agent Fleet stays Live on its Contabo host. AgentOps Studio and Revenue Ops are Building / coming soon (GitHub only) until a public host is verified.
 - `os.agentic-systems-studio.com` stays a planned name in copy. Do not attach it in Cloudflare DNS from this repo.
