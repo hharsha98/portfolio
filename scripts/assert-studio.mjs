@@ -2,6 +2,7 @@
 /** Content and free-plan guards for the studio Worker. */
 import { readFileSync, existsSync, readdirSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -400,54 +401,65 @@ function walkBuilt(dir, acc = []) {
   }
   return acc
 }
-const delistedNeedles = [
-  [/mara-open/i, 'mara-open'],
-  [/\bMARA\b/, 'MARA'],
-  [/siemens/i, 'Siemens'],
-  [/\bFAPS\b/, 'FAPS'],
-  [/\bEBL\b/, 'EBL'],
-  [/10\.53192/, 'EBL DOI'],
-  [/RAG Trustworthiness/i, 'RAG Trustworthiness'],
-  [/rag-trustworthiness/i, 'rag-trustworthiness'],
-  [/ragtrust/i, 'ragtrust'],
-  [/Pflichtpraktikum/i, 'Pflichtpraktikum'],
-  [/\bthesis\b/i, 'thesis'],
-  [/\bNDA\b/, 'NDA'],
-  [/researchgate\.net/i, 'ResearchGate paper'],
-  [/\/research(?![a-z])/i, '/research'],
-]
+// Delisted words are stored only as SHA-256 hashes of lowercase word tokens, so this
+// public repo never spells them out. Add a word with: printf '%s' word | sha256sum
+const delistedTokenHashes = new Set([
+  'c8b6c061e8591dfeaabefdbad7cdacc0ece53900f0bb02160860a0e3ef7d2acc',
+  '30e363d3e8c59f2c1319f8d73d48e3ad26db5e087951a4d7ab809c6f5401aea8',
+  '27039e27ac5ea92ad19fa68de550033247c24ebddd056ce6dc2a68f9d50f2d07',
+  '67b10ab41c13cd8753cb591edde5adf4b1ce52d5d026819d1216379026f86479',
+  '379dcb97adca24d680a53a4f9e93baa39784801d0f9c8d740c900afd3d382760',
+  '726f6ee1e259e8007535c937d5dc92ae5ab32aefbbebbbbbfa7028da3c76cf46',
+  '088e9b729ad8f65689447c285fb6d891e0a897d77af389c41238b161401ed9f0',
+  'c1c2d69c9d39051e3b0cdbcea2929653b64479029f7a1065493f247d172bae2b',
+  '2863229379aa76de93620451ec65b270760a0b41971bad0d1c74f340f1cb4786',
+  '37242106bee67850080d4856d160af34233c93468d5f78f59958ca689367b69b',
+  '739f09ec59b6db48683e1374ed1af4db3b2871758f149d93d44cf8b2c153c3f5',
+])
+const tokenHashes = new Map()
+function tokenHash(token) {
+  let hash = tokenHashes.get(token)
+  if (!hash) {
+    hash = createHash('sha256').update(token).digest('hex')
+    tokenHashes.set(token, hash)
+  }
+  return hash
+}
 
 function assertDelisted(label, text) {
-  for (const [re, name] of delistedNeedles) {
-    if (re.test(text)) fail(`${label} still contains delisted copy: ${name}`)
+  if (/\/research(?![a-z])/i.test(text)) fail(`${label} still links the removed /research page`)
+  for (const token of new Set(text.toLowerCase().match(/[a-z0-9]+/g) ?? [])) {
+    const hash = tokenHash(token)
+    // Report the hash prefix, never the word, so test logs stay clean too.
+    if (delistedTokenHashes.has(hash)) fail(`${label} contains a delisted word (sha256 ${hash.slice(0, 12)})`)
   }
 }
 
-const publicSource = []
+const delistScan = new Set(sourceFiles)
 function walkPublic(dir) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     if (entry.name === 'node_modules' || entry.name === 'dist' || entry.name === '.git') continue
     const path = join(dir, entry.name)
     if (entry.isDirectory()) walkPublic(path)
-    else if (/\.(astro|ts|css|mjs|md|txt|svg)$/.test(entry.name) && !entry.name.endsWith('.d.ts')) {
-      publicSource.push(path)
-    }
+    else if (/\.(css|txt|svg)$/.test(entry.name)) delistScan.add(path)
   }
 }
 walkPublic(join(root, 'src'))
 walkPublic(join(root, 'public'))
-publicSource.push(join(root, 'README.md'))
-for (const file of publicSource) assertDelisted(file, read(file))
+for (const file of delistScan) assertDelisted(file, read(file))
 
-for (const gone of [
-  'research.html',
-  join('products', 'mara-open.html'),
-  join('products', 'rag-trustworthiness.html'),
-  join('projects', 'mara-open.html'),
-  join('projects', 'rag-trustworthiness.html'),
-]) {
-  if (existsSync(join(root, 'dist', gone))) fail(`delisted page still built: ${gone}`)
+// Only catalog products (and legacy redirects) may be built as product pages.
+// Anything removed from the catalog must 404, so no removed slug is listed here.
+const catalogSlugs = [...products.matchAll(/slug: '([a-z0-9-]+)'/g)].map((m) => m[1])
+const legacyBlock = products.match(/legacySlugs = \{([\s\S]*?)\}/)?.[1] ?? ''
+const legacySlugKeys = [...legacyBlock.matchAll(/([a-z0-9-]+):/g)].map((m) => m[1])
+const catalogPages = new Set([...catalogSlugs, ...legacySlugKeys].map((slug) => `${slug}.html`))
+for (const dir of ['products', 'projects']) {
+  for (const page of readdirSync(join(root, 'dist', dir))) {
+    if (!catalogPages.has(page)) fail(`dist/${dir}/${page} is not a catalog product page`)
+  }
 }
+if (existsSync(join(root, 'dist', 'research.html'))) fail('the removed research page must not be built')
 
 for (const file of walkBuilt(join(root, 'dist'))) {
   const built = read(file)
